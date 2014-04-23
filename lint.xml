@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <issue id="DefaultLocale">
+        <ignore path="src/de/anipe/verbrauchsapp/CSVImportActivity.java" />
+        <ignore path="src/de/anipe/verbrauchsapp/PictureImportActivity.java" />
+    </issue>
+</lint>

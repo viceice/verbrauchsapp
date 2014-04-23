@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="horizontal" >
+
+    <TextView
+        android:id="@+id/addconsumption_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/cons_input_header"
+        android:lineSpacingExtra="10sp"
+        android:textColor="#33b5e5"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+    
+    <TextView
+		android:id="@+id/textViewDateLine"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="5dp"
+		android:textStyle="bold"
+		android:textSize="18sp"
+		android:layout_below="@+id/addconsumption_content"
+		android:text="@string/date_picker_header" />
+    
+	<EditText  
+        android:id="@+id/datumTextLine"
+        android:inputType="none"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:singleLine="true"
+        android:layout_below="@+id/textViewDateLine"
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="6dp" /> 
+		
+	<TextView
+		android:id="@+id/textViewKmInput"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="5dp"
+		android:textStyle="bold"
+		android:textSize="18sp"
+		android:layout_below="@+id/datumTextLine"
+		android:text="@string/km_input_header" />
+	
+	<EditText android:id="@+id/cons_km_input"
+	    android:inputType="number"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:digits="0123456789"
+        android:layout_below="@+id/textViewKmInput"
+        android:hint="@string/cons_km_hint" />
+	
+	<TextView
+		android:id="@+id/textViewLiterInput"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="5dp"
+		android:textStyle="bold"
+		android:textSize="18sp"
+		android:layout_below="@+id/cons_km_input"
+		android:text="@string/liter_input_header" />
+	
+	<EditText android:id="@+id/cons_liter_input"
+	    android:inputType="numberDecimal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewLiterInput"
+        android:hint="@string/cons_liter_hint" />
+	
+	<TextView
+		android:id="@+id/textViewPriceInput"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginLeft="5dp"
+		android:textStyle="bold"
+		android:textSize="18sp"
+		android:layout_below="@+id/cons_liter_input"
+		android:text="@string/price_input_header" />
+	
+	<EditText android:id="@+id/cons_price_input"
+	    android:inputType="numberDecimal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewPriceInput"
+        android:hint="@string/cons_price_hint" /> 
+    
+	<Button android:id="@+id/button_add_consumption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cons_price_input"
+        android:text="@string/button_add_cons" 
+        android:layout_centerHorizontal="true" />
+	
+</RelativeLayout>

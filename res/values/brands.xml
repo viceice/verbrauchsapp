@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="brands_array">
+        <item>Audi</item>
+        <item>BMW</item>
+        <item>Daimler-Benz</item>
+        <item>Ford</item>
+        <item>Porsche</item>
+        <item>Skoda</item>
+        <item>Volkswagen</item>
+    </string-array>
+</resources>

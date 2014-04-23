@@ -1,0 +1,41 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+		<!-- item android:id="@+id/action_search"
+        	android:icon="@drawable/ic_action_search"
+			android:title="@string/action_search"/> -->
+		
+		<item android:id="@+id/action_edit_entry"
+			android:icon="@drawable/ic_action_edit"
+			android:title="@string/action_edit_entry" 
+			android:showAsAction="ifRoom" />
+		
+		<item android:id="@+id/action_add_consumption"
+			android:icon="@drawable/ic_action_new"
+			android:title="@string/action_add_consumption" 
+			android:showAsAction="ifRoom" />
+		
+		<item android:id="@+id/action_view_consumptions"
+			android:icon="@drawable/ic_action_search"
+			android:title="@string/action_view_consumptions" 
+			android:showAsAction="ifRoom" />
+		
+		<item android:id="@+id/action_view_chart"
+			android:icon="@drawable/chart_area"
+			android:title="@string/action_view_chart" />
+		
+		<item android:id="@+id/action_import_data"
+			android:icon="@drawable/ic_action_import_export"
+			android:title="@string/action_import_data" />
+		
+		<item android:id="@+id/action_export_data"
+			android:icon="@drawable/ic_action_import_export"
+			android:title="@string/action_export_data" />
+		
+		<item android:id="@+id/action_add_picture"
+			android:icon="@drawable/ic_action_camera"
+			android:title="@string/action_add_picture" />
+		
+		<item android:id="@+id/action_remove_entry"
+			android:icon="@drawable/ic_action_discard"
+			android:title="@string/action_delete_car" />
+
+</menu>
