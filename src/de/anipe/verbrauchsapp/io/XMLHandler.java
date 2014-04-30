@@ -2,6 +2,7 @@ package de.anipe.verbrauchsapp.io;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
@@ -11,6 +12,8 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import de.anipe.verbrauchsapp.objects.Car;
 import de.anipe.verbrauchsapp.objects.Consumption;
@@ -20,7 +23,8 @@ public class XMLHandler {
 	private Car car;
 	private double cons;
 	private List<Consumption> consumptions;
-	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy-HH.mm.ss", Locale.getDefault());
+	private SimpleDateFormat shortDateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
 	
 	public XMLHandler(Car car, double cons, List<Consumption> consumptions) {
 		this.car = car;
@@ -28,6 +32,24 @@ public class XMLHandler {
 		this.consumptions = consumptions;
 	}
 
+	public List<Consumption> parseConsumptionDocument(Document doc) {
+		// TODO create functionality
+		
+		// XXX Do we need this?
+		Node header = doc.getElementsByTagName("Car").item(0);
+		long carId = Long.parseLong(((Element) header).getElementsByTagName("InAppCarID").item(0).getTextContent());  
+		
+		List<Consumption> cons = new LinkedList<Consumption>();
+		NodeList nList = doc.getElementsByTagName("Consumption");
+		
+		
+		
+		
+		
+		
+		return cons;
+	}
+	
 	public Document createConsumptionDocument() {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder parser = null;
@@ -49,7 +71,11 @@ public class XMLHandler {
 	
 	private Element getCarData(Document doc, Car car) {
 		Element carData = doc.createElement("Car");
-		carData.setAttribute("AppID", String.valueOf(car.getCarId()));
+		carData.setAttribute("InAppCarID", String.valueOf(car.getCarId()));
+		
+		Element expDateNode = doc.createElement("ExportDatum");
+		expDateNode.appendChild(doc.createTextNode(getDateTime(new Date(), false)));
+		carData.appendChild(expDateNode);
 		
 		Element brandNode = doc.createElement("Hersteller");
 		brandNode.appendChild(doc.createTextNode(car.getBrand().value()));
@@ -58,6 +84,10 @@ public class XMLHandler {
 		Element typeNode = doc.createElement("Typ");
 		typeNode.appendChild(doc.createTextNode(car.getType()));
 		carData.appendChild(typeNode);
+		
+		Element numberPlateNode = doc.createElement("Kennzeichen");
+		numberPlateNode.appendChild(doc.createTextNode(car.getNumberPlate()));
+		carData.appendChild(numberPlateNode);
 		
 		Element startKm = doc.createElement("Startkilometer");
 		startKm.appendChild(doc.createTextNode(String.valueOf(car.getStartKm())));
@@ -80,22 +110,22 @@ public class XMLHandler {
 			Element consumptionNode = doc.createElement("Consumption");
 			
 			Element dateNode = doc.createElement("Datum");
-			dateNode.appendChild(doc.createTextNode(getDateTime(con.getDate())));
+			dateNode.appendChild(doc.createTextNode(getDateTime(con.getDate(), true)));
 			consumptionNode.appendChild(dateNode);
 			
 			Element refuelKm = doc.createElement("Kilometerstand");
 			refuelKm.appendChild(doc.createTextNode(String.valueOf(con.getRefuelmileage())));
 			consumptionNode.appendChild(refuelKm);
 			
-			Element drivenKm = doc.createElement("Gefahrene_Kilometer");
+			Element drivenKm = doc.createElement("GefahreneKilometer");
 			drivenKm.appendChild(doc.createTextNode(String.valueOf(con.getDrivenmileage())));
 			consumptionNode.appendChild(drivenKm);
 			
-			Element refuelLiter = doc.createElement("Liter_getankt");
+			Element refuelLiter = doc.createElement("LiterGetankt");
 			refuelLiter.appendChild(doc.createTextNode(String.valueOf(con.getRefuelliters())));
 			consumptionNode.appendChild(refuelLiter);
 			
-			Element refuelPrice = doc.createElement("Preis_je_Liter");
+			Element refuelPrice = doc.createElement("PreisJeLiter");
 			refuelPrice.appendChild(doc.createTextNode(String.valueOf(con.getRefuelprice())));
 			consumptionNode.appendChild(refuelPrice);
 			
@@ -108,7 +138,10 @@ public class XMLHandler {
 		return consumptionData;
 	}
 	
-	private String getDateTime(Date date) {
-        return dateFormat.format(date);
+	private String getDateTime(Date date, boolean shortFormat) {
+		if (!shortFormat) {
+			return dateFormat.format(date);
+		}
+		return shortDateFormat.format(date);
 	}
 }

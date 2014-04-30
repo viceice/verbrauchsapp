@@ -14,6 +14,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
@@ -65,21 +67,11 @@ public class FileSystemAccessor {
 	}
 
 	public File createOrGetStorageDir(String folderName) {
-		// Get the directory for the user's public pictures directory.
-//		File file = new File(
-//				Environment
-//						.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), folderName);
-		
 		File file = new File(
 				Environment
 						.getExternalStorageDirectory(), folderName);
 		
 		if (file.exists() && file.isDirectory()) {
-			
-			
-			// XXX
-			System.out.println(file.getAbsolutePath());
-			
 			return file;
 		}
 		if (!file.mkdirs()) {
@@ -93,25 +85,15 @@ public class FileSystemAccessor {
 		return Environment
 				.getExternalStorageDirectory();
 	}
-	
-//	public File getFile() {
-//		return Environment
-//				.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
-//	}
 
 	public File[] readFilesFromStorageDir(File folder) {
 		if (isExternalStorageReadable()) {
-			
-			// XXX
-			System.out.println(folder.getAbsolutePath());
-			
 			return folder.listFiles();
 		}
 		return null;
 	}
 
 	public void writeFileToStorageDir(File file, String folderName) {
-		// Write the file to given folder
 		if (isExternalStorageWritable()) {
 			try {
 				FileOutputStream out = new FileOutputStream(new File(
@@ -146,10 +128,6 @@ public class FileSystemAccessor {
 			String folder, String name) throws Exception {
 		DOMSource source = new DOMSource(doc);
 
-		System.out.println(doc != null);
-		System.out.println(folder != null);
-		System.out.println(name != null);
-		
 		TransformerFactory transformerfactory = TransformerFactory
 				.newInstance();
 		Transformer transformer = transformerfactory.newTransformer();
@@ -157,7 +135,7 @@ public class FileSystemAccessor {
 		transformer.setOutputProperty(
 				"{http://xml.apache.org/xslt}indent-amount", "4");
 
-		SimpleDateFormat dateFormat = new SimpleDateFormat("HH_mm_ss",
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy-HH.mm.ss",
 				Locale.getDefault());
 		String time = dateFormat.format(new Date());
 
@@ -169,6 +147,15 @@ public class FileSystemAccessor {
 		return resultFile;
 	}
 
+	public Document readXMLDocumentFromFile(String folder, String name) throws Exception {
+		File xmlFile = new File(folder, name);
+		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+		Document doc = dBuilder.parse(xmlFile);
+		doc.getDocumentElement().normalize();
+		return doc;
+	}
+	
 	public Bitmap getBitmapForBrand(Context context, Brand value) {
 		AssetManager manager = context.getAssets();
 
