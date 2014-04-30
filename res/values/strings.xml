@@ -60,6 +60,8 @@
     <string name="consumption_text">Durchschnittsverbrauch:</string>
     <string name="drivenKm_text">Kilometer gefahren:</string>
     <string name="overallCosts_text">Kosten:</string>
+    <string name="xmlExport_text">Status XML-Export:</string>
+    <string name="cloudExport_text">Status Cloud-Export:</string>
     
 	<string name="car_input_header">Fahrzeugdaten eingeben</string>
 	<string name="car_type_header">Fahrzeugtyp eingeben:</string>

@@ -142,10 +142,14 @@ public class FileSystemAccessor {
 		return res;
 	}
 
-	public void writeXMLFileToStorage(Context context, Document doc,
+	public File writeXMLFileToStorage(Context context, Document doc,
 			String folder, String name) throws Exception {
 		DOMSource source = new DOMSource(doc);
 
+		System.out.println(doc != null);
+		System.out.println(folder != null);
+		System.out.println(name != null);
+		
 		TransformerFactory transformerfactory = TransformerFactory
 				.newInstance();
 		Transformer transformer = transformerfactory.newTransformer();
@@ -157,10 +161,12 @@ public class FileSystemAccessor {
 				Locale.getDefault());
 		String time = dateFormat.format(new Date());
 
-		FileOutputStream stream = new FileOutputStream(new File(
-				createOrGetStorageDir(folder), name + "_" + time + ".xml"));
+		File resultFile = new File(createOrGetStorageDir(folder), name.replaceAll(" ", "_") + "_" + time + ".xml");
+		FileOutputStream stream = new FileOutputStream(resultFile);
 		StreamResult result = new StreamResult(stream);
 		transformer.transform(source, result);
+		
+		return resultFile;
 	}
 
 	public Bitmap getBitmapForBrand(Context context, Brand value) {

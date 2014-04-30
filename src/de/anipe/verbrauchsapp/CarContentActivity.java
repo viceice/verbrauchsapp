@@ -5,7 +5,6 @@ import java.text.DecimalFormat;
 
 import de.anipe.verbrauchsapp.db.ConsumptionDataSource;
 import de.anipe.verbrauchsapp.io.FileSystemAccessor;
-import de.anipe.verbrauchsapp.io.GDriveStoreActivity;
 import de.anipe.verbrauchsapp.io.XMLHandler;
 import de.anipe.verbrauchsapp.objects.Car;
 import android.app.Activity;
@@ -119,8 +118,8 @@ public class CarContentActivity extends Activity {
 	        	createImportDataActivity();
 	            return true;
 	        case R.id.action_export_data:
-	        	storeDriveData();
 //	        	exportData();
+	        	storeDriveData();
 	            return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
@@ -254,6 +253,7 @@ public class CarContentActivity extends Activity {
 	
 	private void storeDriveData() {
 		Intent intent = new Intent(CarContentActivity.this, GDriveStoreActivity.class);
+		intent.putExtra("carid", carId);
 		CarContentActivity.this.startActivity(intent);
 	}
 }
