@@ -5,7 +5,7 @@ import java.text.DecimalFormat;
 
 import de.anipe.verbrauchsapp.db.ConsumptionDataSource;
 import de.anipe.verbrauchsapp.io.FileSystemAccessor;
-import de.anipe.verbrauchsapp.io.GDriveStoreActivity;
+import de.anipe.verbrauchsapp.GDriveStoreActivity;
 import de.anipe.verbrauchsapp.io.XMLHandler;
 import de.anipe.verbrauchsapp.objects.Car;
 import android.app.Activity;
@@ -120,8 +120,6 @@ public class CarContentActivity extends Activity {
 	            return true;
 	        case R.id.action_export_data:
 //	        	exportData();
-//	        	storeDriveData();
-	        	exportData();
 	        	storeDriveData();
 	            return true;
 	        default:
@@ -164,7 +162,7 @@ public class CarContentActivity extends Activity {
 	}
 	
 	private void createImportDataActivity() {
-		Intent intent = new Intent(CarContentActivity.this, CSVImportActivity.class);
+		Intent intent = new Intent(CarContentActivity.this, ConsumptionImportActivity.class);
 		intent.putExtra("carid", carId);
 		CarContentActivity.this.startActivity(intent);
 	}
@@ -243,9 +241,10 @@ public class CarContentActivity extends Activity {
 		}
 	}
 	
+	@SuppressWarnings("unused")
 	private void exportData() {
 		Car car = dataSource.getCarForId(carId);
-		XMLHandler handler = new XMLHandler(car, dataSource.getOverallConsumptionForCar(carId), dataSource.getConsumptionCycles(carId));
+		XMLHandler handler = new XMLHandler(null, car, dataSource.getOverallConsumptionForCar(carId), dataSource.getConsumptionCycles(carId));
 		try {
 			accessor.writeXMLFileToStorage(this, handler.createConsumptionDocument(), MainActivity.STORAGE_DIR, car.getBrand() + "_" + car.getType());
 			Toast.makeText(CarContentActivity.this, "Daten erfolgreich in XML-Datei exportiert!", Toast.LENGTH_LONG).show();

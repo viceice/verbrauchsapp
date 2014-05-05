@@ -14,15 +14,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-
-import org.w3c.dom.Document;
+import org.jdom2.Document;
+import org.jdom2.input.SAXBuilder;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 
 import de.anipe.verbrauchsapp.objects.Brand;
 
@@ -126,34 +121,25 @@ public class FileSystemAccessor {
 
 	public File writeXMLFileToStorage(Context context, Document doc,
 			String folder, String name) throws Exception {
-		DOMSource source = new DOMSource(doc);
-
-		TransformerFactory transformerfactory = TransformerFactory
-				.newInstance();
-		Transformer transformer = transformerfactory.newTransformer();
-		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-		transformer.setOutputProperty(
-				"{http://xml.apache.org/xslt}indent-amount", "4");
-
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy-HH.mm.ss",
+        
+        XMLOutputter xmlOutput = new XMLOutputter();
+        xmlOutput.setFormat(Format.getPrettyFormat());
+        
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy-HH.mm.ss",
 				Locale.getDefault());
 		String time = dateFormat.format(new Date());
 
 		File resultFile = new File(createOrGetStorageDir(folder), name.replaceAll(" ", "_") + "_" + time + ".xml");
 		FileOutputStream stream = new FileOutputStream(resultFile);
-		StreamResult result = new StreamResult(stream);
-		transformer.transform(source, result);
+
+        xmlOutput.output(doc, stream);
 		
 		return resultFile;
 	}
 
 	public Document readXMLDocumentFromFile(String folder, String name) throws Exception {
-		File xmlFile = new File(folder, name);
-		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-		Document doc = dBuilder.parse(xmlFile);
-		doc.getDocumentElement().normalize();
-		return doc;
+		SAXBuilder builder = new SAXBuilder();
+		return (Document) builder.build(new File(folder, name));
 	}
 	
 	public Bitmap getBitmapForBrand(Context context, Brand value) {

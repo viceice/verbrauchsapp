@@ -2,6 +2,7 @@
 <lint>
     <issue id="DefaultLocale">
         <ignore path="src/de/anipe/verbrauchsapp/CSVImportActivity.java" />
+        <ignore path="src/de/anipe/verbrauchsapp/ConsumptionImportActivity.java" />
         <ignore path="src/de/anipe/verbrauchsapp/PictureImportActivity.java" />
     </issue>
 </lint>

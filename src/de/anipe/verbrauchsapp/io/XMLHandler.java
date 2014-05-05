@@ -1,139 +1,175 @@
 package de.anipe.verbrauchsapp.io;
 
+import java.io.File;
+import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
+import org.jdom2.Attribute;
+import org.jdom2.Document;
+import org.jdom2.Element;
+import org.jdom2.input.SAXBuilder;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import android.content.Context;
+import android.util.Log;
 
+import de.anipe.verbrauchsapp.db.ConsumptionDataSource;
+import de.anipe.verbrauchsapp.objects.Brand;
 import de.anipe.verbrauchsapp.objects.Car;
 import de.anipe.verbrauchsapp.objects.Consumption;
+import de.anipe.verbrauchsapp.objects.Fueltype;
 
 public class XMLHandler {
 
 	private Car car;
 	private double cons;
 	private List<Consumption> consumptions;
+	
+	private static ConsumptionDataSource dataSource;
+	
 	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy-HH.mm.ss", Locale.getDefault());
 	private SimpleDateFormat shortDateFormat = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
 	
-	public XMLHandler(Car car, double cons, List<Consumption> consumptions) {
+	private static final String ROOT_ELEMENT_NAME = "ConsumptionData";
+	private static final String CAR_ELEMENT_NAME = "Car";
+	private static final String CAR_ID_NAME = "InAppCarID";
+	private static final String EXPORT_DATE = "ExportDatum";
+	private static final String MANUFACTURER = "Hersteller";
+	private static final String TYPE = "Typ";
+	private static final String NUMBERPLATE = "Kennzeichen";
+	private static final String START_KILOMETER = "Startkilometer";
+	private static final String FUELTYPE = "Kraftstoff";
+	private static final String OVERALL_CONSUMPTION = "Durchschnittsverbrauch";
+	
+	private static final String CONSUMPTIONS_ROOT_NAME = "Consumptions";
+	private static final String CONSUMPTION_ELEMENT_NAME = "Consumption";
+	private static final String DATE_ELEMENT_NAME = "Datum";
+	private static final String KILOMETER_STATE_NAME = "Kilometerstand";
+	private static final String DRIVEN_KILOMETER_NAME = "GefahreneKilometer";
+	private static final String REFUEL_LITER_NAME = "LiterGetankt";
+	private static final String LITER_PRICE_NAME = "PreisJeLiter";
+	private static final String CONSUMPTION_NAME = "Verbrauch";
+	
+	
+	public XMLHandler(Context context) {
+		this(context, null, 0, null);
+	}
+	
+	public XMLHandler(Context context, Car car, double cons, List<Consumption> consumptions) {
 		this.car = car;
 		this.cons = cons;
 		this.consumptions = consumptions;
+		
+		if (context != null) {
+			dataSource = ConsumptionDataSource.getInstance(context);
+			try {
+				dataSource.open();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public Document importXMLDataForCar(long carId, File inputFile) {
+		// remove old entries
+		dataSource.deleteConsumptionsForCar(carId);
+		
+		try {
+			SAXBuilder builder = new SAXBuilder();
+			Document doc = (Document) builder.build(inputFile);
+			dataSource.addConsumptions(parseConsumptionFromDocument(doc));
+			
+			return doc;
+		} catch (Exception e) {
+			e.printStackTrace();
+			Log.e("XMLHandler", "Exception while parsing XML document");
+		}
+		return null;
+	}
+				
+	
+	public Car parseCarFromDocument(Document doc) {
+		
+		Element rootElem = doc.getRootElement();
+		Element carElement = rootElem.getChild(CAR_ELEMENT_NAME);
+		
+		Car car = new Car();
+		car.setCarId(Long.parseLong(carElement.getChildText(CAR_ID_NAME)));
+		car.setBrand(Brand.fromValue(carElement.getChildText(MANUFACTURER)));
+		car.setType(carElement.getChildText(TYPE));
+		car.setNumberPlate(carElement.getChildText(NUMBERPLATE));
+		car.setStartKm(Integer.parseInt(carElement.getChildText(START_KILOMETER)));
+		car.setFuelType(Fueltype.fromValue(carElement.getChildText(FUELTYPE)));
+
+		return car;
 	}
 
-	public List<Consumption> parseConsumptionDocument(Document doc) {
-		// TODO create functionality
-		
-		// XXX Do we need this?
-		Node header = doc.getElementsByTagName("Car").item(0);
-		long carId = Long.parseLong(((Element) header).getElementsByTagName("InAppCarID").item(0).getTextContent());  
+	public List<Consumption> parseConsumptionFromDocument(Document doc) {
+				
+		Element rootNode = doc.getRootElement();
+		List<Element> conList = rootNode.getChild(CONSUMPTIONS_ROOT_NAME).getChildren(CONSUMPTION_ELEMENT_NAME);
+		long carId = Long.parseLong(rootNode.getChild(CAR_ELEMENT_NAME).getAttributeValue(CAR_ID_NAME));
 		
 		List<Consumption> cons = new LinkedList<Consumption>();
-		NodeList nList = doc.getElementsByTagName("Consumption");
-		
-		
-		
-		
-		
+		for (int i = 0; i < conList.size(); i++) {
+			Element elem = conList.get(i);
+			
+			Consumption conElem = new Consumption();
+			conElem.setCarId(carId);
+			conElem.setDate(getDateFromString(elem.getChildText(DATE_ELEMENT_NAME)));
+			conElem.setRefuelmileage(Integer.parseInt(elem.getChildText(KILOMETER_STATE_NAME)));
+			conElem.setDrivenmileage(Integer.parseInt(elem.getChildText(DRIVEN_KILOMETER_NAME)));
+			conElem.setRefuelliters(Double.parseDouble(elem.getChildText(REFUEL_LITER_NAME)));
+			conElem.setRefuelprice(Double.parseDouble(elem.getChildText(LITER_PRICE_NAME)));
+			conElem.setConsumption(Double.parseDouble(elem.getChildText(CONSUMPTION_NAME)));
+
+			cons.add(conElem);
+		}
 		
 		return cons;
 	}
 	
 	public Document createConsumptionDocument() {
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder parser = null;
-		try {
-			parser = factory.newDocumentBuilder();
-		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
-		}
-        Document doc=parser.newDocument();
-        Element root = doc.createElement("ConsumptionData");
+		Element root = new Element(ROOT_ELEMENT_NAME);
+		Document    doc = new Document(root);   
+        doc.getRootElement().addContent(getCarData(doc, car));
+        doc.getRootElement().addContent(getConsumptionData(doc, consumptions));
         
-        root.appendChild(getCarData(doc, car));
-        root.appendChild(getConsumptionData(doc, consumptions));
-        
-        doc.appendChild(root);
-
         return doc;
 	}
 	
 	private Element getCarData(Document doc, Car car) {
-		Element carData = doc.createElement("Car");
-		carData.setAttribute("InAppCarID", String.valueOf(car.getCarId()));
-		
-		Element expDateNode = doc.createElement("ExportDatum");
-		expDateNode.appendChild(doc.createTextNode(getDateTime(new Date(), false)));
-		carData.appendChild(expDateNode);
-		
-		Element brandNode = doc.createElement("Hersteller");
-		brandNode.appendChild(doc.createTextNode(car.getBrand().value()));
-		carData.appendChild(brandNode);
-		
-		Element typeNode = doc.createElement("Typ");
-		typeNode.appendChild(doc.createTextNode(car.getType()));
-		carData.appendChild(typeNode);
-		
-		Element numberPlateNode = doc.createElement("Kennzeichen");
-		numberPlateNode.appendChild(doc.createTextNode(car.getNumberPlate()));
-		carData.appendChild(numberPlateNode);
-		
-		Element startKm = doc.createElement("Startkilometer");
-		startKm.appendChild(doc.createTextNode(String.valueOf(car.getStartKm())));
-		carData.appendChild(startKm);
-		
-		Element fuelType = doc.createElement("Kraftstoff");
-		fuelType.appendChild(doc.createTextNode(car.getFuelType().value()));
-		carData.appendChild(fuelType);
-		
-		Element consNode = doc.createElement("Durchschnittsverbrauch");
-		consNode.appendChild(doc.createTextNode(String.valueOf(cons)));
-		carData.appendChild(consNode);
+		Element carData = new Element(CAR_ELEMENT_NAME);
+		carData.setAttribute(new Attribute(CAR_ID_NAME, String.valueOf(car.getCarId())));
+
+		carData.addContent(new Element(EXPORT_DATE).setText(getDateTime(new Date(), false)));
+		carData.addContent(new Element(MANUFACTURER).setText(car.getBrand().value()));
+		carData.addContent(new Element(TYPE).setText(car.getType()));
+		carData.addContent(new Element(NUMBERPLATE).setText(car.getNumberPlate()));
+		carData.addContent(new Element(START_KILOMETER).setText(String.valueOf(car.getStartKm())));
+		carData.addContent(new Element(FUELTYPE).setText(String.valueOf(car.getFuelType().value())));
+		carData.addContent(new Element(OVERALL_CONSUMPTION).setText(String.valueOf(cons)));
 		
 		return carData;
 	}
 	
 	private Element getConsumptionData(Document doc, List<Consumption> consumptions) {
-		Element consumptionData = doc.createElement("Consumptions");
+		Element consumptionData = new Element(CONSUMPTIONS_ROOT_NAME);
 		for (Consumption con : consumptions) {
-			Element consumptionNode = doc.createElement("Consumption");
-			
-			Element dateNode = doc.createElement("Datum");
-			dateNode.appendChild(doc.createTextNode(getDateTime(con.getDate(), true)));
-			consumptionNode.appendChild(dateNode);
-			
-			Element refuelKm = doc.createElement("Kilometerstand");
-			refuelKm.appendChild(doc.createTextNode(String.valueOf(con.getRefuelmileage())));
-			consumptionNode.appendChild(refuelKm);
-			
-			Element drivenKm = doc.createElement("GefahreneKilometer");
-			drivenKm.appendChild(doc.createTextNode(String.valueOf(con.getDrivenmileage())));
-			consumptionNode.appendChild(drivenKm);
-			
-			Element refuelLiter = doc.createElement("LiterGetankt");
-			refuelLiter.appendChild(doc.createTextNode(String.valueOf(con.getRefuelliters())));
-			consumptionNode.appendChild(refuelLiter);
-			
-			Element refuelPrice = doc.createElement("PreisJeLiter");
-			refuelPrice.appendChild(doc.createTextNode(String.valueOf(con.getRefuelprice())));
-			consumptionNode.appendChild(refuelPrice);
-			
-			Element consValue = doc.createElement("Verbrauch");
-			consValue.appendChild(doc.createTextNode(String.valueOf(con.getConsumption())));
-			consumptionNode.appendChild(consValue);
-			
-			consumptionData.appendChild(consumptionNode);
+			Element consumptionNode = new Element(CONSUMPTION_ELEMENT_NAME);
+						
+			consumptionNode.addContent(new Element(DATE_ELEMENT_NAME).setText(getDateTime(con.getDate(), true)));
+			consumptionNode.addContent(new Element(KILOMETER_STATE_NAME).setText(String.valueOf(con.getRefuelmileage())));
+			consumptionNode.addContent(new Element(DRIVEN_KILOMETER_NAME).setText(String.valueOf(con.getDrivenmileage())));
+			consumptionNode.addContent(new Element(REFUEL_LITER_NAME).setText(String.valueOf(con.getRefuelliters())));
+			consumptionNode.addContent(new Element(LITER_PRICE_NAME).setText(String.valueOf(con.getRefuelprice())));
+			consumptionNode.addContent(new Element(CONSUMPTION_NAME).setText(String.valueOf(con.getConsumption())));
+
+			consumptionData.addContent(consumptionNode);
 		}
 		return consumptionData;
 	}
@@ -143,5 +179,14 @@ public class XMLHandler {
 			return dateFormat.format(date);
 		}
 		return shortDateFormat.format(date);
+	}
+	
+	private Date getDateFromString(String dateString) {
+		try {
+			return shortDateFormat.parse(dateString);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

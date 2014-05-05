@@ -27,6 +27,7 @@ public abstract class ApiClientAsyncTask<Params, Progress, Result> extends
 		mClient = builder.build();
 	}
 
+	@SafeVarargs
 	@Override
 	protected final Result doInBackground(Params... params) {
 		Log.d("TAG", "in background");
@@ -67,7 +68,7 @@ public abstract class ApiClientAsyncTask<Params, Progress, Result> extends
 	 * Override this method to perform a computation on a background thread,
 	 * while the client is connected.
 	 */
-	protected abstract Result doInBackgroundConnected(Params... params);
+	protected abstract Result doInBackgroundConnected(@SuppressWarnings("unchecked") Params... params);
 
 	/**
 	 * Gets the GoogleApliClient owned by this async task.

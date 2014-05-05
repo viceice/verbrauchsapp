@@ -65,10 +65,6 @@ public class GDriveStoreActivity extends Activity implements
 				.addScope(Drive.SCOPE_FILE).addConnectionCallbacks(this)
 				.addOnConnectionFailedListener(this).build();
 
-		
-
-		
-		
 		accessor = FileSystemAccessor.getInstance();
 		dataSource = ConsumptionDataSource.getInstance(this);
 		try {
@@ -86,8 +82,7 @@ public class GDriveStoreActivity extends Activity implements
 
 		// Step 1: write to local XML file
 		writeXMLFileToLocalFileSystem();
-				
-		
+						
 		// Step 2: upload to the cloud
 		if (outputFile != null) {
 			if (mGoogleApiClient == null) {
@@ -106,7 +101,7 @@ public class GDriveStoreActivity extends Activity implements
 	private void writeXMLFileToLocalFileSystem() {
 		Car car = dataSource.getCarForId(carId);
 
-		XMLHandler handler = new XMLHandler(car,
+		XMLHandler handler = new XMLHandler(null, car,
 				dataSource.getOverallConsumptionForCar(carId),
 				dataSource.getConsumptionCycles(carId));		
 		try {
@@ -114,9 +109,6 @@ public class GDriveStoreActivity extends Activity implements
 					handler.createConsumptionDocument(),
 					MainActivity.STORAGE_DIR,
 					car.getBrand() + "_" + car.getType());
-			// Toast.makeText(GDriveStoreActivity.this,
-			// "Daten erfolgreich in XML-Datei exportiert!",
-			// Toast.LENGTH_LONG).show();
 			TextView xmlTv = (TextView) findViewById(R.id.xmlExportValueLine);
 			xmlTv.setTextColor(Color.GREEN);
 			xmlTv.setText("OK");
@@ -125,6 +117,9 @@ public class GDriveStoreActivity extends Activity implements
 					GDriveStoreActivity.this,
 					"Fehler beim Schreiben der XML-Datei. Grund: "
 							+ e.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+			TextView xmlTv = (TextView) findViewById(R.id.xmlExportValueLine);
+			xmlTv.setTextColor(Color.RED);
+			xmlTv.setText("FEHLER");
 		}
 	}
 
@@ -133,27 +128,11 @@ public class GDriveStoreActivity extends Activity implements
 		Log.i("GDriveStoreActivity", "GoogleApiClient connected");
 		Drive.DriveApi.newContents(mGoogleApiClient).setResultCallback(contentsCallback);
 
-		if (fileId != null) {
-			final ResultCallback<DriveIdResult> idCallback = new ResultCallback<DriveIdResult>() {
-				@Override
-				public void onResult(DriveIdResult result) {
-					if (!result.getStatus().isSuccess()) {
-						showMessage("Cannot find DriveId. Are you authorized to view this file?");
-						return;
-					}
-					DriveFile file = Drive.DriveApi.getFile(mGoogleApiClient,
-							result.getDriveId());
-					new EditContentsAsyncTask(GDriveStoreActivity.this)
-							.execute(file);
-					
-					TextView cloudTv = (TextView) findViewById(R.id.cloudExportValueLine);
-					cloudTv.setTextColor(Color.GREEN);
-					cloudTv.setText("OK");
-				}
-			};
-			Drive.DriveApi.fetchDriveId(mGoogleApiClient, fileId.encodeToString())
-					.setResultCallback(idCallback);
-		}
+		
+		
+		
+		Drive.DriveApi.fetchDriveId(mGoogleApiClient, fileId.encodeToString()).setResultCallback(idCallback);
+
 	}
 
 	@Override
@@ -163,7 +142,7 @@ public class GDriveStoreActivity extends Activity implements
 
 	@Override
 	public void onConnectionFailed(ConnectionResult result) {
-		Log.i("GDriveStoreActivity", "GoogleApiClient connection failed: "
+		Log.e("GDriveStoreActivity", "GoogleApiClient connection failed: "
 				+ result.toString());
 		if (!result.hasResolution()) {
 			GooglePlayServicesUtil.getErrorDialog(result.getErrorCode(), this,
@@ -178,19 +157,43 @@ public class GDriveStoreActivity extends Activity implements
 		}
 		
 		TextView cloudTv = (TextView) findViewById(R.id.cloudExportValueLine);
-		cloudTv.setTextColor(Color.GREEN);
-		cloudTv.setText("OK");
+		cloudTv.setTextColor(Color.RED);
+		cloudTv.setText("FEHLER");
+		
+		showMessage("Export zu Google Drive fehlgeschlagen!");
+		finish();
 	}
 
 	private void showMessage(String message) {
 		Toast.makeText(this, message, Toast.LENGTH_LONG).show();
 	}
 
-	final private ResultCallback<ContentsResult> contentsCallback = new ResultCallback<ContentsResult>() {
+	private final ResultCallback<DriveIdResult> idCallback = new ResultCallback<DriveIdResult>() {
+		@Override
+		public void onResult(DriveIdResult result) {
+			if (!result.getStatus().isSuccess()) {
+				Log.e("GDriveStoreActivity", "Cannot find DriveId. Are you authorized to view this file?");
+				return;
+			}
+			
+			Log.i("GDriveStoreActivity", "Start uploading file...");
+			
+			fileId = result.getDriveId();
+			
+			DriveFile file = Drive.DriveApi.getFile(mGoogleApiClient, fileId);
+			new EditContentsAsyncTask(GDriveStoreActivity.this).execute(file);
+			
+			TextView cloudTv = (TextView) findViewById(R.id.cloudExportValueLine);
+			cloudTv.setTextColor(Color.GREEN);
+			cloudTv.setText("OK");
+		}
+	};
+	
+	private final ResultCallback<ContentsResult> contentsCallback = new ResultCallback<ContentsResult>() {
 		@Override
 		public void onResult(ContentsResult result) {
 			if (!result.getStatus().isSuccess()) {
-				showMessage("Error while trying to create new file contents");
+				Log.e("GDriveStoreActivity", "Error while trying to create new file contents");
 				return;
 			}
 
@@ -210,7 +213,7 @@ public class GDriveStoreActivity extends Activity implements
 		@Override
 		public void onResult(DriveFileResult result) {
 			if (!result.getStatus().isSuccess()) {
-				showMessage("Error while trying to create the file");
+				Log.e("GDriveStoreActivity", "Error while trying to create the file");
 				return;
 			}
 			fileId = result.getDriveFile().getDriveId();
@@ -255,16 +258,22 @@ public class GDriveStoreActivity extends Activity implements
 				if (!contentsResult.getStatus().isSuccess()) {
 					return false;
 				}
-				OutputStream outputStream = contentsResult.getContents()
-						.getOutputStream();
+				OutputStream outputStream = contentsResult.getContents().getOutputStream();
+				
+				System.out.println("A");
+				
 				outputStream.write(read(outputFile));
 				com.google.android.gms.common.api.Status status = file
 						.commitAndCloseContents(mGoogleApiClient,
 								contentsResult.getContents()).await();
+				
+				System.out.println("A");
+				
+				
 				return status.getStatus().isSuccess();
 			} catch (IOException e) {
-				Log.i("GDriveStoreActivity",
-						"Error whoile writing file to cloud");
+				Log.e("GDriveStoreActivity",
+						"Error while writing file to cloud");
 			}
 			return false;
 		}
@@ -272,10 +281,10 @@ public class GDriveStoreActivity extends Activity implements
 		@Override
 		protected void onPostExecute(Boolean result) {
 			if (!result) {
-				showMessage("Error while editing contents");
+				Log.e("GDriveStoreActivity", "Error while editing contents");
 				return;
 			}
-			showMessage("Successfully edited contents");
+			Log.i("GDriveStoreActivity", "Successfully edited contents");
 		}
 	}
 }
