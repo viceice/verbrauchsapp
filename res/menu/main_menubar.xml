@@ -5,6 +5,11 @@
 			android:title="@string/action_add_car" 
 			android:showAsAction="ifRoom" />
 		
+		<item android:id="@+id/action_import_car"
+			android:icon="@drawable/ic_action_import_export"
+			android:title="@string/action_import_car" 
+			android:showAsAction="ifRoom" />
+		
 		<item android:id="@+id/action_quit"
 			android:icon="@drawable/ic_action_remove"
 			android:title="@string/action_quit" />

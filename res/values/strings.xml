@@ -24,6 +24,7 @@
     <!-- menu action labels -->
     <string name="action_view_cars">Fahrzeuge anzeigen</string>
     <string name="action_add_car">Fahrzeug hinzufügen</string>
+    <string name="action_import_car">Fahrzeugdatensatz importieren</string>
     <string name="action_import_data">Daten importieren</string>
     <string name="action_export_data">Daten exportieren</string>
     <string name="action_edit">Bearbeiten</string>

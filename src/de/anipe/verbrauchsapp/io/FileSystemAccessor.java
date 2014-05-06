@@ -62,10 +62,9 @@ public class FileSystemAccessor {
 	}
 
 	public File createOrGetStorageDir(String folderName) {
-		File file = new File(
-				Environment
-						.getExternalStorageDirectory(), folderName);
-		
+		File file = new File(Environment.getExternalStorageDirectory(),
+				folderName);
+
 		if (file.exists() && file.isDirectory()) {
 			return file;
 		}
@@ -77,8 +76,7 @@ public class FileSystemAccessor {
 	}
 
 	public File getFile() {
-		return Environment
-				.getExternalStorageDirectory();
+		return Environment.getExternalStorageDirectory();
 	}
 
 	public File[] readFilesFromStorageDir(File folder) {
@@ -121,27 +119,29 @@ public class FileSystemAccessor {
 
 	public File writeXMLFileToStorage(Context context, Document doc,
 			String folder, String name) throws Exception {
-        
-        XMLOutputter xmlOutput = new XMLOutputter();
-        xmlOutput.setFormat(Format.getPrettyFormat());
-        
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy-HH.mm.ss",
-				Locale.getDefault());
+
+		XMLOutputter xmlOutput = new XMLOutputter();
+		xmlOutput.setFormat(Format.getPrettyFormat());
+
+		SimpleDateFormat dateFormat = new SimpleDateFormat(
+				"dd.MM.yyyy-HH.mm.ss", Locale.getDefault());
 		String time = dateFormat.format(new Date());
 
-		File resultFile = new File(createOrGetStorageDir(folder), name.replaceAll(" ", "_") + "_" + time + ".xml");
+		File resultFile = new File(createOrGetStorageDir(folder),
+				name.replaceAll(" ", "_") + "_" + time + ".xml");
 		FileOutputStream stream = new FileOutputStream(resultFile);
 
-        xmlOutput.output(doc, stream);
-		
+		xmlOutput.output(doc, stream);
+
 		return resultFile;
 	}
 
-	public Document readXMLDocumentFromFile(String folder, String name) throws Exception {
+	public Document readXMLDocumentFromFile(String folder, String name)
+			throws Exception {
 		SAXBuilder builder = new SAXBuilder();
 		return (Document) builder.build(new File(folder, name));
 	}
-	
+
 	public Bitmap getBitmapForBrand(Context context, Brand value) {
 		AssetManager manager = context.getAssets();
 

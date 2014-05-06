@@ -68,7 +68,7 @@ public abstract class ApiClientAsyncTask<Params, Progress, Result> extends
 	 * Override this method to perform a computation on a background thread,
 	 * while the client is connected.
 	 */
-	protected abstract Result doInBackgroundConnected(@SuppressWarnings("unchecked") Params... params);
+	protected abstract Result doInBackgroundConnected(Params... params);
 
 	/**
 	 * Gets the GoogleApliClient owned by this async task.

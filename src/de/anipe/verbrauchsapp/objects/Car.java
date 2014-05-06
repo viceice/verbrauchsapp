@@ -13,11 +13,12 @@ public class Car implements Comparable<Car> {
 	private int startKm;
 	private Bitmap icon;
 	private Bitmap image;
-	
-	
-	public Car() {};
-	
-	public Car(String type, Brand brand, String numberPlate, Fueltype fuelType, int startKm, Bitmap icon) {
+
+	public Car() {
+	};
+
+	public Car(String type, Brand brand, String numberPlate, Fueltype fuelType,
+			int startKm, Bitmap icon) {
 		this.carId = -1;
 		this.type = type;
 		this.numberPlate = numberPlate;
@@ -25,7 +26,6 @@ public class Car implements Comparable<Car> {
 		this.startKm = startKm;
 		this.icon = icon;
 	}
-
 
 	public long getCarId() {
 		return carId;
@@ -42,7 +42,7 @@ public class Car implements Comparable<Car> {
 	public void setType(String type) {
 		this.type = type;
 	}
-	
+
 	public Brand getBrand() {
 		return brand;
 	}
@@ -74,7 +74,7 @@ public class Car implements Comparable<Car> {
 	public void setStartKm(int startKm) {
 		this.startKm = startKm;
 	}
-	
+
 	@Override
 	public int compareTo(Car another) {
 		return this.type.compareTo(another.type);

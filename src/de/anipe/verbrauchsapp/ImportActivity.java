@@ -1,16 +1,15 @@
 package de.anipe.verbrauchsapp;
 
 import java.io.File;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import de.anipe.verbrauchsapp.db.ConsumptionDataSource;
+import de.anipe.verbrauchsapp.io.CSVHandler;
 import de.anipe.verbrauchsapp.io.FileSystemAccessor;
+import de.anipe.verbrauchsapp.io.XMLHandler;
 import android.app.ListActivity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -18,13 +17,14 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class PictureImportActivity extends ListActivity {
+public class ImportActivity extends ListActivity {
 
-	private static final int MAX_FILE_SIZE = 6000000;
-	private ConsumptionDataSource dataSource;
 	private FileSystemAccessor accessor;
+	private CSVHandler csvImporter;
+	private XMLHandler xmlImporter;
 	private Map<String, File> fileMapping;
 	private long carId;
+	private boolean isCarImport = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,15 +34,7 @@ public class PictureImportActivity extends ListActivity {
 		Intent intent = getIntent();
 		Bundle bundle = intent.getExtras();
 		carId = bundle.getLong("carid");
-
-		dataSource = ConsumptionDataSource.getInstance(this);
-		try {
-			dataSource.open();
-		} catch (SQLException e) {
-			Toast.makeText(PictureImportActivity.this,
-					"Fehler beim Öffnen der Datenbank!", Toast.LENGTH_LONG)
-					.show();
-		}
+		isCarImport = bundle.getBoolean("iscarimport");
 
 		ArrayList<String> filesList = new ArrayList<String>();
 		fileMapping = new HashMap<String, File>();
@@ -53,7 +45,11 @@ public class PictureImportActivity extends ListActivity {
 		if (files != null && files.length > 0) {
 			for (File f : files) {
 				String name = f.getName();
-				if (isPictureFile(name.toLowerCase())) {
+				if (name.toLowerCase().endsWith(".xml")) {
+					filesList.add(f.getName());
+					fileMapping.put(f.getName(), f);
+				}
+				if (name.toLowerCase().endsWith(".csv") && !isCarImport) {
 					filesList.add(f.getName());
 					fileMapping.put(f.getName(), f);
 				}
@@ -67,31 +63,26 @@ public class PictureImportActivity extends ListActivity {
 		setListAdapter(adapter);
 	}
 
-	private boolean isPictureFile(String lowerCase) {
-		return lowerCase.endsWith(".png") || lowerCase.endsWith(".jpg")
-				|| lowerCase.endsWith(".bmp");
-	}
-
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		String item = (String) getListAdapter().getItem(position);
-		Bitmap bitMap = accessor.getBitmapForValue(fileMapping.get(item));
+		Toast.makeText(this, "Importiere Datensätze aus Datei " + item,
+				Toast.LENGTH_LONG).show();
 
-		if (bitMap.getByteCount() > MAX_FILE_SIZE) {
-			Toast.makeText(this, "Datei darf maximal 1 MBte groß sein!",
-					Toast.LENGTH_LONG).show();
+		if (isCarImport) {
+			xmlImporter = new XMLHandler(this);
+			xmlImporter.importXMLCarData(fileMapping.get(item));
 		} else {
-			long result = dataSource.storeImageForCar(carId, bitMap);
-
-			if (result > 0) {
-				Toast.makeText(this, "Bild erfolgreich gespeichert!",
-						Toast.LENGTH_LONG).show();
-			} else {
-				Toast.makeText(this, "Fehler beim Speichern der Bilddatei",
-						Toast.LENGTH_LONG).show();
+			if (fileMapping.get(item).getName().toLowerCase().endsWith(".csv")) {
+				csvImporter = new CSVHandler(this);
+				csvImporter.importCSVDataForCar(carId, fileMapping.get(item));
+			} else if (fileMapping.get(item).getName().toLowerCase()
+					.endsWith(".xml")) {
+				xmlImporter = new XMLHandler(this);
+				xmlImporter.importXMLConsumptionDataForCar(carId,
+						fileMapping.get(item));
 			}
-
-			finish();
 		}
+		finish();
 	}
 }
