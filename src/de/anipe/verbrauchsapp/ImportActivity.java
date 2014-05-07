@@ -9,7 +9,9 @@ import de.anipe.verbrauchsapp.io.CSVHandler;
 import de.anipe.verbrauchsapp.io.FileSystemAccessor;
 import de.anipe.verbrauchsapp.io.XMLHandler;
 import android.app.ListActivity;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -66,23 +68,67 @@ public class ImportActivity extends ListActivity {
 	@Override
 	protected void onListItemClick(ListView l, View v, int position, long id) {
 		String item = (String) getListAdapter().getItem(position);
-		Toast.makeText(this, "Importiere Datensätze aus Datei " + item,
-				Toast.LENGTH_LONG).show();
+		MyAsyncTask task = new MyAsyncTask();
+		task.item = item;
+		task.execute();
+	}
 
+	protected int loadData(String item) {
+		int dataSets = 0;
 		if (isCarImport) {
 			xmlImporter = new XMLHandler(this);
-			xmlImporter.importXMLCarData(fileMapping.get(item));
+			long carId = xmlImporter.importXMLCarData(fileMapping.get(item));
+			dataSets = xmlImporter.importXMLConsumptionDataForCar(carId,
+					fileMapping.get(item));
 		} else {
 			if (fileMapping.get(item).getName().toLowerCase().endsWith(".csv")) {
 				csvImporter = new CSVHandler(this);
-				csvImporter.importCSVDataForCar(carId, fileMapping.get(item));
+				dataSets = csvImporter.importCSVDataForCar(carId,
+						fileMapping.get(item));
 			} else if (fileMapping.get(item).getName().toLowerCase()
 					.endsWith(".xml")) {
 				xmlImporter = new XMLHandler(this);
-				xmlImporter.importXMLConsumptionDataForCar(carId,
+				dataSets = xmlImporter.importXMLConsumptionDataForCar(carId,
 						fileMapping.get(item));
 			}
 		}
-		finish();
+		return dataSets;
+	}
+
+	class MyAsyncTask extends AsyncTask<Void, Void, Void> {
+		ProgressDialog myprogsdial;
+		int dataSets = 0;
+		String item;
+
+		@Override
+		protected void onPreExecute() {
+			myprogsdial = ProgressDialog.show(ImportActivity.this,
+					"Datensatz-Import", "Bitte warten ...", true);
+		}
+
+		@Override
+		protected Void doInBackground(Void... params) {
+			dataSets = loadData(item);
+
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void result) {
+			myprogsdial.dismiss();
+
+			if (isCarImport) {
+				Toast.makeText(
+						ImportActivity.this,
+						"Fahrzeug mit " + dataSets + " Datensätzen importiert.",
+						Toast.LENGTH_LONG).show();
+			} else {
+				Toast.makeText(ImportActivity.this,
+						dataSets + " Datensätze importiert.", Toast.LENGTH_LONG)
+						.show();
+			}
+			
+			finish();
+		}
 	}
 }

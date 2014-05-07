@@ -29,7 +29,7 @@ public class MainActivity extends ListActivity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.layout_car_listview);
-
+		
 		dataSource = ConsumptionDataSource.getInstance(this);
 		try {
 			dataSource.open();

@@ -76,36 +76,35 @@ public class XMLHandler {
 		}
 	}
 
-	public Document importXMLCarData(File inputFile) {
+	public long importXMLCarData(File inputFile) {
 		try {
 			SAXBuilder builder = new SAXBuilder();
 			Document doc = (Document) builder.build(inputFile);
-			dataSource.addCar(parseCarFromDocument(doc));
-
-			return doc;
+			return dataSource.addCar(parseCarFromDocument(doc));
 		} catch (Exception e) {
 			e.printStackTrace();
 			Log.e("XMLHandler", "Exception while parsing XML document");
 		}
-		return null;
+		return -1;
 	}
 
-	public Document importXMLConsumptionDataForCar(long carId, File inputFile) {
+	public int importXMLConsumptionDataForCar(long carId, File inputFile) {
 		// remove old entries
 		dataSource.deleteConsumptionsForCar(carId);
 
 		try {
 			SAXBuilder builder = new SAXBuilder();
 			Document doc = (Document) builder.build(inputFile);
-			dataSource
-					.addConsumptions(parseConsumptionFromDocument(doc, carId));
-
-			return doc;
+			List<Consumption> conList = parseConsumptionFromDocument(doc, carId);
+			if (conList.size() > 0) {
+				dataSource.addConsumptions(conList);
+			}
+			return conList.size();
 		} catch (Exception e) {
 			e.printStackTrace();
 			Log.e("XMLHandler", "Exception while parsing XML document");
 		}
-		return null;
+		return 0;
 	}
 
 	public Car parseCarFromDocument(Document doc) {

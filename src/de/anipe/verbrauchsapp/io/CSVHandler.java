@@ -29,7 +29,7 @@ public class CSVHandler {
 	}
 
 	@SuppressLint("SimpleDateFormat")
-	public void importCSVDataForCar(long carId, File inputFile) {
+	public int importCSVDataForCar(long carId, File inputFile) {
 
 		// remove old entries
 		dataSource.deleteConsumptionsForCar(carId);
@@ -70,6 +70,8 @@ public class CSVHandler {
 			cycles.add(cycle);
 		}
 		dataSource.addConsumptions(cycles);
+		
+		return cycles.size();
 	}
 
 	private List<String> getCsvContent(File file) {

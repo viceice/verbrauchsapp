@@ -13,6 +13,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -182,11 +183,14 @@ public class CarContentActivity extends Activity {
 
 		// set title
 		alertDialogBuilder.setTitle("Eintrag löschen?");
+		TypedValue typedValue = new TypedValue();
+		getTheme().resolveAttribute(android.R.attr.alertDialogIcon, typedValue, true);
+		alertDialogBuilder.setIcon(typedValue.resourceId);
 
 		// set dialog message
 		alertDialogBuilder
 				.setMessage(
-						"Mit 'Ja' wird der Fahrzeugdatensatz und alle dazugehörigen Verbrauchsdatensätze glöscht!")
+						"Mit 'Ja' wird der Fahrzeugdatensatz und alle dazugehörigen Verbrauchsdatensätze gelöscht!")
 				.setCancelable(false)
 				.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {
