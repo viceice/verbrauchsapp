@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import com.androidplot.xy.BoundaryMode;
 import com.androidplot.xy.LineAndPointFormatter;
 import com.androidplot.xy.PointLabelFormatter;
 import com.androidplot.xy.SimpleXYSeries;
@@ -29,6 +30,8 @@ public class PlotActivity extends Activity {
 	private XYPlot plot;
 	private ConsumptionDataSource dataSource;
 	private long carId;
+	
+	private double maxY = 0;
 
 	private List<Long> dateList;
 	private List<Double> valueList;
@@ -75,6 +78,10 @@ public class PlotActivity extends Activity {
 		// add a new series' to the xyplot:
 		plot.addSeries(series1, series1Format);
 
+		plot.setDomainLowerBoundary(0, BoundaryMode.FIXED);
+		plot.setDomainUpperBoundary(20, BoundaryMode.AUTO);
+		
+		
 		// reduce the number of range labels
 		plot.setTicksPerRangeLabel(3);
 		plot.getGraphWidget().setDomainLabelOrientation(-45);
@@ -90,8 +97,12 @@ public class PlotActivity extends Activity {
 
 		for (Consumption c : consList) {
 			dateList.add(c.getDate().getTime());
-			valueList.add(c.getConsumption());
+			valueList.add((double)((Math.round(c.getConsumption()*100))/100.0));
+			if (c.getConsumption() > maxY) {
+				maxY = c.getConsumption();
+			}
 		}
+		maxY += 2;
 	}
 
 	private class MyDateFormat extends Format {

@@ -222,7 +222,9 @@ public class CarContentActivity extends Activity {
 	}
 
 	private void createConsumptionPlotActivity() {
-		Intent intent = new Intent(CarContentActivity.this, PlotActivity.class);
+//		Intent intent = new Intent(CarContentActivity.this, PlotActivity.class);
+//		Intent intent = new Intent(CarContentActivity.this, XYPlot.class);
+		Intent intent = new Intent(CarContentActivity.this, GraphViewPlot.class);
 		intent.putExtra("carid", carId);
 		CarContentActivity.this.startActivity(intent);
 	}
