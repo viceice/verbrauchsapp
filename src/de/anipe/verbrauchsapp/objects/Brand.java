@@ -3,7 +3,7 @@ package de.anipe.verbrauchsapp.objects;
 public enum Brand {
 
 	VW("Volkswagen"), BMW("BMW"), SKODA("Skoda"), FORD("Ford"), MERCEDES(
-			"Daimler-Benz"), AUDI("Audi"), PORSCHE("Porsche");
+			"Daimler-Benz"), AUDI("Audi"), PORSCHE("Porsche"), TOYOTA("Toyota"), MAZDA("Mazda"), NISSAN("Nissan");
 
 	private final String value;
 

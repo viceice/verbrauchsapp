@@ -5,8 +5,11 @@
         <item>BMW</item>
         <item>Daimler-Benz</item>
         <item>Ford</item>
+        <item>Mazda</item>
+        <item>Nissan</item>
         <item>Porsche</item>
         <item>Skoda</item>
+		<item>Toyota</item>
         <item>Volkswagen</item>
     </string-array>
 </resources>
