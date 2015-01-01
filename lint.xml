@@ -6,4 +6,7 @@
         <ignore path="src/de/anipe/verbrauchsapp/ImportActivity.java" />
         <ignore path="src/de/anipe/verbrauchsapp/PictureImportActivity.java" />
     </issue>
+    <issue id="InvalidPackage">
+        <ignore path="libs/jdom-2.0.5.jar" />
+    </issue>
 </lint>
