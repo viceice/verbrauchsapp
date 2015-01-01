@@ -12,9 +12,9 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
-import com.google.android.gms.drive.Contents;
 import com.google.android.gms.drive.Drive;
-import com.google.android.gms.drive.DriveApi.ContentsResult;
+import com.google.android.gms.drive.DriveApi.DriveContentsResult;
+import com.google.android.gms.drive.DriveContents;
 import com.google.android.gms.drive.DriveFolder;
 import com.google.android.gms.drive.DriveFolder.DriveFileResult;
 import com.google.android.gms.drive.DriveResource.MetadataResult;
@@ -26,7 +26,6 @@ import de.anipe.verbrauchsapp.io.ApiClientAsyncTask;
 import de.anipe.verbrauchsapp.io.FileSystemAccessor;
 import de.anipe.verbrauchsapp.io.XMLHandler;
 import de.anipe.verbrauchsapp.objects.Car;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -210,7 +209,7 @@ public class GDriveStoreActivity extends Activity implements
 
 			// First we start by creating a new contents, and blocking on the
 			// result by calling await().
-			ContentsResult contentsResult = Drive.DriveApi.newContents(
+			DriveContentsResult contentsResult = Drive.DriveApi.newDriveContents(
 					mGoogleApiClient).await();
 			if (!contentsResult.getStatus().isSuccess()) {
 				// We failed, stop the task and return.
@@ -219,7 +218,7 @@ public class GDriveStoreActivity extends Activity implements
 
 			// Read the contents and open its output stream for writing, then
 			// write a short message.
-			Contents originalContents = contentsResult.getContents();
+			DriveContents originalContents = contentsResult.getDriveContents();
 			OutputStream os = originalContents.getOutputStream();
 			try {
 				os.write(read(outputFile));
