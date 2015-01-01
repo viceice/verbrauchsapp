@@ -25,6 +25,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/addconsumption_content"
+            android:layout_marginStart="5dp"
             android:layout_marginLeft="5dp"
             android:text="@string/date_picker_header"
             android:textSize="18sp"
@@ -36,6 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewDateLine"
             android:layout_marginLeft="6dp"
+            android:layout_marginStart="6dp"
             android:layout_marginTop="6dp"
             android:inputType="none"
             android:singleLine="true"
@@ -48,6 +50,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/datumTextLine"
             android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:text="@string/km_input_header"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -67,6 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/cons_km_input"
             android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:text="@string/liter_input_header"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -85,6 +89,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/cons_liter_input"
             android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:text="@string/price_input_header"
             android:textSize="18sp"
             android:textStyle="bold" />

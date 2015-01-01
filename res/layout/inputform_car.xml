@@ -26,6 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/addcar_content"
             android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:text="@string/brand_spinner_header"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -35,6 +36,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_below="@+id/spinnerBrand" />
 
         <TextView
@@ -43,6 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/brand_spinner"
             android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:text="@string/car_type_header"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -52,6 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_below="@+id/textViewCarType"
             android:hint="@string/car_type_hint"
             android:inputType="textNoSuggestions"
@@ -64,6 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/car_type_input"
             android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:text="@string/number_plate_header"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -73,6 +78,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_below="@+id/textViewNumberPlate"
             android:hint="@string/car_numberplate_hint"
             android:inputType="textNoSuggestions"
@@ -85,6 +91,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/car_numberplate_input"
             android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:text="@string/start_km_header"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -94,6 +101,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_below="@+id/textViewStartKm"
             android:digits="0123456789"
             android:hint="@string/car_startkm_hint"
@@ -107,6 +115,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/car_startkm_input"
             android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
             android:text="@string/fueltype_spinner_header"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -116,6 +125,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_below="@+id/spinnerFuelType" />
 
         <Button

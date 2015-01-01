@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:textColor="#33b5e5"
         android:textSize="25sp"
+	    android:layout_marginStart="6dp"
         android:layout_marginLeft="6dp"
         android:textStyle="bold" />
 
@@ -27,6 +28,7 @@
 	        android:text="@string/xmlExport_text"
 	        android:singleLine="true"
 	        android:layout_marginTop="6dp"
+	    	android:layout_marginStart="6dp"
 	        android:layout_marginLeft="6dp" />
          
          <TextView  
@@ -38,6 +40,7 @@
 	        android:textStyle="bold"
 	        android:singleLine="true"
 	        android:layout_marginTop="6dp"
+	    	android:layout_marginStart="6dp"
 	        android:layout_marginLeft="6dp" />
      </LinearLayout>
      
@@ -55,6 +58,7 @@
 	        android:text="@string/cloudExport_text"
 	        android:singleLine="true"
 	        android:layout_marginTop="6dp"
+	    	android:layout_marginStart="6dp"
 	        android:layout_marginLeft="6dp" />
          
          <TextView  
@@ -66,6 +70,7 @@
 	        android:textStyle="bold"
 	        android:singleLine="true"
 	        android:layout_marginTop="6dp"
+	    	android:layout_marginStart="6dp"
 	        android:layout_marginLeft="6dp" />
      </LinearLayout>
 

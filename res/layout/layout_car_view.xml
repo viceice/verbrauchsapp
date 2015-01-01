@@ -21,9 +21,12 @@
         android:textSize="22sp"
         android:textColor="#444444"
         android:layout_toRightOf="@id/brand_icon"
+        android:layout_toEndOf="@id/brand_icon"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:singleLine="true"
+        android:layout_marginStart="6dp"
         android:layout_marginLeft="6dp" />
 
     <TextView
@@ -34,11 +37,14 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/brand_icon"
+        android:layout_toEndOf="@id/brand_icon"
         android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:layout_above="@id/numberplateLine"
         android:layout_alignWithParentIfMissing="true"
         android:gravity="center_vertical" 
+        android:layout_marginStart="6dp" 
         android:layout_marginLeft="6dp" />
 
 </RelativeLayout>
