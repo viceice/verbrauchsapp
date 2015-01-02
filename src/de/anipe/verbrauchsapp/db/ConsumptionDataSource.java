@@ -19,7 +19,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-
+import android.util.Log;
 import de.anipe.verbrauchsapp.io.FileSystemAccessor;
 import de.anipe.verbrauchsapp.objects.Brand;
 import de.anipe.verbrauchsapp.objects.Car;
@@ -98,20 +98,20 @@ public class ConsumptionDataSource implements Serializable {
 		String queryString = "SELECT MAX(refuelkm) FROM consumptions where carid=?";
 		Cursor cursor = database.rawQuery(queryString,
 				new String[] { String.valueOf(carId) });
-		cursor.moveToFirst();
 
 		int mileage = 0;
 
-		if (!cursor.isAfterLast()) {
+		if (cursor.moveToFirst() && !cursor.isNull(0)) {
 			mileage = cursor.getInt(0);
+			Log.d("ConsumptionDataSource", "Found mileage: " + mileage);
 		} else {
 			cursor.close();
 			queryString = "SELECT startkm FROM cars where _id=?";
 			cursor = database.rawQuery(queryString,
 				new String[] { String.valueOf(carId) });
-			cursor.moveToFirst();
-			if (!cursor.isAfterLast()) {
+			if (cursor.moveToFirst() && !cursor.isNull(0)) {
 				mileage = cursor.getInt(0);
+				Log.d("ConsumptionDataSource", "Found start mileage: " + mileage);
 			}
 		}
 		cursor.close();
