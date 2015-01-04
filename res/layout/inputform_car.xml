@@ -59,6 +59,7 @@
             android:layout_below="@+id/textViewCarType"
             android:hint="@string/car_type_hint"
             android:inputType="textNoSuggestions"
+            android:imeOptions="actionNext"
             android:lineSpacingExtra="10sp"
             android:textSize="25sp" />
 
@@ -82,6 +83,7 @@
             android:layout_below="@+id/textViewNumberPlate"
             android:hint="@string/car_numberplate_hint"
             android:inputType="textNoSuggestions"
+            android:imeOptions="actionNext"
             android:lineSpacingExtra="10sp"
             android:textSize="25sp" />
 
@@ -106,6 +108,7 @@
             android:digits="0123456789"
             android:hint="@string/car_startkm_hint"
             android:inputType="number"
+            android:imeOptions="actionDone"
             android:lineSpacingExtra="10sp"
             android:textSize="25sp" />
 

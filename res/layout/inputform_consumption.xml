@@ -62,6 +62,7 @@
             android:layout_below="@+id/textViewKmInput"
             android:digits="0123456789"
             android:hint="@string/cons_km_hint"
+            android:imeOptions="actionNext"
             android:inputType="number" />
 
         <TextView
@@ -81,6 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewLiterInput"
             android:hint="@string/cons_liter_hint"
+            android:imeOptions="actionNext"
             android:inputType="numberDecimal" />
 
         <TextView
@@ -100,6 +102,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/textViewPriceInput"
             android:hint="@string/cons_price_hint"
+            android:imeOptions="actionDone"
             android:inputType="numberDecimal" />
 
         <Button
