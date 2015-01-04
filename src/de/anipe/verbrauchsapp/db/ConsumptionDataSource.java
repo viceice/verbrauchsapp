@@ -95,9 +95,11 @@ public class ConsumptionDataSource implements Serializable {
 
 	public int getMileageForCar(long carId) {
 
-		String queryString = "SELECT MAX(refuelkm) FROM consumptions where carid=?";
-		Cursor cursor = database.rawQuery(queryString,
-				new String[] { String.valueOf(carId) });
+		Cursor cursor = database.query(DBHelper.TABLE_CONSUMPTIONS,
+				new String[] { "MAX("
+						+ DBHelper.CONSUMPTION_COLUMN_REFUELMILEAGE + ")" },
+				DBHelper.CONSUMPTION_CAR_ID + "=?",
+				new String[] { String.valueOf(carId) }, null, null, null, "1");
 
 		int mileage = 0;
 
@@ -106,9 +108,11 @@ public class ConsumptionDataSource implements Serializable {
 			Log.d("ConsumptionDataSource", "Found mileage: " + mileage);
 		} else {
 			cursor.close();
-			queryString = "SELECT startkm FROM cars where _id=?";
-			cursor = database.rawQuery(queryString,
-					new String[] { String.valueOf(carId) });
+			cursor = database.query(DBHelper.TABLE_CARS,
+					new String[] { DBHelper.CAR_COLUMN_STARTKM },
+					DBHelper.COLUMN_ID + "=?",
+					new String[] { String.valueOf(carId) }, null, null, null,
+					"1");
 			if (cursor.moveToFirst()) {
 				mileage = cursor.getInt(0);
 				Log.d("ConsumptionDataSource", "Found start mileage: "
@@ -123,9 +127,11 @@ public class ConsumptionDataSource implements Serializable {
 
 		double consumption = 0;
 		int cycleCount = 0;
-		
+
 		Cursor cursor = database.query(DBHelper.TABLE_CONSUMPTIONS,
-				new String[] { "SUM(" + DBHelper.CONSUMPTION_COLUMN_CONSUMPTION + ")", "COUNT(" + DBHelper.COLUMN_ID + ")" },
+				new String[] {
+						"SUM(" + DBHelper.CONSUMPTION_COLUMN_CONSUMPTION + ")",
+						"COUNT(" + DBHelper.COLUMN_ID + ")" },
 				DBHelper.CONSUMPTION_CAR_ID + "=?",
 				new String[] { String.valueOf(carId) }, null, null, null);
 
@@ -158,15 +164,14 @@ public class ConsumptionDataSource implements Serializable {
 
 		List<Car> carList = new LinkedList<Car>();
 
-		String queryString = "SELECT * FROM cars";
-		Cursor cursor = database.rawQuery(queryString, null);
+		Cursor cursor = database.query(DBHelper.TABLE_CARS, null, null, null, null, null,
+				DBHelper.CAR_COLUMN_TYPE);
 
 		while (cursor.moveToNext()) {
 			Car car = cursorToCar(cursor);
 			carList.add(car);
 		}
 		cursor.close();
-		Collections.sort(carList);
 		return carList;
 	}
 
@@ -174,14 +179,14 @@ public class ConsumptionDataSource implements Serializable {
 
 		List<String> carTypesList = new ArrayList<String>();
 
-		String queryString = "SELECT type FROM cars";
-		Cursor cursor = database.rawQuery(queryString, null);
+		Cursor cursor = database.query(DBHelper.TABLE_CARS,
+				new String[] { DBHelper.CAR_COLUMN_TYPE }, null, null, null,
+				null, DBHelper.CAR_COLUMN_TYPE);
 
 		while (cursor.moveToNext()) {
 			carTypesList.add(cursor.getString(0));
 		}
 		cursor.close();
-		Collections.sort(carTypesList);
 		return carTypesList;
 	}
 
@@ -236,9 +241,11 @@ public class ConsumptionDataSource implements Serializable {
 	}
 
 	public Bitmap getImageForCarId(long carId) {
-		String queryString = "SELECT imagedata FROM cars where _id=?";
-		Cursor cursor = database.rawQuery(queryString,
-				new String[] { String.valueOf(carId) });
+
+		Cursor cursor = database.query(DBHelper.TABLE_CARS,
+				new String[]{ DBHelper.CAR_COLUMN_IMAGEDATA },
+				DBHelper.COLUMN_ID + "=?",
+				new String[] { String.valueOf(carId) }, null, null, null, "1");
 
 		Bitmap bm = null;
 
