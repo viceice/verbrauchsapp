@@ -108,10 +108,11 @@ public class ConsumptionDataSource implements Serializable {
 			cursor.close();
 			queryString = "SELECT startkm FROM cars where _id=?";
 			cursor = database.rawQuery(queryString,
-				new String[] { String.valueOf(carId) });
+					new String[] { String.valueOf(carId) });
 			if (cursor.moveToFirst() && !cursor.isNull(0)) {
 				mileage = cursor.getInt(0);
-				Log.d("ConsumptionDataSource", "Found start mileage: " + mileage);
+				Log.d("ConsumptionDataSource", "Found start mileage: "
+						+ mileage);
 			}
 		}
 		cursor.close();
