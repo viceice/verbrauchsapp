@@ -86,7 +86,7 @@ public class ConsumptionDataSource implements Serializable {
 				DBHelper.COLUMN_ID + "=?",
 				new String[] { String.valueOf(carId) }, null, null, null, "1");
 
-		if (cursor.moveToNext()) {
+		if (cursor.moveToFirst()) {
 			return cursorToCar(cursor);
 		}
 		cursor.close();
@@ -109,7 +109,7 @@ public class ConsumptionDataSource implements Serializable {
 			queryString = "SELECT startkm FROM cars where _id=?";
 			cursor = database.rawQuery(queryString,
 					new String[] { String.valueOf(carId) });
-			if (cursor.moveToFirst() && !cursor.isNull(0)) {
+			if (cursor.moveToFirst()) {
 				mileage = cursor.getInt(0);
 				Log.d("ConsumptionDataSource", "Found start mileage: "
 						+ mileage);
@@ -129,7 +129,7 @@ public class ConsumptionDataSource implements Serializable {
 				DBHelper.CONSUMPTION_CAR_ID + "=?",
 				new String[] { String.valueOf(carId) }, null, null, null);
 
-		if (cursor.moveToNext() && !cursor.isNull(0)) {
+		if (cursor.moveToFirst() && !cursor.isNull(0)) {
 			consumption = cursor.getDouble(0);
 			cycleCount = cursor.getInt(1);
 		}
@@ -144,13 +144,11 @@ public class ConsumptionDataSource implements Serializable {
 		String queryString = "SELECT liter, price FROM consumptions where carid=?";
 		Cursor cursor = database.rawQuery(queryString,
 				new String[] { String.valueOf(carId) });
-		cursor.moveToFirst();
 
-		while (!cursor.isAfterLast()) {
+		while (cursor.moveToNext()) {
 			double liter = cursor.getDouble(0);
 			double price = cursor.getDouble(1);
 			costs += (liter * price);
-			cursor.moveToNext();
 		}
 		cursor.close();
 		return costs;
@@ -162,12 +160,10 @@ public class ConsumptionDataSource implements Serializable {
 
 		String queryString = "SELECT * FROM cars";
 		Cursor cursor = database.rawQuery(queryString, null);
-		cursor.moveToFirst();
 
-		while (!cursor.isAfterLast()) {
+		while (cursor.moveToNext()) {
 			Car car = cursorToCar(cursor);
 			carList.add(car);
-			cursor.moveToNext();
 		}
 		cursor.close();
 		Collections.sort(carList);
@@ -180,11 +176,9 @@ public class ConsumptionDataSource implements Serializable {
 
 		String queryString = "SELECT type FROM cars";
 		Cursor cursor = database.rawQuery(queryString, null);
-		cursor.moveToFirst();
 
-		while (!cursor.isAfterLast()) {
+		while (cursor.moveToNext()) {
 			carTypesList.add(cursor.getString(0));
-			cursor.moveToNext();
 		}
 		cursor.close();
 		Collections.sort(carTypesList);
@@ -245,11 +239,10 @@ public class ConsumptionDataSource implements Serializable {
 		String queryString = "SELECT imagedata FROM cars where _id=?";
 		Cursor cursor = database.rawQuery(queryString,
 				new String[] { String.valueOf(carId) });
-		cursor.moveToFirst();
 
 		Bitmap bm = null;
 
-		if (!cursor.isAfterLast()) {
+		if (cursor.moveToFirst()) {
 			bm = getBitMapForByteArray(cursor.getBlob(0));
 		}
 		cursor.close();
