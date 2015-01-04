@@ -64,29 +64,29 @@ public class ConsumptionDataSource implements Serializable {
 	public List<Consumption> getConsumptionCycles(long carId) {
 
 		List<Consumption> consumptionCyclestList = new LinkedList<Consumption>();
-		String queryString = "SELECT * FROM consumptions where carid=?";
-		Cursor cursor = database.rawQuery(queryString,
-				new String[] { String.valueOf(carId) });
-		cursor.moveToFirst();
+		Cursor cursor = database.query(DBHelper.TABLE_CONSUMPTIONS, null,
+				DBHelper.CONSUMPTION_CAR_ID + "=?",
+				new String[] { String.valueOf(carId) }, null, null,
+				DBHelper.CONSUMPTION_COLUMN_DATE);
 
-		while (!cursor.isAfterLast()) {
+		while (cursor.moveToNext()) {
 			Consumption cons = cursorToConsumption(cursor);
 			consumptionCyclestList.add(cons);
-			cursor.moveToNext();
 		}
 		cursor.close();
+
+		// TODO: Should be done on database
 		Collections.sort(consumptionCyclestList);
 		return consumptionCyclestList;
 	}
 
 	public Car getCarForId(long carId) {
 
-		String queryString = "SELECT * FROM cars where _id=?";
-		Cursor cursor = database.rawQuery(queryString,
-				new String[] { String.valueOf(carId) });
-		cursor.moveToFirst();
+		Cursor cursor = database.query(DBHelper.TABLE_CARS, null,
+				DBHelper.COLUMN_ID + "=?",
+				new String[] { String.valueOf(carId) }, null, null, null, "1");
 
-		if (!cursor.isAfterLast()) {
+		if (cursor.moveToNext()) {
 			return cursorToCar(cursor);
 		}
 		cursor.close();
