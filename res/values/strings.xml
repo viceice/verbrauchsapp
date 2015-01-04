@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <!-- Activity Labels  -->
-    
+    <!-- Activity Labels -->
+
     <string name="app_name">VerbrauchsApp</string>
     <string name="app_id">411613445263</string>
     <string name="car_dataset_label">Fahrzeugdatensatz</string>
@@ -11,16 +11,16 @@
     <string name="cons_add_label">Verbrauchseintrag hinzufügen</string>
     <string name="cons_list_label">Verbrauchsdaten</string>
     <string name="store_drive_label">Daten in Google Cloud speichern</string>
-    
+
     <!-- Consumption list header labels -->
-    
+
     <string name="dateHeaderText">Datum</string>
     <string name="refuelKmHeaderText">Kilom.</string>
     <string name="drivenKmKmHeaderText">\u2192</string>
     <string name="literHeaderText">Liter</string>
     <string name="priceHeaderText">\u20ac</string>
     <string name="consumptionKmHeaderText">\u2205</string>
-    
+
     <!-- menu action labels -->
     <string name="action_view_cars">Fahrzeuge anzeigen</string>
     <string name="action_add_car">Fahrzeug hinzufügen</string>
@@ -37,16 +37,14 @@
     <string name="action_add_consumption">Verbrauchseintrag hinzufügen</string>
     <string name="action_add_picture">Fahrzeugbild laden</string>
     <string name="action_quit">Beenden</string>
-    
-    <!-- -->
-    
+
+    <!--  -->
+
     <string name="car_input_name">Fahrzeug hinzufügen</string>
     <string name="cars_view_name">Fahrzeugliste</string>
     <string name="car_list_title">Fahrzeugliste</string>
     <string name="file_list_title">Dateiliste</string>
     <string name="brand_icon_description">Marken-Icon</string>
-    
-    
     <string name="addcar_button">Fahrzeug anlegen</string>
     <string name="showcars_button">Fahrzeuge anzeigen</string>
     <string name="showconsumptions_button">Verbrauchsdaten anzeigen</string>
@@ -54,7 +52,6 @@
     <string name="importconsumptions_button">Datensatz importieren</string>
     <string name="addpictures_button">Bild hinzufügen</string>
     <string name="viewconsumptions_button">Verbrauchsdaten anzeigen</string>
-    
     <string name="picture_text">Bild</string>
     <string name="startkm_text">Kilometer bei Beginn:</string>
     <string name="actualkm_text">Aktueller Kilometerstand:</string>
@@ -63,29 +60,48 @@
     <string name="overallCosts_text">Kosten:</string>
     <string name="xmlExport_text">Status XML-Export:</string>
     <string name="cloudExport_text">Status Cloud-Export:</string>
-    
-	<string name="car_input_header">Fahrzeugdaten eingeben</string>
-	<string name="car_type_header">Fahrzeugtyp eingeben:</string>
-	<string name="car_type_hint">Fahrzeugtyp</string>
-	<string name="number_plate_header">Kennzeichen eingeben:</string>
-	<string name="car_numberplate_hint">Kennzeichen</string>
-	<string name="start_km_header">Start-Kilometer eingeben:</string>
-	<string name="car_startkm_hint">Start-Kilometerstand</string>
-	<string name="fueltype_spinner_header">Kraftstoff-Art auswählen:</string>
-	<string name="brand_spinner_header">Hersteller auswählen:</string>
-	<string name="button_add_car">Fahrzeug hinzufügen</string>
-	
-	<string name="date_picker_header">Datum wählen:</string>
-	<string name="km_input_header">Kilometerstand eingeben:</string>
-	<string name="liter_input_header">Getankte Literzahl eingeben:</string>
-	<string name="price_input_header">Preis eingeben (in Euro):</string>
+    <string name="car_input_header">Fahrzeugdaten eingeben</string>
+    <string name="car_type_header">Fahrzeugtyp eingeben:</string>
+    <string name="car_type_hint">Fahrzeugtyp</string>
+    <string name="number_plate_header">Kennzeichen eingeben:</string>
+    <string name="car_numberplate_hint">Kennzeichen</string>
+    <string name="start_km_header">Start-Kilometer eingeben:</string>
+    <string name="car_startkm_hint">Start-Kilometerstand</string>
+    <string name="fueltype_spinner_header">Kraftstoff-Art auswählen:</string>
+    <string name="brand_spinner_header">Hersteller auswählen:</string>
+    <string name="button_add_car">Fahrzeug hinzufügen</string>
+    <string name="date_picker_header">Datum wählen:</string>
+    <string name="km_input_header">Kilometerstand eingeben:</string>
+    <string name="liter_input_header">Getankte Literzahl eingeben:</string>
+    <string name="price_input_header">Preis eingeben (in Euro):</string>
+    <string name="cons_input_header">Verbrauchsdaten eingeben</string>
+    <string name="cons_plot_header">Verbrauch (grafisch)</string>
+    <string name="cons_select_date">Datum wählen</string>
+    <string name="cons_km_hint">Kilometerstand</string>
+    <string name="cons_liter_hint">Getankt (Liter)</string>
+    <string name="cons_price_hint">Preis (je Liter)</string>
+    <string name="button_add_cons">Tankdaten hinzufügen</string>
 
-	<string name="cons_input_header">Verbrauchsdaten eingeben</string>
-	<string name="cons_plot_header">Verbrauch (grafisch)</string>
-	<string name="cons_select_date">Datum wählen</string>
-	<string name="cons_km_hint">Kilometerstand</string>
-	<string name="cons_liter_hint">Getankt (Liter)</string>
-	<string name="cons_price_hint">Preis (je Liter)</string>
-	<string name="button_add_cons">Tankdaten hinzufügen</string>
-	
+    <!-- Fuel types -->
+    <string name="fuel_benzin">Benzin</string>
+    <string name="fuel_diesel">Diesel</string>
+    <string name="fuel_lpg">LPG</string>
+    <string name="fuel_ethanol">Ethanol</string>
+    <string name="fuel_wasserstoff">Wasserstoff</string>
+    <string name="fuel_strom">Strom</string>
+    <string name="fuel_other">Sonstige</string>
+
+    <!-- Brands -->
+    <string name="brand_audi">Audi</string>
+    <string name="brand_bmw">BMW</string>
+    <string name="brand_mercedes">Daimler-Benz</string>
+    <string name="brand_ford">Ford</string>
+    <string name="brand_honda">Honda</string>
+    <string name="brand_mazda">Mazda</string>
+    <string name="brand_nissan">Nissan</string>
+    <string name="brand_porsche">Porsche</string>
+    <string name="brand_skoda">Skoda</string>
+    <string name="brand_toyota">Toyota</string>
+    <string name="brand_vw">Volkswagen</string>
+
 </resources>

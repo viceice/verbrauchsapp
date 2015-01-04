@@ -54,7 +54,7 @@ public class CarInputActivity extends Activity {
 
 		Spinner fuelTypeSpinner = (Spinner) findViewById(R.id.fueltypes_spinner);
 		ArrayAdapter<CharSequence> fuelAdapter = ArrayAdapter
-				.createFromResource(this, R.array.fueltype_array,
+				.createFromResource(this, R.array.fuel_types,
 						android.R.layout.simple_spinner_item);
 		// Specify the layout to use when the list of choices appears
 		fuelAdapter
@@ -64,7 +64,7 @@ public class CarInputActivity extends Activity {
 
 		Spinner brandSpinner = (Spinner) findViewById(R.id.brand_spinner);
 		ArrayAdapter<CharSequence> brandAdapter = ArrayAdapter
-				.createFromResource(this, R.array.brands_array,
+				.createFromResource(this, R.array.brands,
 						android.R.layout.simple_spinner_item);
 		// Specify the layout to use when the list of choices appears
 		brandAdapter
