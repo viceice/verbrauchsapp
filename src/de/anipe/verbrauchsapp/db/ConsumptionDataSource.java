@@ -123,16 +123,15 @@ public class ConsumptionDataSource implements Serializable {
 
 		double consumption = 0;
 		int cycleCount = 0;
+		
+		Cursor cursor = database.query(DBHelper.TABLE_CONSUMPTIONS,
+				new String[] { "SUM(" + DBHelper.CONSUMPTION_COLUMN_CONSUMPTION + ")", "COUNT(" + DBHelper.COLUMN_ID + ")" },
+				DBHelper.CONSUMPTION_CAR_ID + "=?",
+				new String[] { String.valueOf(carId) }, null, null, null);
 
-		String queryString = "SELECT consumptionvalue FROM consumptions where carid=?";
-		Cursor cursor = database.rawQuery(queryString,
-				new String[] { String.valueOf(carId) });
-		cursor.moveToFirst();
-
-		while (!cursor.isAfterLast()) {
-			consumption += cursor.getDouble(0);
-			cycleCount++;
-			cursor.moveToNext();
+		if (cursor.moveToNext() && !cursor.isNull(0)) {
+			consumption = cursor.getDouble(0);
+			cycleCount = cursor.getInt(1);
 		}
 		cursor.close();
 		return cycleCount == 0 ? 0 : (consumption / cycleCount);
