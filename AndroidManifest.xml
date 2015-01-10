@@ -53,6 +53,10 @@
 			android:label="@string/csv_import_label" >
         </activity>
         <activity
+			android:name="de.anipe.verbrauchsapp.TabbedImportActivity"
+			android:label="@string/csv_import_label" >
+        </activity>
+        <activity
 			android:name="de.anipe.verbrauchsapp.PictureImportActivity"
 			android:label="@string/picture_import_label" >
         </activity>

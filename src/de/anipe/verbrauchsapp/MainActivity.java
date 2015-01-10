@@ -132,8 +132,10 @@ public class MainActivity extends ListActivity {
 	}
 
 	private void createImportCarActivity() {
-		Intent intent = new Intent(MainActivity.this, ImportActivity.class);
-		intent.putExtra("iscarimport", true);
+//		Intent intent = new Intent(MainActivity.this, ImportActivity.class);
+//		intent.putExtra("iscarimport", true);
+		
+		Intent intent = new Intent(MainActivity.this, TabbedImportActivity.class);
 		MainActivity.this.startActivity(intent);
 	}
 

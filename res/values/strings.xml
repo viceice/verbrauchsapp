@@ -38,6 +38,9 @@
     <string name="action_add_picture">Fahrzeugbild laden</string>
     <string name="action_quit">Beenden</string>
 
+	<string name="actionbar_local">Lokal</string>
+    <string name="actionbar_remote">Google Drive</string>
+	
     <!--  -->
 
     <string name="car_input_name">Fahrzeug hinzufügen</string>

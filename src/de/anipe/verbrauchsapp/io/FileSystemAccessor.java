@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -81,7 +82,20 @@ public class FileSystemAccessor {
 
 	public File[] readFilesFromStorageDir(File folder) {
 		if (isExternalStorageReadable()) {
-			return folder.listFiles();
+			File[] files = folder.listFiles();
+			
+			String[] temp = new String[files.length];
+			for (int i = 0; i < files.length; i++) {
+				temp[i] = files[i].getAbsolutePath();
+			}
+			Arrays.sort(temp);
+			File[] out = new File[files.length];
+			for (int i = 0; i < files.length; i++) {
+				out[i] = new File(temp[i]);
+			}
+			return out;
+			
+//			return folder.listFiles();
 		}
 		return null;
 	}
@@ -124,7 +138,7 @@ public class FileSystemAccessor {
 		xmlOutput.setFormat(Format.getPrettyFormat());
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat(
-				"dd.MM.yyyy-HH.mm.ss", Locale.getDefault());
+				"yyyy.MM.dd-HH.mm.ss", Locale.getDefault());
 		String time = dateFormat.format(new Date());
 
 		File resultFile = new File(createOrGetStorageDir(folder),
