@@ -16,12 +16,12 @@ import java.util.concurrent.CountDownLatch;
 /**
  * An AsyncTask that maintains a connected client.
  */
-public abstract class ApiClientAsyncTask<Params, Progress, Result> extends
+public abstract class GDriveAsyncTask<Params, Progress, Result> extends
 		AsyncTask<Params, Progress, Result> {
 
 	private GoogleApiClient mClient;
 
-	public ApiClientAsyncTask(Context context) {
+	public GDriveAsyncTask(Context context) {
 		GoogleApiClient.Builder builder = new GoogleApiClient.Builder(context)
 				.addApi(Drive.API).addScope(Drive.SCOPE_FILE);
 		mClient = builder.build();
@@ -69,11 +69,4 @@ public abstract class ApiClientAsyncTask<Params, Progress, Result> extends
 	 * while the client is connected.
 	 */
 	protected abstract Result doInBackgroundConnected(Params... params);
-
-	/**
-	 * Gets the GoogleApliClient owned by this async task.
-	 */
-	protected GoogleApiClient getGoogleApiClient() {
-		return mClient;
-	}
 }

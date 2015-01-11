@@ -2,15 +2,31 @@ package de.anipe.verbrauchsapp;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
+import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
+import com.google.android.gms.drive.Drive;
+import com.google.android.gms.drive.DriveFolder;
+import com.google.android.gms.drive.DriveApi.DriveIdResult;
+import com.google.android.gms.drive.DriveApi.MetadataBufferResult;
 
 import de.anipe.verbrauchsapp.io.FileSystemAccessor;
 import de.anipe.verbrauchsapp.io.XMLHandler;
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.app.ActionBar.Tab;
+import android.content.IntentSender.SendIntentException;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -28,10 +44,13 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class TabbedImportActivity extends FragmentActivity {
+public class TabbedImportActivity extends FragmentActivity implements ConnectionCallbacks, OnConnectionFailedListener {
 	
-	ImportPagerAdapter pagerAdapter;
-    ViewPager viewPager;
+	private GoogleApiClient mGoogleApiClient;
+	private ImportPagerAdapter pagerAdapter;
+    private ViewPager viewPager;
+    
+    private static String[] gDriveFiles;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -88,8 +107,106 @@ public class TabbedImportActivity extends FragmentActivity {
             public void onPageScrollStateChanged(int arg0) {
             }
         });
-
 	}
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		if (mGoogleApiClient == null) {
+			mGoogleApiClient = new GoogleApiClient.Builder(this)
+					.addApi(Drive.API).addScope(Drive.SCOPE_FILE)
+					.addScope(Drive.SCOPE_APPFOLDER)
+					// required for App Folder sample
+					.addConnectionCallbacks(this)
+					.addOnConnectionFailedListener(this).build();
+		}
+		mGoogleApiClient.connect();
+	}
+	
+	@Override
+	public void onConnected(Bundle connectionHint) {
+		Log.i("TabbedImportActivity", "GoogleApiClient connected");
+
+		DriveFolder folder = Drive.DriveApi.getFolder(mGoogleApiClient, Drive.DriveApi.getRootFolder(mGoogleApiClient).getDriveId());		
+		folder.listChildren(mGoogleApiClient).setResultCallback(childrenRetrievedCallback);
+	}
+	
+	@Override
+	public void onConnectionFailed(ConnectionResult result) {
+		Log.e("TabbedImportActivity", "GoogleApiClient connection failed: " + result.toString());
+		if (!result.hasResolution()) {
+			// show the localized error dialog.
+			GooglePlayServicesUtil.getErrorDialog(result.getErrorCode(), this,
+					0).show();
+			return;
+		}
+		try {
+			result.startResolutionForResult(this, 1);
+		} catch (SendIntentException e) {
+			Log.e("TabbedImportActivity", "Exception while starting resolution activity", e);
+		}
+	}
+	
+	@Override
+	public void onConnectionSuspended(int cause) {
+		Log.i("TabbedImportActivity", "GoogleApiClient connection suspended");
+	}
+	
+	final private ResultCallback<MetadataBufferResult> childrenRetrievedCallback = new ResultCallback<MetadataBufferResult>() {
+        @Override
+        public void onResult(MetadataBufferResult result) {
+            if (!result.getStatus().isSuccess()) {
+            	Log.e("TabbedImportActivity", "Problem while retrieving files");
+                return;
+            }
+            
+            Log.i("TabbedImportActivity", "Listing files...");
+            
+            List<String> tempList = new LinkedList<String>();
+			for(int i = 0; i < result.getMetadataBuffer().getCount(); i++) {
+				if (!result.getMetadataBuffer().get(i).isTrashed() && !(result.getMetadataBuffer().get(i).getTitle() == null)) {
+					tempList.add(result.getMetadataBuffer().get(i).getTitle());
+				}
+			}
+			gDriveFiles = new String[tempList.size()];
+			for (int j = 0; j < tempList.size(); j++) {
+				gDriveFiles[j] = tempList.get(j);
+			}
+			Arrays.sort(gDriveFiles);
+			
+			result.getMetadataBuffer().release();
+        }
+    };
+	
+	@SuppressWarnings("unused")
+	final private ResultCallback<DriveIdResult> idCallback = new ResultCallback<DriveIdResult>() {
+		@Override
+		public void onResult(DriveIdResult result) {
+			if (!result.getStatus().isSuccess()) {
+				Log.e("TabbedImportActivity", "Cannot find DriveId. Are you authorized to view this file?");
+				return;
+			}
+			DriveFolder folder = Drive.DriveApi.getFolder(mGoogleApiClient,	result.getDriveId());
+			folder.listChildren(mGoogleApiClient).setResultCallback(metadataResult);
+		}
+	};
+	
+	final private ResultCallback<MetadataBufferResult> metadataResult = new ResultCallback<MetadataBufferResult>() {
+		@Override
+		public void onResult(MetadataBufferResult result) {
+			if (!result.getStatus().isSuccess()) {
+				Log.e("TabbedImportActivity", "Problem while retrieving files");
+				return;
+			}
+			Log.i("TabbedImportActivity", "Successfully listed files.");
+			
+			gDriveFiles = new String[result.getMetadataBuffer().getCount()];
+			for(int i = 0; i < result.getMetadataBuffer().getCount(); i++) {
+				gDriveFiles[i] = result.getMetadataBuffer().get(i).getTitle();
+			}
+			
+		}
+	};
 
 	// Since this is an object collection, use a FragmentStatePagerAdapter,
 	// and NOT a FragmentPagerAdapter.
@@ -132,7 +249,8 @@ public class TabbedImportActivity extends FragmentActivity {
 		private XMLHandler xmlImporter;
 		private Map<String, File> fileMapping;
 		private int local = 0;
-
+		
+		@SuppressLint("DefaultLocale")
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
@@ -175,17 +293,44 @@ public class TabbedImportActivity extends FragmentActivity {
 							int position, long id) {
 						
 						String item = (String) adapter.getItem(position);
-						MyAsyncTask task = new MyAsyncTask();
+						ExportLocalAsyncTask task = new ExportLocalAsyncTask();
 						task.item = item;
 						task.execute();
 					}
 				});
-			}
+			} else if (local == 1) {
+
+				if (gDriveFiles == null) {
+					gDriveFiles = new String[] {"aaa", "bbb", "ccc"};
+				}
+				
+				Log.i("TabbedImportActivity", "Array size is " + gDriveFiles.length);
+				
+				for (int i = 0; i < gDriveFiles.length; i++) {
+					Log.i("TabbedImportActivity", "Element at " + i + " is " + gDriveFiles[i]);
+				}
+				
+				final ListAdapter adapter = new ArrayAdapter<String>(getActivity(),
+						android.R.layout.simple_list_item_1, gDriveFiles);			// gDriveList
+				
+				rootView.setAdapter(adapter);
+				
+				rootView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+					@Override
+					public void onItemClick(AdapterView<?> parent, View view,
+							int position, long id) {
+						
+						// TODO: Read from Google Drive file
+					}
+				});
+				
+			} 
 			
 			return rootView;
 		}
 		
-		class MyAsyncTask extends AsyncTask<Void, Void, Void> {
+		class ExportLocalAsyncTask extends AsyncTask<Void, Void, Void> {
 			ProgressDialog myprogsdial;
 			int dataSets = 0;
 			String item;

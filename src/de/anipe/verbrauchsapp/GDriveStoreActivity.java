@@ -9,9 +9,6 @@ import java.sql.SQLException;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
-import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.drive.Drive;
 import com.google.android.gms.drive.DriveApi.DriveContentsResult;
 import com.google.android.gms.drive.DriveContents;
@@ -22,11 +19,10 @@ import com.google.android.gms.drive.Metadata;
 import com.google.android.gms.drive.MetadataChangeSet;
 
 import de.anipe.verbrauchsapp.db.ConsumptionDataSource;
-import de.anipe.verbrauchsapp.io.ApiClientAsyncTask;
+import de.anipe.verbrauchsapp.io.GDriveAsyncTask;
 import de.anipe.verbrauchsapp.io.FileSystemAccessor;
 import de.anipe.verbrauchsapp.io.XMLHandler;
 import de.anipe.verbrauchsapp.objects.Car;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
@@ -36,13 +32,10 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class GDriveStoreActivity extends Activity implements
-		ConnectionCallbacks, OnConnectionFailedListener {
+public class GDriveStoreActivity extends GDriveBaseActivity {
 
 	private File outputFile;
 	private long carId;
-
-	private static GoogleApiClient mGoogleApiClient;
 
 	private FileSystemAccessor accessor;
 	private ConsumptionDataSource dataSource;
@@ -59,10 +52,6 @@ public class GDriveStoreActivity extends Activity implements
 
 		setContentView(R.layout.activity_gdrive_upload);
 
-		mGoogleApiClient = new GoogleApiClient.Builder(this).addApi(Drive.API)
-				.addScope(Drive.SCOPE_FILE).addConnectionCallbacks(this)
-				.addOnConnectionFailedListener(this).build();
-
 		accessor = FileSystemAccessor.getInstance();
 		dataSource = ConsumptionDataSource.getInstance(this);
 		try {
@@ -72,29 +61,37 @@ public class GDriveStoreActivity extends Activity implements
 					"Fehler beim Öffnen der Datenbank!", Toast.LENGTH_LONG)
 					.show();
 		}
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-
+		
 		// Step 1: write to local XML file
 		writeXMLFileToLocalFileSystem();
-
-		// Step 2: upload to the cloud
-		if (outputFile != null) {
-			if (mGoogleApiClient == null) {
-				mGoogleApiClient = new GoogleApiClient.Builder(this)
-						.addApi(Drive.API).addScope(Drive.SCOPE_FILE)
-						.addScope(Drive.SCOPE_APPFOLDER)
-						.addConnectionCallbacks(this)
-						.addOnConnectionFailedListener(this).build();
-			}
-			mGoogleApiClient.connect();
-		} else {
+		
+		if (outputFile == null) {
+			Log.e("GDriveStoreActivity", "Output file is null. Nothing to write to Google Drive. Aborting Activity.");
 			finish();
 		}
 	}
+
+//	@Override
+//	protected void onResume() {
+//		super.onResume();
+//
+//		// Step 1: write to local XML file
+//		writeXMLFileToLocalFileSystem();
+//
+//		// Step 2: upload to the cloud
+//		if (outputFile != null) {
+//			if (getGoogleApiClient() == null) {
+//				mGoogleApiClient = new GoogleApiClient.Builder(this)
+//						.addApi(Drive.API).addScope(Drive.SCOPE_FILE)
+//						.addScope(Drive.SCOPE_APPFOLDER)
+//						.addConnectionCallbacks(this)
+//						.addOnConnectionFailedListener(this).build();
+//			}
+//			mGoogleApiClient.connect();
+//		} else {
+//			finish();
+//		}
+//	}
 
 	private void writeXMLFileToLocalFileSystem() {
 		Car car = dataSource.getCarForId(carId);
@@ -141,11 +138,6 @@ public class GDriveStoreActivity extends Activity implements
 			xmlTv.setTextColor(Color.BLACK);
 			xmlTv.setText("FEHLER");
 		}
-	}
-
-	@Override
-	public void onConnectionSuspended(int result) {
-		Log.i("GDriveStoreActivity", "GoogleApiClient connection suspended");
 	}
 
 	@Override
@@ -198,7 +190,7 @@ public class GDriveStoreActivity extends Activity implements
 	}
 
 	public class CreateFileAsyncTask extends
-			ApiClientAsyncTask<Void, Void, Metadata> {
+			GDriveAsyncTask<Void, Void, Metadata> {
 
 		public CreateFileAsyncTask(Context context) {
 			super(context);
@@ -210,8 +202,9 @@ public class GDriveStoreActivity extends Activity implements
 			// First we start by creating a new contents, and blocking on the
 			// result by calling await().
 			DriveContentsResult contentsResult = Drive.DriveApi.newDriveContents(
-					mGoogleApiClient).await();
+					getGoogleApiClient()).await();
 			if (!contentsResult.getStatus().isSuccess()) {
+				Log.e("GDriveStoreActivity", "Creating Drive content: failed!");
 				// We failed, stop the task and return.
 				return null;
 			}
@@ -223,6 +216,7 @@ public class GDriveStoreActivity extends Activity implements
 			try {
 				os.write(read(outputFile));
 			} catch (IOException e) {
+				Log.e("GDriveStoreActivity", "Exception while writing content to output stream: " + e.getLocalizedMessage());
 				e.printStackTrace();
 				return null;
 			}
@@ -236,19 +230,20 @@ public class GDriveStoreActivity extends Activity implements
 			// Create the file in the root folder, again calling await() to
 			// block until the request finishes.
 			DriveFolder rootFolder = Drive.DriveApi
-					.getRootFolder(mGoogleApiClient);
+					.getRootFolder(getGoogleApiClient());
 			DriveFileResult fileResult = rootFolder.createFile(
-					mGoogleApiClient, originalMetadata, originalContents)
+					getGoogleApiClient(), originalMetadata, originalContents)
 					.await();
 			if (!fileResult.getStatus().isSuccess()) {
 				// We failed, stop the task and return.
+				Log.e("GDriveStoreActivity", "Creating Drive content failed!");
 				return null;
 			}
 
 			// Finally, fetch the metadata for the newly created file, again
 			// calling await to block until the request finishes.
 			MetadataResult metadataResult = fileResult.getDriveFile()
-					.getMetadata(mGoogleApiClient).await();
+					.getMetadata(getGoogleApiClient()).await();
 			if (!metadataResult.getStatus().isSuccess()) {
 				// We failed, stop the task and return.
 				return null;
@@ -273,6 +268,8 @@ public class GDriveStoreActivity extends Activity implements
 			// The creation succeeded, show a message.
 			// showMessage("File created: " + result.getDriveId());
 
+			Log.i("GDriveStoreActivity", "Writing to Drive ok. Created content size: " + result.getFileSize());
+			
 			TextView xmlTv = (TextView) findViewById(R.id.cloudExportValueLine);
 			xmlTv.setBackgroundColor(Color.GREEN);
 			xmlTv.setTextColor(Color.BLACK);

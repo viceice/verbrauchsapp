@@ -82,6 +82,9 @@
 			android:label="@string/cons_plot_header" >
         </activity>
         <activity
+			android:name="de.anipe.verbrauchsapp.GDriveBaseActivity" >
+	    </activity>
+        <activity
 			android:name="de.anipe.verbrauchsapp.GDriveStoreActivity"
 			android:label="@string/store_drive_label" >
             <data android:mimeType="text/xml" />
