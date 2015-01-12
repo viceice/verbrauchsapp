@@ -4,14 +4,10 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -35,9 +31,6 @@ public class ConsumptionDataSource implements Serializable {
 	private DBHelper dbHelper;
 	private FileSystemAccessor accessor;
 	private Context context;
-
-	private SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy",
-			Locale.getDefault());
 
 	private ConsumptionDataSource(Context context) {
 		dbHelper = new DBHelper(context);
@@ -75,8 +68,6 @@ public class ConsumptionDataSource implements Serializable {
 		}
 		cursor.close();
 
-		// TODO: Should be done on database
-		Collections.sort(consumptionCyclestList);
 		return consumptionCyclestList;
 	}
 
@@ -287,8 +278,7 @@ public class ConsumptionDataSource implements Serializable {
 
 		ContentValues values = new ContentValues();
 		values.put(DBHelper.CONSUMPTION_CAR_ID, cycle.getCarId());
-		values.put(DBHelper.CONSUMPTION_COLUMN_DATE,
-				getDateTime(cycle.getDate()));
+		values.put(DBHelper.CONSUMPTION_COLUMN_DATE, cycle.getDate().getTime());
 		values.put(DBHelper.CONSUMPTION_COLUMN_REFUELMILEAGE,
 				cycle.getRefuelmileage());
 		values.put(DBHelper.CONSUMPTION_COLUMN_REFUELLITERS,
@@ -328,7 +318,7 @@ public class ConsumptionDataSource implements Serializable {
 
 		consumption.setId(cursor.getLong(0));
 		consumption.setCarId(cursor.getLong(1));
-		consumption.setDate(getDatefromString(cursor.getString(2)));
+		consumption.setDate(new Date(cursor.getLong(2)));
 		consumption.setRefuelmileage(cursor.getInt(3));
 		consumption.setRefuelliters(cursor.getDouble(4));
 		consumption.setRefuelprice(cursor.getDouble(5));
@@ -351,17 +341,5 @@ public class ConsumptionDataSource implements Serializable {
 	private Bitmap getBitMapForByteArray(byte[] blob) {
 		ByteArrayInputStream imageStream = new ByteArrayInputStream(blob);
 		return BitmapFactory.decodeStream(imageStream);
-	}
-
-	private String getDateTime(Date date) {
-		return dateFormat.format(date);
-	}
-
-	private Date getDatefromString(String dateString) {
-		try {
-			return dateFormat.parse(dateString);
-		} catch (ParseException e) {
-		}
-		return null;
 	}
 }

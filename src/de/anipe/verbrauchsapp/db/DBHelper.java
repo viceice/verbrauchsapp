@@ -42,7 +42,7 @@ public class DBHelper extends SQLiteOpenHelper {
 			+ TABLE_CONSUMPTIONS + "(" + COLUMN_ID
 			+ " integer primary key autoincrement, " + CONSUMPTION_CAR_ID
 			+ " integer not null, " + CONSUMPTION_COLUMN_DATE
-			+ " text not null, " + CONSUMPTION_COLUMN_REFUELMILEAGE
+			+ " integer not null, " + CONSUMPTION_COLUMN_REFUELMILEAGE
 			+ " integer not null, " + CONSUMPTION_COLUMN_REFUELLITERS
 			+ " integer not null, " + CONSUMPTION_COLUMN_REFUELPRICE
 			+ " real, " + CONSUMPTION_COLUMN_DRIVENMILEAGE
