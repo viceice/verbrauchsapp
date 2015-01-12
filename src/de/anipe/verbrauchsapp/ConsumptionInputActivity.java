@@ -179,7 +179,7 @@ public class ConsumptionInputActivity extends Activity {
 			}
 			String liter = ((EditText) findViewById(R.id.cons_liter_input))
 					.getText().toString().replace(',', '.');
-			if (liter == null || liter.equals("")) {
+			if (liter.equals("")) {
 				Toast.makeText(ConsumptionInputActivity.this,
 						"Literzahl darf nicht leer sein!", Toast.LENGTH_LONG)
 						.show();
@@ -196,7 +196,7 @@ public class ConsumptionInputActivity extends Activity {
 			}
 			String price = ((EditText) findViewById(R.id.cons_price_input))
 					.getText().toString().replace(',', '.');
-			if (price != null && !price.equals("")) {
+			if (!price.equals("")) {
 				try {
 					Double.parseDouble(price);
 				} catch (NumberFormatException nfe) {
