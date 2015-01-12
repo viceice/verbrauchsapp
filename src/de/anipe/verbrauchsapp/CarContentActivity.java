@@ -5,7 +5,6 @@ import java.text.DecimalFormat;
 
 import de.anipe.verbrauchsapp.db.ConsumptionDataSource;
 import de.anipe.verbrauchsapp.io.FileSystemAccessor;
-import de.anipe.verbrauchsapp.GDriveStoreActivity;
 import de.anipe.verbrauchsapp.io.XMLHandler;
 import de.anipe.verbrauchsapp.objects.Car;
 import android.app.Activity;
