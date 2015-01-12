@@ -99,6 +99,9 @@ public class CarInputActivity extends Activity {
 		if (update) {
 			addButton.setText("Datensatz speichern");
 		}
+
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override

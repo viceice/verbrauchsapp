@@ -61,6 +61,8 @@ public class CarContentActivity extends Activity {
 
 		Button b2 = (Button) findViewById(R.id.viewconsumptions_button);
 		b2.setOnClickListener(clickListener);
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override

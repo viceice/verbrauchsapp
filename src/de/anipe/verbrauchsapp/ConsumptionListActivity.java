@@ -8,6 +8,7 @@ import de.anipe.verbrauchsapp.objects.Consumption;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -46,6 +47,8 @@ public class ConsumptionListActivity extends ListActivity {
 		setListAdapter(adapter);
 
 		registerForContextMenu(getListView());
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override
@@ -85,4 +88,14 @@ public class ConsumptionListActivity extends ListActivity {
 		}
 		return super.onContextItemSelected(item);
 	}
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

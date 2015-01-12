@@ -38,7 +38,12 @@
         <activity
 			android:name="de.anipe.verbrauchsapp.CarInputActivity"
 			android:windowSoftInputMode="adjustResize"
-			android:label="@string/car_input_name" >
+			android:label="@string/car_input_name"
+            android:parentActivityName="de.anipe.verbrauchsapp.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.anipe.verbrauchsapp.MainActivity"
+                />
         </activity>
         <activity
 			android:name="de.anipe.verbrauchsapp.CarListActivity"
@@ -46,28 +51,59 @@
         </activity>
         <activity
 			android:name="de.anipe.verbrauchsapp.CarContentActivity"
-			android:label="@string/car_dataset_label" >
+			android:label="@string/car_dataset_label"
+            android:parentActivityName="de.anipe.verbrauchsapp.MainActivity"
+            android:launchMode="singleTop" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.anipe.verbrauchsapp.MainActivity"
+                />
         </activity>
         <activity
 			android:name="de.anipe.verbrauchsapp.ImportActivity"
-			android:label="@string/csv_import_label" >
+			android:label="@string/csv_import_label"
+            android:parentActivityName="de.anipe.verbrauchsapp.CarContentActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.anipe.verbrauchsapp.CarContentActivity"
+                />
         </activity>
         <activity
 			android:name="de.anipe.verbrauchsapp.TabbedImportActivity"
-			android:label="@string/csv_import_label" >
+			android:label="@string/csv_import_label"
+            android:parentActivityName="de.anipe.verbrauchsapp.MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.anipe.verbrauchsapp.MainActivity"
+                />
         </activity>
         <activity
 			android:name="de.anipe.verbrauchsapp.PictureImportActivity"
-			android:label="@string/picture_import_label" >
+			android:label="@string/picture_import_label"
+            android:parentActivityName="de.anipe.verbrauchsapp.CarContentActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.anipe.verbrauchsapp.CarContentActivity"
+                />
         </activity>
         <activity
 			android:name="de.anipe.verbrauchsapp.ConsumptionInputActivity"
 			android:windowSoftInputMode="adjustResize"
-			android:label="@string/cons_add_label" >
+			android:label="@string/cons_add_label"
+            android:parentActivityName="de.anipe.verbrauchsapp.CarContentActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.anipe.verbrauchsapp.CarContentActivity"
+                />
         </activity>
         <activity
 			android:name="de.anipe.verbrauchsapp.ConsumptionListActivity"
-			android:label="@string/cons_list_label" >
+			android:label="@string/cons_list_label"
+            android:parentActivityName="de.anipe.verbrauchsapp.CarContentActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.anipe.verbrauchsapp.CarContentActivity"
+                />
         </activity>
         <activity
 			android:name="de.anipe.verbrauchsapp.PlotActivity"
@@ -79,14 +115,24 @@
         </activity>
         <activity
 			android:name="de.anipe.verbrauchsapp.GraphViewPlot"
-			android:label="@string/cons_plot_header" >
+			android:label="@string/cons_plot_header"
+            android:parentActivityName="de.anipe.verbrauchsapp.CarContentActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.anipe.verbrauchsapp.CarContentActivity"
+                />
         </activity>
         <activity
 			android:name="de.anipe.verbrauchsapp.GDriveBaseActivity" >
 	    </activity>
         <activity
 			android:name="de.anipe.verbrauchsapp.GDriveStoreActivity"
-			android:label="@string/store_drive_label" >
+			android:label="@string/store_drive_label"
+            android:parentActivityName="de.anipe.verbrauchsapp.CarContentActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="de.anipe.verbrauchsapp.CarContentActivity"
+                />
             <data android:mimeType="text/xml" />
             <data android:mimeType="text/csv" />
             <action android:name="com.google.android.apps.drive.DRIVE_OPEN" />

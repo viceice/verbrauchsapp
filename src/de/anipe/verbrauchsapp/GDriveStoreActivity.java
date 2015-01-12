@@ -28,7 +28,9 @@ import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,6 +71,8 @@ public class GDriveStoreActivity extends GDriveBaseActivity {
 			Log.e("GDriveStoreActivity", "Output file is null. Nothing to write to Google Drive. Aborting Activity.");
 			finish();
 		}
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 //	@Override
@@ -276,4 +280,14 @@ public class GDriveStoreActivity extends GDriveBaseActivity {
 			xmlTv.setText("OK");
 		}
 	}
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

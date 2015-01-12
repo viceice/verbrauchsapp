@@ -17,6 +17,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
+import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -70,7 +72,7 @@ public class GraphViewPlot extends Activity {
 		
 		layout.addView(gView);
 
-
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 	
 	private GraphViewData[] createDataLists() {
@@ -94,4 +96,14 @@ public class GraphViewPlot extends Activity {
 		
 		return data;
 	}
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
