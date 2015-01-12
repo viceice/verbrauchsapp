@@ -44,7 +44,7 @@ public class ConsumptionInputActivity extends Activity {
 			dataSource.open();
 		} catch (SQLException e) {
 			Toast.makeText(ConsumptionInputActivity.this,
-					"Fehler beim Öffnen der Datenbank!", Toast.LENGTH_LONG)
+					"Fehler beim Ã–ffnen der Datenbank!", Toast.LENGTH_LONG)
 					.show();
 		}
 
@@ -70,7 +70,7 @@ public class ConsumptionInputActivity extends Activity {
 			dataSource.open();
 		} catch (SQLException e) {
 			Toast.makeText(ConsumptionInputActivity.this,
-					"Fehler beim Öffnen der Datenbank!", Toast.LENGTH_LONG)
+					"Fehler beim Ã–ffnen der Datenbank!", Toast.LENGTH_LONG)
 					.show();
 		}
 		super.onResume();
@@ -137,13 +137,13 @@ public class ConsumptionInputActivity extends Activity {
 
 					if (dataSource.addConsumption(cons) > -1) {
 						Toast.makeText(ConsumptionInputActivity.this,
-								"Verbrauchsdatensatz hinzugefügt!",
+								"Verbrauchsdatensatz hinzugefÃ¼gt!",
 								Toast.LENGTH_LONG).show();
 						finish();
 					} else {
 						Toast.makeText(
 								ConsumptionInputActivity.this,
-								"Fehler beim Hinzufügen des Verbrauchsdatensatzes!",
+								"Fehler beim HinzufÃ¼gen des Verbrauchsdatensatzes!",
 								Toast.LENGTH_LONG).show();
 					}
 					finish();
@@ -167,7 +167,7 @@ public class ConsumptionInputActivity extends Activity {
 				if (val - ConsumptionInputActivity.this.kmState <= 0) {
 					Toast.makeText(
 							ConsumptionInputActivity.this,
-							"Kilometerstand muss größer als der letzte Kilometerstand sein!",
+							"Kilometerstand muss grÃ¶ÃŸer als der letzte Kilometerstand sein!",
 							Toast.LENGTH_LONG).show();
 					return false;
 				}

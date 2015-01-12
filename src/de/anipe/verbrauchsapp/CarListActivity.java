@@ -31,7 +31,7 @@ public class CarListActivity extends ListActivity {
 			dataSource.open();
 		} catch (SQLException e) {
 			Toast.makeText(CarListActivity.this,
-					"Fehler beim Öffnen der Datenbank!", Toast.LENGTH_LONG)
+					"Fehler beim Ã–ffnen der Datenbank!", Toast.LENGTH_LONG)
 					.show();
 		}
 
@@ -48,7 +48,7 @@ public class CarListActivity extends ListActivity {
 			dataSource.open();
 		} catch (SQLException e) {
 			Toast.makeText(CarListActivity.this,
-					"Fehler beim Öffnen der Datenbank!", Toast.LENGTH_LONG)
+					"Fehler beim Ã–ffnen der Datenbank!", Toast.LENGTH_LONG)
 					.show();
 		}
 		adapter.notifyDataSetChanged();

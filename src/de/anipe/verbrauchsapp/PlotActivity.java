@@ -54,7 +54,7 @@ public class PlotActivity extends Activity {
 			dataSource.open();
 		} catch (SQLException e) {
 			Toast.makeText(PlotActivity.this,
-					"Fehler beim Öffnen der Datenbank!", Toast.LENGTH_LONG)
+					"Fehler beim Ã–ffnen der Datenbank!", Toast.LENGTH_LONG)
 					.show();
 		}
 

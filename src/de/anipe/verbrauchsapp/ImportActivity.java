@@ -120,11 +120,11 @@ public class ImportActivity extends ListActivity {
 			if (isCarImport) {
 				Toast.makeText(
 						ImportActivity.this,
-						"Fahrzeug mit " + dataSets + " Datens‰tzen importiert.",
+						"Fahrzeug mit " + dataSets + " Datens√§tzen importiert.",
 						Toast.LENGTH_LONG).show();
 			} else {
 				Toast.makeText(ImportActivity.this,
-						dataSets + " Datens‰tze importiert.", Toast.LENGTH_LONG)
+						dataSets + " Datens√§tze importiert.", Toast.LENGTH_LONG)
 						.show();
 			}
 			

@@ -45,7 +45,7 @@ public class GraphViewPlot extends Activity {
 			dataSource.open();
 		} catch (SQLException e) {
 			Toast.makeText(GraphViewPlot.this,
-					"Fehler beim Öffnen der Datenbank!", Toast.LENGTH_LONG)
+					"Fehler beim Ã–ffnen der Datenbank!", Toast.LENGTH_LONG)
 					.show();
 		}
 		

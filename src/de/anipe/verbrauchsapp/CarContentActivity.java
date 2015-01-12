@@ -51,7 +51,7 @@ public class CarContentActivity extends Activity {
 			dataSource.open();
 		} catch (SQLException e) {
 			Toast.makeText(CarContentActivity.this,
-					"Fehler beim Öffnen der Datenbank!", Toast.LENGTH_LONG)
+					"Fehler beim Ã–ffnen der Datenbank!", Toast.LENGTH_LONG)
 					.show();
 		}
 
@@ -76,7 +76,7 @@ public class CarContentActivity extends Activity {
 			dataSource.open();
 		} catch (SQLException e) {
 			Toast.makeText(CarContentActivity.this,
-					"Fehler beim Öffnen der Datenbank!", Toast.LENGTH_LONG)
+					"Fehler beim Ã–ffnen der Datenbank!", Toast.LENGTH_LONG)
 					.show();
 		}
 
@@ -182,7 +182,7 @@ public class CarContentActivity extends Activity {
 				CarContentActivity.this);
 
 		// set title
-		alertDialogBuilder.setTitle("Eintrag löschen?");
+		alertDialogBuilder.setTitle("Eintrag lÃ¶schen?");
 		TypedValue typedValue = new TypedValue();
 		getTheme().resolveAttribute(android.R.attr.alertDialogIcon, typedValue, true);
 		alertDialogBuilder.setIcon(typedValue.resourceId);
@@ -190,7 +190,7 @@ public class CarContentActivity extends Activity {
 		// set dialog message
 		alertDialogBuilder
 				.setMessage(
-						"Mit 'Ja' wird der Fahrzeugdatensatz und alle dazugehörigen Verbrauchsdatensätze gelöscht!")
+						"Mit 'Ja' wird der Fahrzeugdatensatz und alle dazugehÃ¶rigen VerbrauchsdatensÃ¤tze gelÃ¶scht!")
 				.setCancelable(false)
 				.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
 					public void onClick(DialogInterface dialog, int id) {

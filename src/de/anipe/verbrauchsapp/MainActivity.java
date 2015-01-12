@@ -35,7 +35,7 @@ public class MainActivity extends ListActivity {
 			dataSource.open();
 		} catch (SQLException e) {
 			Toast.makeText(MainActivity.this,
-					"Fehler beim Öffnen der Datenbank!", Toast.LENGTH_LONG)
+					"Fehler beim Ã–ffnen der Datenbank!", Toast.LENGTH_LONG)
 					.show();
 		}
 
@@ -57,7 +57,7 @@ public class MainActivity extends ListActivity {
 			dataSource.open();
 		} catch (SQLException e) {
 			Toast.makeText(MainActivity.this,
-					"Fehler beim Öffnen der Datenbank!", Toast.LENGTH_LONG)
+					"Fehler beim Ã–ffnen der Datenbank!", Toast.LENGTH_LONG)
 					.show();
 		}
 		adapter.notifyDataSetChanged();
@@ -69,7 +69,7 @@ public class MainActivity extends ListActivity {
 			dataSource.open();
 		} catch (SQLException e) {
 			Toast.makeText(MainActivity.this,
-					"Fehler beim Öffnen der Datenbank!", Toast.LENGTH_LONG)
+					"Fehler beim Ã–ffnen der Datenbank!", Toast.LENGTH_LONG)
 					.show();
 		}
 		adapter.update(dataSource.getCarList());
@@ -84,7 +84,7 @@ public class MainActivity extends ListActivity {
 			dataSource.open();
 		} catch (SQLException e) {
 			Toast.makeText(MainActivity.this,
-					"Fehler beim Öffnen der Datenbank!", Toast.LENGTH_LONG)
+					"Fehler beim Ã–ffnen der Datenbank!", Toast.LENGTH_LONG)
 					.show();
 		}
 		super.onActivityResult(requestCode, resultCode, data);

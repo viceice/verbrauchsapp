@@ -356,7 +356,7 @@ public class TabbedImportActivity extends FragmentActivity implements Connection
 				myprogsdial.dismiss();
 				Toast.makeText(
 							getActivity(),
-							"Fahrzeug mit " + dataSets + " Datens‰tzen importiert.",
+							"Fahrzeug mit " + dataSets + " Datens√§tzen importiert.",
 							Toast.LENGTH_LONG).show();
 			}
 		}

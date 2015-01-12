@@ -40,7 +40,7 @@ public class PictureImportActivity extends ListActivity {
 			dataSource.open();
 		} catch (SQLException e) {
 			Toast.makeText(PictureImportActivity.this,
-					"Fehler beim ÷ffnen der Datenbank!", Toast.LENGTH_LONG)
+					"Fehler beim √ñffnen der Datenbank!", Toast.LENGTH_LONG)
 					.show();
 		}
 
@@ -78,7 +78,7 @@ public class PictureImportActivity extends ListActivity {
 		Bitmap bitMap = accessor.getBitmapForValue(fileMapping.get(item));
 
 		if (bitMap.getByteCount() > MAX_FILE_SIZE) {
-			Toast.makeText(this, "Datei darf maximal 1 MBte groﬂ sein!",
+			Toast.makeText(this, "Datei darf maximal 1 MBte gro√ü sein!",
 					Toast.LENGTH_LONG).show();
 		} else {
 			long result = dataSource.storeImageForCar(carId, bitMap);

@@ -46,7 +46,7 @@ public class CarInputActivity extends Activity {
 			dataSource.open();
 		} catch (SQLException e) {
 			Toast.makeText(CarInputActivity.this,
-					"Fehler beim Öffnen der Datenbank!", Toast.LENGTH_LONG)
+					"Fehler beim Ã–ffnen der Datenbank!", Toast.LENGTH_LONG)
 					.show();
 		}
 
@@ -113,7 +113,7 @@ public class CarInputActivity extends Activity {
 			dataSource.open();
 		} catch (SQLException e) {
 			Toast.makeText(CarInputActivity.this,
-					"Fehler beim Öffnen der Datenbank!", Toast.LENGTH_LONG)
+					"Fehler beim Ã–ffnen der Datenbank!", Toast.LENGTH_LONG)
 					.show();
 		}
 		super.onResume();
@@ -150,7 +150,7 @@ public class CarInputActivity extends Activity {
 					car.setImage(dataSource.getImageForCarId(carId));
 					if (dataSource.updateCar(car) > 0) {
 						Toast.makeText(CarInputActivity.this,
-								"Fahrzeugdatensatz geändert!",
+								"Fahrzeugdatensatz geÃ¤ndert!",
 								Toast.LENGTH_LONG).show();
 						finish();
 					} else {
@@ -162,13 +162,13 @@ public class CarInputActivity extends Activity {
 				} else {
 					if (dataSource.addCar(car) > -1) {
 						Toast.makeText(CarInputActivity.this,
-								"Fahrzeug hinzugefügt!", Toast.LENGTH_LONG)
+								"Fahrzeug hinzugefÃ¼gt!", Toast.LENGTH_LONG)
 								.show();
 						finish();
 					} else {
 						Toast.makeText(
 								CarInputActivity.this,
-								"Fehler beim Hinzufügen des Fahrzeug-Datensatzes!",
+								"Fehler beim HinzufÃ¼gen des Fahrzeug-Datensatzes!",
 								Toast.LENGTH_LONG).show();
 					}
 				}
