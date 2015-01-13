@@ -1,7 +1,6 @@
 package de.anipe.verbrauchsapp.fragments;
 
-import android.widget.Toast;
-
+import de.anipe.verbrauchsapp.tasks.ImportGDriveCar;
 import de.anipe.verbrauchsapp.tasks.UpdateGDriveCarList;
 
 /**
@@ -11,9 +10,7 @@ public class GDriveImportFragment extends ImportFragment {
 
     @Override
     public void onImport(String name) {
-        // TODO: create task for importing from gdrive
-        Toast.makeText(getActivity(), "TODO: Import from gDrive: " + name,
-                Toast.LENGTH_LONG).show();
+        new ImportGDriveCar(getActivity()).execute(name);
     }
 
     @Override

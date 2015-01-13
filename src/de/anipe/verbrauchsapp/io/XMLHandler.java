@@ -1,6 +1,7 @@
 package de.anipe.verbrauchsapp.io;
 
 import java.io.File;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -88,6 +89,23 @@ public class XMLHandler {
 		return -1;
 	}
 
+    public int importXMLCarDataWithConsumption(InputStream input) {
+        try {
+            SAXBuilder builder = new SAXBuilder();
+            Document doc = (Document) builder.build(input);
+            long carId = dataSource.addCar(parseCarFromDocument(doc));
+            List<Consumption> conList = parseConsumptionFromDocument(doc, carId);
+            if (conList.size() > 0) {
+                dataSource.addConsumptions(conList);
+            }
+            return conList.size();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("XMLHandler", "Exception while parsing XML document");
+        }
+        return -1;
+    }
+
 	public int importXMLConsumptionDataForCar(long carId, File inputFile) {
 		// remove old entries
 		dataSource.deleteConsumptionsForCar(carId);
@@ -106,6 +124,25 @@ public class XMLHandler {
 		}
 		return 0;
 	}
+
+    public int importXMLConsumptionDataForCar(long carId, InputStream inputFile) {
+        // remove old entries
+        dataSource.deleteConsumptionsForCar(carId);
+
+        try {
+            SAXBuilder builder = new SAXBuilder();
+            Document doc = (Document) builder.build(inputFile);
+            List<Consumption> conList = parseConsumptionFromDocument(doc, carId);
+            if (conList.size() > 0) {
+                dataSource.addConsumptions(conList);
+            }
+            return conList.size();
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.e("XMLHandler", "Exception while parsing XML document");
+        }
+        return 0;
+    }
 
 	public Car parseCarFromDocument(Document doc) {
 
