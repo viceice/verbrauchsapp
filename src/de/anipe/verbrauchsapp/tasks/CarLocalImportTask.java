@@ -1,23 +1,20 @@
 package de.anipe.verbrauchsapp.tasks;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
 import java.io.File;
 
-import de.anipe.verbrauchsapp.TabbedImportActivity;
 import de.anipe.verbrauchsapp.io.XMLHandler;
 
-/**
- * Created by kriese on 13.01.2015.
- */
 public class CarLocalImportTask extends AsyncTask<File, Void, Void> {
-    private TabbedImportActivity mCon;
+    private Activity mCon;
     private ProgressDialog myprogsdial;
     private int dataSets = 0;
 
-    public CarLocalImportTask(TabbedImportActivity con)
+    public CarLocalImportTask(Activity con)
     {
         mCon = con;
     }
@@ -41,12 +38,8 @@ public class CarLocalImportTask extends AsyncTask<File, Void, Void> {
     @Override
     protected void onPostExecute(Void nope) {
         myprogsdial.dismiss();
-        // Give some feedback on the UI.
         Toast.makeText(mCon,
                 "Fahrzeug mit " + dataSets + " Datensätzen importiert.",
                 Toast.LENGTH_LONG).show();
-
-        // Change the menu back
-        //mCon.endRefreshFragment();
     }
 }
