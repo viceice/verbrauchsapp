@@ -12,10 +12,15 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -41,6 +46,7 @@ import java.util.Map;
 
 import de.anipe.verbrauchsapp.io.FileSystemAccessor;
 import de.anipe.verbrauchsapp.io.XMLHandler;
+import de.anipe.verbrauchsapp.tasks.UpdateTask;
 
 public class TabbedImportActivity extends FragmentActivity implements ConnectionCallbacks, OnConnectionFailedListener {
 	
@@ -49,8 +55,9 @@ public class TabbedImportActivity extends FragmentActivity implements Connection
     private ViewPager viewPager;
     
     private static String[] gDriveFiles;
-	
-	@Override
+    private Menu menu;
+
+    @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_collection_import);
@@ -63,8 +70,30 @@ public class TabbedImportActivity extends FragmentActivity implements Connection
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
-	
-	@Override
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        this.menu = menu;
+        getMenuInflater().inflate(R.menu.car_import, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_refresh:
+                ImageView iv = (ImageView)getLayoutInflater().inflate(R.layout.iv_refresh, null);
+                Animation rotation = AnimationUtils.loadAnimation(this, R.anim.rotate_refresh);
+                rotation.setRepeatCount(Animation.INFINITE);
+                iv.startAnimation(rotation);
+                item.setActionView(iv);
+                new UpdateTask(this).execute();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
 	protected void onResume() {
 		super.onResume();
 		if (mGoogleApiClient == null) {
@@ -163,7 +192,18 @@ public class TabbedImportActivity extends FragmentActivity implements Connection
 		}
 	};
 
-	// Since this is an object collection, use a FragmentStatePagerAdapter,
+    public void resetUpdating() {
+        // Get our refresh item from the menu
+        MenuItem m = menu.findItem(R.id.action_refresh);
+        if(m.getActionView()!=null)
+        {
+            // Remove the animation.
+            m.getActionView().clearAnimation();
+            m.setActionView(null);
+        }
+    }
+
+    // Since this is an object collection, use a FragmentStatePagerAdapter,
 	// and NOT a FragmentPagerAdapter.
 	public class ImportPagerAdapter extends FragmentStatePagerAdapter {
 		
