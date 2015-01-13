@@ -1,10 +1,7 @@
 package de.anipe.verbrauchsapp;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,9 +10,8 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 
-import de.anipe.verbrauchsapp.fragments.GDriveImportFragment;
+import de.anipe.verbrauchsapp.adapters.ImportPagerAdapter;
 import de.anipe.verbrauchsapp.fragments.ImportFragment;
-import de.anipe.verbrauchsapp.fragments.LocalImportFragment;
 
 public class TabbedImportActivity extends FragmentActivity {
 
@@ -33,7 +29,7 @@ public class TabbedImportActivity extends FragmentActivity {
 
         // ViewPager and its adapters use support library
         // fragments, so use getSupportFragmentManager.
-        pagerAdapter = new ImportPagerAdapter(getSupportFragmentManager());
+        pagerAdapter = new ImportPagerAdapter(this);
         viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(pagerAdapter);
 
@@ -94,44 +90,5 @@ public class TabbedImportActivity extends FragmentActivity {
             --loader;
         invalidateOptionsMenu();
     }
-
-    // Since this is an object collection, use a FragmentStatePagerAdapter,
-    // and NOT a FragmentPagerAdapter.
-    public class ImportPagerAdapter extends FragmentStatePagerAdapter {
-
-        private final LocalImportFragment localImportFragment;
-        private final GDriveImportFragment gDriveImportFragment;
-
-        public ImportPagerAdapter(FragmentManager fm) {
-            super(fm);
-            localImportFragment = new LocalImportFragment();
-            gDriveImportFragment = new GDriveImportFragment();
-        }
-
-        @Override
-        public Fragment getItem(int i) {
-
-            if (i == 0)
-                return localImportFragment;
-            else
-                return gDriveImportFragment;
-        }
-
-        @Override
-        public int getCount() {
-            return 2;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            if (position == 0) {
-                return getString(R.string.actionbar_local);
-            } else {
-                return getString(R.string.actionbar_remote);
-            }
-        }
-    }
-
-
 }
 
