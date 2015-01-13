@@ -4,13 +4,9 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Map;
 
-import de.anipe.verbrauchsapp.TabbedImportActivity;
 import de.anipe.verbrauchsapp.tasks.CarLocalImportTask;
 import de.anipe.verbrauchsapp.tasks.UpdateLocalCarList;
 
-/**
- * Created by kriese on 13.01.2015.
- */
 public class LocalImportFragment extends ImportFragment {
 
     private Map<String, File> fileMapping;
@@ -28,6 +24,6 @@ public class LocalImportFragment extends ImportFragment {
 
     @Override
     public void onImport(String item) {
-        new CarLocalImportTask((TabbedImportActivity) getActivity()).execute(fileMapping.get(item));
+        new CarLocalImportTask(getActivity()).execute(fileMapping.get(item));
     }
 }

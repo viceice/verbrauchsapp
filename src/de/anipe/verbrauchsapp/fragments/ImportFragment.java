@@ -13,9 +13,6 @@ import java.util.ArrayList;
 
 import de.anipe.verbrauchsapp.R;
 
-/**
- * Created by kriese on 13.01.2015.
- */
 public abstract class ImportFragment extends Fragment implements AdapterView.OnItemClickListener {
 
     private ArrayAdapter<String> adapter;

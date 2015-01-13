@@ -8,14 +8,10 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.drive.Drive;
-import com.google.android.gms.drive.DriveApi;
-import com.google.android.gms.drive.DriveFolder;
 import com.google.android.gms.drive.Metadata;
 import com.google.android.gms.drive.MetadataBuffer;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -29,14 +25,10 @@ import static com.google.android.gms.common.api.GoogleApiClient.ConnectionCallba
 import static com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import static com.google.android.gms.drive.DriveApi.MetadataBufferResult;
 
-/**
- * Created by kriese on 13.01.2015.
- */
 public class UpdateGDriveCarList extends AsyncTask<Void, Void, Void> {
     private GDriveImportFragment mCon;
-    //private ProgressDialog myprogsdial;
     private int dataSets = 0;
-    public HashMap<String, File> fileMapping;
+    public HashMap<String, String> fileMapping;
     private ArrayList<String> filesList;
     private GoogleApiClient mClient;
 
@@ -46,12 +38,6 @@ public class UpdateGDriveCarList extends AsyncTask<Void, Void, Void> {
                 .addApi(Drive.API)
                 .addScope(Drive.SCOPE_FILE);
         mClient = builder.build();
-    }
-
-    @Override
-    protected void onPreExecute() {
-//        myprogsdial = ProgressDialog.show(mCon.getActivity(),
-//                "Export-Suche", "Bitte warten ...", true);
     }
 
     @Override
@@ -88,40 +74,37 @@ public class UpdateGDriveCarList extends AsyncTask<Void, Void, Void> {
         if (!mClient.isConnected()) {
             return null;
         }
+
         try {
             filesList = new ArrayList<String>();
-            //fileMapping = new HashMap<String, File>();
-            latch.reset();
+            fileMapping = new HashMap<String, String>();
 
-            DriveFolder folder = Drive.DriveApi.getFolder(mClient, Drive.DriveApi.getRootFolder(mClient).getDriveId());
-            folder.listChildren(mClient).setResultCallback(new ResultCallback<DriveApi.MetadataBufferResult>() {
+            MetadataBufferResult result = Drive.DriveApi
+                    .getFolder(mClient, Drive.DriveApi.getRootFolder(mClient).getDriveId())
+                    .listChildren(mClient).await();
 
-                @Override
-                public void onResult(MetadataBufferResult result) {
-                    try {
-                        MetadataBuffer buffer = result.getMetadataBuffer();
+            if (!result.getStatus().isSuccess())
+            {
+                Log.w("UpdateGDriveCarList", result.getStatus().getStatusMessage());
+                return null;
+            }
 
-                        for (int i = 0; i < buffer.getCount(); i++) {
-                            Metadata meta = buffer.get(i);
-                            if (!meta.isTrashed() && !(meta.getTitle() == null)) {
-                                filesList.add(meta.getTitle());
-                                dataSets++;
-                            }
-                        }
-
-                        buffer.release();
-                    } catch (Exception e){
-                        Log.e("UpdateGDriveCarList", "Error listing files", e);
-                    } finally {
-                        latch.countDown();
+            MetadataBuffer buffer = result.getMetadataBuffer();
+            try {
+                for (int i = 0; i < buffer.getCount(); i++) {
+                    Metadata meta = buffer.get(i);
+                    String title = meta.getTitle();
+                    if (!meta.isTrashed() && !(title == null)) {
+                        filesList.add(title);
+                        fileMapping.put(title, meta.getDriveId().encodeToString());
+                        dataSets++;
                     }
                 }
-            });
 
-            try {
-                latch.await();
-            } catch (InterruptedException e) {
-                return null;
+            } catch (Exception e) {
+                Log.e("UpdateGDriveCarList", "Error listing files", e);
+            } finally {
+                buffer.release();
             }
 
             Collections.sort(filesList);
@@ -134,12 +117,10 @@ public class UpdateGDriveCarList extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected void onPostExecute(Void nope) {
-//        myprogsdial.dismiss();
 
         ((TabbedImportActivity) mCon.getActivity()).endRefreshFragment();
 
         if (dataSets == 0) {
-            // Give some feedback on the UI.
             Toast.makeText(mCon.getActivity(),
                     "Keine gDrive Exports gefunden.",
                     Toast.LENGTH_LONG).show();
@@ -149,6 +130,6 @@ public class UpdateGDriveCarList extends AsyncTask<Void, Void, Void> {
         Toast.makeText(mCon.getActivity(), dataSets + " gDrive Exports gefunden.",
                 Toast.LENGTH_LONG).show();
 
-        mCon.update(filesList);
+        mCon.update(filesList, fileMapping);
     }
 }

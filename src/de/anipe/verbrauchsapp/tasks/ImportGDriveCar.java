@@ -2,7 +2,6 @@ package de.anipe.verbrauchsapp.tasks;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.IntentSender;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -11,38 +10,21 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.drive.Drive;
-import com.google.android.gms.drive.DriveApi;
 import com.google.android.gms.drive.DriveContents;
 import com.google.android.gms.drive.DriveFile;
-import com.google.android.gms.drive.DriveFolder;
-import com.google.android.gms.drive.Metadata;
-import com.google.android.gms.drive.MetadataBuffer;
-import com.google.android.gms.drive.query.Filters;
-import com.google.android.gms.drive.query.Query;
-import com.google.android.gms.drive.query.SearchableField;
+import com.google.android.gms.drive.DriveId;
 
-import java.io.File;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 
-import de.anipe.verbrauchsapp.TabbedImportActivity;
-import de.anipe.verbrauchsapp.fragments.GDriveImportFragment;
 import de.anipe.verbrauchsapp.io.XMLHandler;
 import de.anipe.verbrauchsapp.util.ResetableCountDownLatch;
 
 import static com.google.android.gms.common.api.GoogleApiClient.Builder;
 import static com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import static com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
-import static com.google.android.gms.drive.DriveApi.*;
-import static com.google.android.gms.drive.DriveApi.MetadataBufferResult;
+import static com.google.android.gms.drive.DriveApi.DriveContentsResult;
 
-/**
- * Created by kriese on 13.01.2015.
- */
 public class ImportGDriveCar extends AsyncTask<String, Void, Void> {
     private Activity mCon;
     private ProgressDialog myprogsdial;
@@ -99,37 +81,25 @@ public class ImportGDriveCar extends AsyncTask<String, Void, Void> {
         }
         try {
 
-            DriveFolder folder = Drive.DriveApi.getFolder(mClient, Drive.DriveApi.getRootFolder(mClient).getDriveId());
-            Query query = new Query.Builder()
-                    .addFilter(Filters.eq(SearchableField.TITLE, params[0]))
-                    .build();
+            DriveFile file = Drive.DriveApi.getFile(mClient, DriveId.decodeFromString(params[0]));
+            DriveContentsResult result = file.open(mClient, DriveFile.MODE_READ_ONLY, null).await();
 
-            MetadataBuffer buffer = folder.queryChildren(mClient, query).await().getMetadataBuffer();
+            if (!result.getStatus().isSuccess())
+            {
+                Log.w("ImportGDriveCar", result.getStatus().getStatusMessage());
+                return null;
+            }
+
             DriveContents content = null;
             try {
-                if (buffer.getCount() == 1) {
-                    Metadata meta = buffer.get(0);
-                    if (!meta.isTrashed() && params[0].equals(meta.getTitle())) {
+                content = result.getDriveContents();
+                InputStream stream = content.getInputStream();
 
-                        DriveFile file = Drive.DriveApi.getFile(mClient, meta.getDriveId());
-
-                        DriveContentsResult result = file.open(mClient, DriveFile.MODE_READ_ONLY, null).await();
-                        if (!result.getStatus().isSuccess())
-                            return null;
-
-                        content = result.getDriveContents();
-
-                        InputStream stream = content.getInputStream();
-
-                        XMLHandler xmlImporter = new XMLHandler(mCon);
-                        dataSets = xmlImporter.importXMLCarDataWithConsumption(stream);
-                    }
-                }
+                XMLHandler xmlImporter = new XMLHandler(mCon);
+                dataSets = xmlImporter.importXMLCarDataWithConsumption(stream);
             } finally {
                 if (content != null)
                     content.discard(mClient);
-
-                buffer.release();
             }
         } catch (Exception e) {
             Log.e("ImportGDriveCar", "Exception while importing from gdrive. ", e);
