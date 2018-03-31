@@ -10,6 +10,7 @@ import de.anipe.verbrauchsapp.objects.Fueltype;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -122,10 +123,15 @@ public class CarInputActivity extends ActionBarActivity {
 		super.onResume();
 	}
 
-	@Override
-	protected void onPostCreate(Bundle savedInstanceState) {
-		super.onPostCreate(savedInstanceState);
-	}
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
 	// Create an anonymous implementation of OnClickListener
 	private OnClickListener clickListener = new OnClickListener() {
