@@ -24,66 +24,66 @@ import de.anipe.verbrauchsapp.io.XMLHandler;
 
 public class ImportActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
-	private FileSystemAccessor accessor;
-	private CSVHandler csvImporter;
-	private XMLHandler xmlImporter;
-	private Map<String, File> fileMapping;
-	private long carId;
-	private boolean isCarImport = false;
+    private FileSystemAccessor accessor;
+    private CSVHandler csvImporter;
+    private XMLHandler xmlImporter;
+    private Map<String, File> fileMapping;
+    private long carId;
+    private boolean isCarImport = false;
     private ArrayAdapter<String> adapter;
 
     @Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.csvimport_layout);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.csvimport_layout);
 
-		Intent intent = getIntent();
-		Bundle bundle = intent.getExtras();
-		carId = bundle.getLong("carid");
-		isCarImport = bundle.getBoolean("iscarimport");
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        carId = bundle.getLong("carid");
+        isCarImport = bundle.getBoolean("iscarimport");
 
-		ArrayList<String> filesList = new ArrayList<String>();
-		fileMapping = new HashMap<String, File>();
+        ArrayList<String> filesList = new ArrayList<String>();
+        fileMapping = new HashMap<String, File>();
 
-		accessor = FileSystemAccessor.getInstance();
-		File[] files = accessor.readFilesFromStorageDir(accessor
-				.createOrGetStorageDir(MainActivity.STORAGE_DIR));
-		if (files != null && files.length > 0) {
-			for (File f : files) {
-				String name = f.getName();
-				if (name.toLowerCase().endsWith(".xml")) {
-					filesList.add(f.getName());
-					fileMapping.put(f.getName(), f);
-				}
-				if (name.toLowerCase().endsWith(".csv") && !isCarImport) {
-					filesList.add(f.getName());
-					fileMapping.put(f.getName(), f);
-				}
-			}
-		} else {
-			Toast.makeText(this, "Zielordner existiert nicht oder ist leer!",
-					Toast.LENGTH_LONG).show();
-		}
+        accessor = FileSystemAccessor.getInstance();
+        File[] files = accessor.readFilesFromStorageDir(accessor
+            .createOrGetStorageDir(MainActivity.STORAGE_DIR));
+        if (files != null && files.length > 0) {
+            for (File f : files) {
+                String name = f.getName();
+                if (name.toLowerCase().endsWith(".xml")) {
+                    filesList.add(f.getName());
+                    fileMapping.put(f.getName(), f);
+                }
+                if (name.toLowerCase().endsWith(".csv") && !isCarImport) {
+                    filesList.add(f.getName());
+                    fileMapping.put(f.getName(), f);
+                }
+            }
+        } else {
+            Toast.makeText(this, "Zielordner existiert nicht oder ist leer!",
+                Toast.LENGTH_LONG).show();
+        }
         adapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_list_item_1, filesList);
+            android.R.layout.simple_list_item_1, filesList);
         ListView view = (ListView) findViewById(android.R.id.list);
-		view.setAdapter(adapter);
+        view.setAdapter(adapter);
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-	}
+    }
 
-	@Override
+    @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		String item = adapter.getItem(position);
-		MyAsyncTask task = new MyAsyncTask();
-		task.item = item;
-		task.execute();
-	}
+        String item = adapter.getItem(position);
+        MyAsyncTask task = new MyAsyncTask();
+        task.item = item;
+        task.execute();
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case android.R.id.home:
                 NavUtils.navigateUpFromSameTask(this);
                 return true;
@@ -91,62 +91,71 @@ public class ImportActivity extends AppCompatActivity implements AdapterView.OnI
         return super.onOptionsItemSelected(item);
     }
 
-	protected int loadData(String item) {
-		int dataSets = 0;
-		if (isCarImport) {
-			xmlImporter = new XMLHandler(this);
-			long carId = xmlImporter.importXMLCarData(fileMapping.get(item));
-			dataSets = xmlImporter.importXMLConsumptionDataForCar(carId,
-					fileMapping.get(item));
-		} else {
-			if (fileMapping.get(item).getName().toLowerCase().endsWith(".csv")) {
-				csvImporter = new CSVHandler(this);
-				dataSets = csvImporter.importCSVDataForCar(carId,
-						fileMapping.get(item));
-			} else if (fileMapping.get(item).getName().toLowerCase()
-					.endsWith(".xml")) {
-				xmlImporter = new XMLHandler(this);
-				dataSets = xmlImporter.importXMLConsumptionDataForCar(carId,
-						fileMapping.get(item));
-			}
-		}
-		return dataSets;
-	}
+    protected int loadData(String item) {
+        int dataSets = 0;
+        if (isCarImport) {
+            xmlImporter = new XMLHandler(this);
+            long carId = xmlImporter.importXMLCarData(fileMapping.get(item));
+            dataSets = xmlImporter.importXMLConsumptionDataForCar(carId,
+                fileMapping.get(item));
+        } else {
+            if (fileMapping.get(item).getName().toLowerCase().endsWith(".csv")) {
+                csvImporter = new CSVHandler(this);
+                dataSets = csvImporter.importCSVDataForCar(carId,
+                    fileMapping.get(item));
+            } else if (fileMapping.get(item).getName().toLowerCase()
+                .endsWith(".xml")) {
+                xmlImporter = new XMLHandler(this);
+                dataSets = xmlImporter.importXMLConsumptionDataForCar(carId,
+                    fileMapping.get(item));
+            }
+        }
+        return dataSets;
+    }
 
-	class MyAsyncTask extends AsyncTask<Void, Void, Void> {
-		ProgressDialog myprogsdial;
-		int dataSets = 0;
-		String item;
+    class MyAsyncTask extends AsyncTask<Void, Void, Void> {
+        ProgressDialog myprogsdial;
+        int dataSets = 0;
+        boolean error = false;
+        String item;
 
-		@Override
-		protected void onPreExecute() {
-			myprogsdial = ProgressDialog.show(ImportActivity.this,
-					"Datensatz-Import", "Bitte warten ...", true);
-		}
+        @Override
+        protected void onPreExecute() {
+            myprogsdial = ProgressDialog.show(ImportActivity.this,
+                "Datensatz-Import", "Bitte warten ...", true);
+        }
 
-		@Override
-		protected Void doInBackground(Void... params) {
-			dataSets = loadData(item);
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                dataSets = loadData(item);
+            } catch (Throwable  e) {
+                error = true;
+                Toast.makeText(ImportActivity.this,
+                    "Fehler: " + e.getLocalizedMessage(), Toast.LENGTH_LONG)
+                    .show();
+            }
+            return null;
+        }
 
-			return null;
-		}
+        @Override
+        protected void onPostExecute(Void result) {
+            myprogsdial.dismiss();
 
-		@Override
-		protected void onPostExecute(Void result) {
-			myprogsdial.dismiss();
+            if (!error) {
+                if (isCarImport) {
+                    Toast.makeText(
+                        ImportActivity.this,
+                        "Fahrzeug mit " + dataSets + " Datensätzen importiert.",
+                        Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(ImportActivity.this,
+                        dataSets + " Datensätze importiert.", Toast.LENGTH_LONG)
+                        .show();
+                }
+            }
 
-			if (isCarImport) {
-				Toast.makeText(
-						ImportActivity.this,
-						"Fahrzeug mit " + dataSets + " Datensätzen importiert.",
-						Toast.LENGTH_LONG).show();
-			} else {
-				Toast.makeText(ImportActivity.this,
-						dataSets + " Datensätze importiert.", Toast.LENGTH_LONG)
-						.show();
-			}
-
-			finish();
-		}
-	}
+            finish();
+        }
+    }
 }

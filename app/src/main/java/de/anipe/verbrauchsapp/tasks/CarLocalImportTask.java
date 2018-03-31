@@ -13,32 +13,40 @@ public class CarLocalImportTask extends AsyncTask<File, Void, Void> {
     private Activity mCon;
     private ProgressDialog myprogsdial;
     private int dataSets = 0;
+    private Throwable _error = null;
 
-    public CarLocalImportTask(Activity con)
-    {
+    public CarLocalImportTask(Activity con) {
         mCon = con;
     }
 
     @Override
     protected void onPreExecute() {
         myprogsdial = ProgressDialog.show(mCon,
-                "Datensatz-Import", "Bitte warten ...", true);
+            "Datensatz-Import", "Bitte warten ...", true);
     }
 
     @Override
     protected Void doInBackground(File... params) {
-        XMLHandler xmlImporter = new XMLHandler(mCon);
-        File file = params[0];
-        long carId = xmlImporter.importXMLCarData(file);
-        dataSets = xmlImporter.importXMLConsumptionDataForCar(carId, file);
-
+        try {
+            XMLHandler xmlImporter = new XMLHandler(mCon);
+            File file = params[0];
+            long carId = xmlImporter.importXMLCarData(file);
+            dataSets = xmlImporter.importXMLConsumptionDataForCar(carId, file);
+        } catch (Throwable e) {
+            _error = e;
+        }
         return null;
     }
 
     @Override
     protected void onPostExecute(Void nope) {
         myprogsdial.dismiss();
-        Toast.makeText(mCon,
+        if (_error != null) {
+            Toast.makeText(mCon,
+                "Fehler beim Importieren: " + _error.getLocalizedMessage(),
+                Toast.LENGTH_LONG).show();
+        } else
+            Toast.makeText(mCon,
                 "Fahrzeug mit " + dataSets + " Datensätzen importiert.",
                 Toast.LENGTH_LONG).show();
     }
