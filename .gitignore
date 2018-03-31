@@ -1,0 +1,7 @@
+/.settings/
+/gen/
+/.gradle/
+/.idea/
+/VerbrauchsApp.iml
+/local.properties
+/build
