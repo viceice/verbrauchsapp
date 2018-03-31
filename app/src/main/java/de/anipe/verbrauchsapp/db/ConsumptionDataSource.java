@@ -60,7 +60,7 @@ public class ConsumptionDataSource implements Serializable {
 		Cursor cursor = database.query(DBHelper.TABLE_CONSUMPTIONS, null,
 				DBHelper.CONSUMPTION_CAR_ID + "=?",
 				new String[] { String.valueOf(carId) }, null, null,
-				DBHelper.CONSUMPTION_COLUMN_DATE);
+				DBHelper.CONSUMPTION_COLUMN_DATE + " desc");
 
 		while (cursor.moveToNext()) {
 			Consumption cons = cursorToConsumption(cursor);
