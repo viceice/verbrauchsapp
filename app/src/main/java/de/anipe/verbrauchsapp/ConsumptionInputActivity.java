@@ -3,6 +3,7 @@ package de.anipe.verbrauchsapp;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -18,12 +19,13 @@ import java.util.Calendar;
 import java.util.Date;
 
 import de.anipe.verbrauchsapp.db.ConsumptionDataSource;
+import de.anipe.verbrauchsapp.fragments.DatePickerFragment;
 import de.anipe.verbrauchsapp.objects.Consumption;
 
 /**
  *
  */
-public class ConsumptionInputActivity extends Activity {
+public class ConsumptionInputActivity extends Activity implements DatePickerFragment.OnFragmentInteractionListener {
 
 	private ConsumptionDataSource dataSource;
 	private long carId;
@@ -80,44 +82,16 @@ public class ConsumptionInputActivity extends Activity {
 		super.onResume();
 	}
 
-	@Override
-	protected void onPostCreate(Bundle savedInstanceState) {
-		super.onPostCreate(savedInstanceState);
-	}
-
-	@Override
-	protected Dialog onCreateDialog(int id) {
-		final Calendar c = Calendar.getInstance();
-		int year = c.get(Calendar.YEAR);
-		int month = c.get(Calendar.MONTH);
-		int day = c.get(Calendar.DAY_OF_MONTH);
-		switch (id) {
-		case Date_Dialog_ID:
-			return new DatePickerDialog(this, mDateSetListener, year, month,
-					day);
-		}
-		return null;
-	}
-
-	private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
-		// onDateSet method
-		public void onDateSet(DatePicker view, int year, int monthOfYear,
-				int dayOfMonth) {
-			EditText dateText = findViewById(R.id.datumTextLine);
-			String dateSelected = String.valueOf(dayOfMonth) + "."
-					+ String.valueOf(monthOfYear + 1) + "."
-					+ String.valueOf(year);
-			dateText.setText(dateSelected);
-		}
-	};
-
 	// Create an anonymous implementation of OnClickListener
 	private OnClickListener clickListener = new OnClickListener() {
 		@SuppressWarnings("deprecation")
 		public void onClick(View v) {
 			switch (v.getId()) {
 			case R.id.datumTextLine:
-				showDialog(Date_Dialog_ID);
+				// showDialog(Date_Dialog_ID);
+                DialogFragment f = DatePickerFragment.newInstance(getCalendarFromDateText(((EditText) findViewById(R.id.datumTextLine))
+                    .getText().toString()));
+                f.show(getFragmentManager(), "datePicker");
 				break;
 			case R.id.button_add_consumption:
 				if (verify()) {
@@ -215,13 +189,17 @@ public class ConsumptionInputActivity extends Activity {
 			return true;
 		}
 
-		private Date getDateFromDateText(String text) {
-			Calendar cal = Calendar.getInstance();
-			String[] date = text.split("\\.");
-			cal.set(Integer.parseInt(date[2]), Integer.parseInt(date[1]) - 1,
-					Integer.parseInt(date[0]));
+        private Calendar getCalendarFromDateText(String text) {
+            Calendar cal = Calendar.getInstance();
+            String[] date = text.split("\\.");
+            cal.set(Integer.parseInt(date[2]), Integer.parseInt(date[1]) - 1,
+                Integer.parseInt(date[0]));
 
-			return cal.getTime();
+            return cal;
+        }
+
+		private Date getDateFromDateText(String text) {
+			return getCalendarFromDateText(text).getTime();
 		}
 
 		private double calculateConsumption(double liters, int drivenKm) {
@@ -237,5 +215,14 @@ public class ConsumptionInputActivity extends Activity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onFragmentInteraction(Calendar date) {
+        EditText dateText = findViewById(R.id.datumTextLine);
+        String dateSelected = String.valueOf(date.get(Calendar.DAY_OF_MONTH)) + "."
+            + String.valueOf(date.get(Calendar.MONTH) + 1) + "."
+            + String.valueOf(date.get(Calendar.YEAR));
+        dateText.setText(dateSelected);
     }
 }

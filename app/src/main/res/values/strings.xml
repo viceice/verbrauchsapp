@@ -38,9 +38,9 @@
     <string name="action_add_picture">Fahrzeugbild laden</string>
     <string name="action_quit">Beenden</string>
 
-	<string name="actionbar_local">Lokal</string>
+    <string name="actionbar_local">Lokal</string>
     <string name="actionbar_remote">Google Drive</string>
-	
+
     <!--  -->
 
     <string name="car_input_name">Fahrzeug hinzufügen</string>
@@ -109,5 +109,9 @@
 
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+    <string name="cons_date_hint">Tankdatum</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
