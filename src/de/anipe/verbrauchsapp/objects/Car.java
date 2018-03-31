@@ -100,4 +100,14 @@ public class Car implements Comparable<Car> {
     public String toString() {
         return getType() + " " + getNumberPlate();
     }
+
+    @Override
+    public boolean equals(Object o) {
+        return o instanceof Car ? compareTo((Car)o) == 0 : false;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int)getCarId();
+    }
 }

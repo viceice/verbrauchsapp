@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import de.anipe.verbrauchsapp.IOnCarSelected;
 import de.anipe.verbrauchsapp.R;
 import de.anipe.verbrauchsapp.objects.Car;
 
@@ -28,15 +27,13 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.ViewHold
         View v = LayoutInflater.from(viewGroup.getContext())
                 .inflate(R.layout.layout_car_view, viewGroup, false);
 
-
-        ViewHolder vh = new ViewHolder(v);
-        return vh;
+        return new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
         Car car = data.get(i);
-        viewHolder.bind(i, car);
+        viewHolder.bind(car);
     }
 
     @Override
@@ -53,7 +50,6 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.ViewHold
         private TextView type;
         private TextView number;
         private Car mCar;
-        private int mPos;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -62,7 +58,7 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.ViewHold
                 @Override
                 public void onClick(View v) {
                     if (CarListAdapter.this.selected != null)
-                        CarListAdapter.this.selected.selected(mCar, mPos);
+                        CarListAdapter.this.selected.selected(mCar);
                 }
             });
 
@@ -71,12 +67,11 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.ViewHold
             number = (TextView) itemView.findViewById(R.id.numberplateLine);
         }
 
-        public void bind(int pos, Car car) {
+        public void bind(Car car) {
             type.setText(car.getType());
             number.setText(car.getNumberPlate());
             imgIcon.setImageBitmap(car.getIcon());
             mCar = car;
-            mPos = pos;
         }
     }
 

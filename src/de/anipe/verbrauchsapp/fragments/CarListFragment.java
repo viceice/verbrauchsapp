@@ -1,6 +1,5 @@
 package de.anipe.verbrauchsapp.fragments;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,7 +12,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import de.anipe.verbrauchsapp.IOnCarSelected;
+import de.anipe.verbrauchsapp.adapters.IOnCarSelected;
 import de.anipe.verbrauchsapp.MainActivity;
 import de.anipe.verbrauchsapp.R;
 import de.anipe.verbrauchsapp.adapters.CarListAdapter;
@@ -25,13 +24,12 @@ public class CarListFragment extends Fragment implements IOnCarSelected {
 
     private ConsumptionDataSource dataSource;
     private CarListAdapter adapter;
-    private RecyclerView rootView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         // The last two arguments ensure LayoutParams are inflated properly.
-        rootView = (RecyclerView) inflater.inflate(R.layout.car_listview, container, false);
+        RecyclerView rootView = (RecyclerView) inflater.inflate(R.layout.car_listview, container, false);
 
         rootView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
         rootView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -67,8 +65,8 @@ public class CarListFragment extends Fragment implements IOnCarSelected {
     }
 
     @Override
-    public void selected(Car car, int pos) {
+    public void selected(Car car) {
         MainActivity a = (MainActivity) getActivity();
-        a.selectCar(car, pos);
+        a.selectCar(car);
     }
 }

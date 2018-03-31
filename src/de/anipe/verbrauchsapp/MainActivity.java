@@ -18,6 +18,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 import de.anipe.verbrauchsapp.adapters.CarArrayAdapter;
 import de.anipe.verbrauchsapp.db.ConsumptionDataSource;
@@ -30,6 +32,7 @@ import de.anipe.verbrauchsapp.objects.Car;
  */
 public class MainActivity extends ActionBarActivity {
 
+    private final CarListFragment mCarListFragment = new CarListFragment();
     private ConsumptionDataSource dataSource;
     private ArrayAdapter<Car> adapter;
     public static final String STORAGE_DIR = "VerbrauchsApp";
@@ -37,6 +40,7 @@ public class MainActivity extends ActionBarActivity {
     private ListView mDrawerList;
     private Car mCar;
     private ActionBarDrawerToggle mDrawerToggle;
+    private final Map<Car, Fragment> mFragments = new HashMap<Car, Fragment>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,18 +67,23 @@ public class MainActivity extends ActionBarActivity {
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                selectCar(adapter.getItem(position), position);
+                selectCar(adapter.getItem(position));
                 mDrawerLayout.closeDrawer(mDrawerList);
             }
         });
 
-        if (mCar == null) {
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.content_frame, new CarListFragment())
-                    .commit();
-        }
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.content_frame, mCarListFragment)
+                .commit();
 
+        if (savedInstanceState != null) {
+            long carid = savedInstanceState.getLong("carid");
+
+            if (carid > 0) {
+                selectCar(dataSource.getCarForId(carid));
+            }
+        }
 
         mDrawerToggle = new ActionBarDrawerToggle(
                 this,                  /* host Activity */
@@ -111,15 +120,15 @@ public class MainActivity extends ActionBarActivity {
 
                 Fragment f = fm.findFragmentById(R.id.content_frame);
                 Bundle args = f.getArguments();
-                if (args == null){
+                if (args == null) {
                     mCar = null;
                     mDrawerList.clearChoices();
                     mDrawerList.requestLayout();
                     return;
                 }
-                int pos = args.getInt("pos");
-                mCar = adapter.getItem(pos);
-                mDrawerList.setItemChecked(pos, true);
+                int carid = args.getInt("carid");
+                mCar = dataSource.getCarForId(carid);
+                mDrawerList.setItemChecked(adapter.getPosition(mCar), true);
             }
         });
 
@@ -187,6 +196,14 @@ public class MainActivity extends ActionBarActivity {
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        if (mCar != null)
+            outState.putLong("carid", mCar.getCarId());
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
         //MenuInflater inflater = getMenuInflater();
@@ -229,31 +246,31 @@ public class MainActivity extends ActionBarActivity {
         MainActivity.this.startActivity(intent);
     }
 
-    public void selectCar(Car car, int pos) {
+    public void selectCar(Car car) {
         mCar = car;
+        int pos = adapter.getPosition(car);
         Fragment fragment;
 
         if (car != null) {
             Bundle args = new Bundle();
             args.putLong("carid", car.getCarId());
             args.putInt("pos", pos);
-            fragment = new CarContentFragment();
+            fragment = mFragments.get(mCar);
+            if (fragment == null) {
+                fragment = new CarContentFragment();
+                mFragments.put(mCar, fragment);
+            }
             fragment.setArguments(args);
-
         } else
-            fragment = new CarListFragment();
+            fragment = mCarListFragment;
 
         mDrawerList.setItemChecked(pos, true);
 
         getSupportFragmentManager()
                 .beginTransaction()
                 .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
-                .replace(R.id.content_frame, fragment, "car_" + pos)
+                .replace(R.id.content_frame, fragment)
                 .addToBackStack(null)
                 .commit();
-        //Intent intent = new Intent(this, CarContentActivity.class);
-        //intent.putExtra("carid", car.getCarId());
-
-        //startActivityForResult(intent, 999);
     }
 }
