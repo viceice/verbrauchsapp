@@ -1,9 +1,9 @@
 package de.anipe.verbrauchsapp;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -20,7 +20,7 @@ import java.util.Map;
 import de.anipe.verbrauchsapp.db.ConsumptionDataSource;
 import de.anipe.verbrauchsapp.io.FileSystemAccessor;
 
-public class PictureImportActivity extends Activity implements AdapterView.OnItemClickListener {
+public class PictureImportActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
 	private static final int MAX_FILE_SIZE = 6000000;
 	private ConsumptionDataSource dataSource;
@@ -72,7 +72,7 @@ public class PictureImportActivity extends Activity implements AdapterView.OnIte
         view.setAdapter(adapter);
 
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	private boolean isPictureFile(String lowerCase) {

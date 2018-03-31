@@ -72,7 +72,7 @@ public class GDriveStoreActivity extends GDriveBaseActivity {
 			finish();
 		}
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 //	@Override

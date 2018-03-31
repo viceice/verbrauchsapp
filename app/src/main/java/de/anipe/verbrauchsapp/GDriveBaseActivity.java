@@ -1,5 +1,11 @@
 package de.anipe.verbrauchsapp;
 
+import android.content.Intent;
+import android.content.IntentSender.SendIntentException;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -7,13 +13,7 @@ import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.drive.Drive;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.content.IntentSender.SendIntentException;
-import android.os.Bundle;
-import android.util.Log;
-
-public class GDriveBaseActivity extends Activity implements
+public class GDriveBaseActivity extends AppCompatActivity implements
 		ConnectionCallbacks, OnConnectionFailedListener {
 
 	private GoogleApiClient mGoogleApiClient;

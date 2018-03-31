@@ -1,19 +1,21 @@
 package de.anipe.verbrauchsapp;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import de.anipe.verbrauchsapp.adapters.ImportPagerAdapter;
 import de.anipe.verbrauchsapp.fragments.ImportFragment;
 
-public class TabbedImportActivity extends FragmentActivity {
+public class TabbedImportActivity extends AppCompatActivity {
 
     private ImportPagerAdapter pagerAdapter;
     private ViewPager viewPager;
@@ -38,7 +40,11 @@ public class TabbedImportActivity extends FragmentActivity {
         rotation.setRepeatCount(Animation.INFINITE);
         iv.startAnimation(rotation);
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        ActionBar ab = getSupportActionBar();
+        if (ab != null)
+            ab.setDisplayHomeAsUpEnabled(true);
+        else
+            Toast.makeText(this, "Missing actionbar!", Toast.LENGTH_LONG).show();
     }
 
     @Override

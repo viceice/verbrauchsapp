@@ -1,9 +1,9 @@
 package de.anipe.verbrauchsapp;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -21,7 +21,7 @@ import java.util.Locale;
 import de.anipe.verbrauchsapp.db.ConsumptionDataSource;
 import de.anipe.verbrauchsapp.objects.Consumption;
 
-public class GraphViewPlot extends Activity {
+public class GraphViewPlot extends AppCompatActivity {
 
 	private ConsumptionDataSource dataSource;
 	private long carId;
@@ -71,7 +71,7 @@ public class GraphViewPlot extends Activity {
 
 		layout.addView(gView);
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	private GraphViewData[] createDataLists() {

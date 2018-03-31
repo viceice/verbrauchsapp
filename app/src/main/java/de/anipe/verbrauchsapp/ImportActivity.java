@@ -1,10 +1,10 @@
 package de.anipe.verbrauchsapp;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,7 +21,7 @@ import de.anipe.verbrauchsapp.io.CSVHandler;
 import de.anipe.verbrauchsapp.io.FileSystemAccessor;
 import de.anipe.verbrauchsapp.io.XMLHandler;
 
-public class ImportActivity extends Activity implements AdapterView.OnItemClickListener {
+public class ImportActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private Map<String, File> fileMapping;
     private long carId;
@@ -66,7 +66,7 @@ public class ImportActivity extends Activity implements AdapterView.OnItemClickL
         view.setAdapter(adapter);
 
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

@@ -1,8 +1,8 @@
 package de.anipe.verbrauchsapp;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuInflater;
@@ -18,7 +18,7 @@ import de.anipe.verbrauchsapp.adapters.ConsumptionArrayAdapter;
 import de.anipe.verbrauchsapp.db.ConsumptionDataSource;
 import de.anipe.verbrauchsapp.objects.Consumption;
 
-public class ConsumptionListActivity extends Activity {
+public class ConsumptionListActivity extends AppCompatActivity {
 
 	private ConsumptionDataSource dataSource;
 	private ConsumptionArrayAdapter adapter;
@@ -50,7 +50,7 @@ public class ConsumptionListActivity extends Activity {
 
 		registerForContextMenu(view);
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override

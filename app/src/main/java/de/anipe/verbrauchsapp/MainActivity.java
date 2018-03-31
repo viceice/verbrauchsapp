@@ -1,14 +1,14 @@
 package de.anipe.verbrauchsapp;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,7 +29,7 @@ import de.anipe.verbrauchsapp.objects.Car;
 /**
  *
  */
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
     private final CarListFragment mCarListFragment = new CarListFragment();
     private ConsumptionDataSource dataSource;
@@ -68,7 +68,7 @@ public class MainActivity extends Activity {
             mDrawerLayout.closeDrawer(mDrawerList);
         });
 
-        getFragmentManager()
+        getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.content_frame, mCarListFragment)
                 .commit();
@@ -100,10 +100,10 @@ public class MainActivity extends Activity {
 
         mDrawerLayout.addDrawerListener(mDrawerToggle);
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
 
-        final FragmentManager fm = getFragmentManager();
+        final FragmentManager fm = getSupportFragmentManager();
         fm.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
             int mCount;
 
@@ -264,7 +264,7 @@ public class MainActivity extends Activity {
 
         mDrawerList.setItemChecked(pos, true);
 
-        getFragmentManager()
+        getSupportFragmentManager()
                 .beginTransaction()
                 .setCustomAnimations(R.animator.enter_from_right, R.animator.exit_to_left, R.animator.enter_from_left, R.animator.exit_to_right)
                 .replace(R.id.content_frame, fragment)
