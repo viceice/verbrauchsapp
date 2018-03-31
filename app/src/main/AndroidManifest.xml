@@ -62,12 +62,6 @@
             android:label="@string/cons_list_label"
             android:parentActivityName=".MainActivity" />
         <activity
-            android:name="de.anipe.verbrauchsapp.PlotActivity"
-            android:label="@string/cons_plot_header" />
-        <activity
-            android:name="de.anipe.verbrauchsapp.XYPlot"
-            android:label="@string/cons_plot_header" />
-        <activity
             android:name="de.anipe.verbrauchsapp.GraphViewPlot"
             android:label="@string/cons_plot_header"
             android:parentActivityName=".MainActivity" />

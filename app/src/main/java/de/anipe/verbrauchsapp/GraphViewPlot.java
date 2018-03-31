@@ -1,10 +1,9 @@
 package de.anipe.verbrauchsapp;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -22,7 +21,7 @@ import java.util.Locale;
 import de.anipe.verbrauchsapp.db.ConsumptionDataSource;
 import de.anipe.verbrauchsapp.objects.Consumption;
 
-public class GraphViewPlot extends AppCompatActivity {
+public class GraphViewPlot extends Activity {
 
 	private ConsumptionDataSource dataSource;
 	private long carId;
@@ -68,11 +67,11 @@ public class GraphViewPlot extends AppCompatActivity {
 
 		gView.setHorizontalLabels(xLabels);
 
-		LinearLayout layout = (LinearLayout) findViewById(R.id.chart);
+		LinearLayout layout = findViewById(R.id.chart);
 
 		layout.addView(gView);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	private GraphViewData[] createDataLists() {
@@ -85,7 +84,7 @@ public class GraphViewPlot extends AppCompatActivity {
 
 		for (int i = 0; i < consList.size(); i++) {
 			Consumption c = consList.get(i);
-			double y = (double)((Math.round(c.getConsumption()*100))/100.0);
+			double y = (Math.round(c.getConsumption()*100))/100.0;
 			data[i] = new GraphViewData(i, y);
 			xLabels[i] = sdf.format(c.getDate());
 			if (c.getConsumption() > maxY) {
@@ -101,7 +100,7 @@ public class GraphViewPlot extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
+                navigateUpTo(this.getParentActivityIntent());
                 return true;
         }
         return super.onOptionsItemSelected(item);

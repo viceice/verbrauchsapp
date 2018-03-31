@@ -1,11 +1,10 @@
 package de.anipe.verbrauchsapp;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,11 +21,8 @@ import de.anipe.verbrauchsapp.io.CSVHandler;
 import de.anipe.verbrauchsapp.io.FileSystemAccessor;
 import de.anipe.verbrauchsapp.io.XMLHandler;
 
-public class ImportActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class ImportActivity extends Activity implements AdapterView.OnItemClickListener {
 
-    private FileSystemAccessor accessor;
-    private CSVHandler csvImporter;
-    private XMLHandler xmlImporter;
     private Map<String, File> fileMapping;
     private long carId;
     private boolean isCarImport = false;
@@ -45,7 +41,7 @@ public class ImportActivity extends AppCompatActivity implements AdapterView.OnI
         ArrayList<String> filesList = new ArrayList<String>();
         fileMapping = new HashMap<String, File>();
 
-        accessor = FileSystemAccessor.getInstance();
+        FileSystemAccessor accessor = FileSystemAccessor.getInstance();
         File[] files = accessor.readFilesFromStorageDir(accessor
             .createOrGetStorageDir(MainActivity.STORAGE_DIR));
         if (files != null && files.length > 0) {
@@ -64,13 +60,13 @@ public class ImportActivity extends AppCompatActivity implements AdapterView.OnI
             Toast.makeText(this, "Zielordner existiert nicht oder ist leer!",
                 Toast.LENGTH_LONG).show();
         }
-        adapter = new ArrayAdapter<String>(this,
+        adapter = new ArrayAdapter<>(this,
             android.R.layout.simple_list_item_1, filesList);
-        ListView view = (ListView) findViewById(android.R.id.list);
+        ListView view = findViewById(android.R.id.list);
         view.setAdapter(adapter);
 
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -85,7 +81,7 @@ public class ImportActivity extends AppCompatActivity implements AdapterView.OnI
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
+                navigateUpTo(this.getParentActivityIntent());
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -93,6 +89,7 @@ public class ImportActivity extends AppCompatActivity implements AdapterView.OnI
 
     protected int loadData(String item) {
         int dataSets = 0;
+        XMLHandler xmlImporter;
         if (isCarImport) {
             xmlImporter = new XMLHandler(this);
             long carId = xmlImporter.importXMLCarData(fileMapping.get(item));
@@ -100,7 +97,7 @@ public class ImportActivity extends AppCompatActivity implements AdapterView.OnI
                 fileMapping.get(item));
         } else {
             if (fileMapping.get(item).getName().toLowerCase().endsWith(".csv")) {
-                csvImporter = new CSVHandler(this);
+                CSVHandler csvImporter = new CSVHandler(this);
                 dataSets = csvImporter.importCSVDataForCar(carId,
                     fileMapping.get(item));
             } else if (fileMapping.get(item).getName().toLowerCase()

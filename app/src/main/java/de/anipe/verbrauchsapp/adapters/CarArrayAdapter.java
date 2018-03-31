@@ -1,19 +1,18 @@
 package de.anipe.verbrauchsapp.adapters;
 
-import java.util.List;
-
-import de.anipe.verbrauchsapp.R;
-import de.anipe.verbrauchsapp.objects.Car;
-
 import android.app.Activity;
 import android.content.Context;
-import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import java.util.List;
+
+import de.anipe.verbrauchsapp.R;
+import de.anipe.verbrauchsapp.objects.Car;
 
 public class CarArrayAdapter extends ArrayAdapter<Car> {
 

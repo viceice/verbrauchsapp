@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -73,7 +72,7 @@ public class GDriveStoreActivity extends GDriveBaseActivity {
 			finish();
 		}
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 //	@Override
@@ -109,7 +108,7 @@ public class GDriveStoreActivity extends GDriveBaseActivity {
 					handler.createConsumptionDocument(),
 					MainActivity.STORAGE_DIR,
 					car.getBrand() + "_" + car.getType());
-			TextView xmlTv = (TextView) findViewById(R.id.xmlExportValueLine);
+			TextView xmlTv = findViewById(R.id.xmlExportValueLine);
 			xmlTv.setBackgroundColor(Color.GREEN);
 			xmlTv.setTextColor(Color.BLACK);
 			xmlTv.setText("OK");
@@ -119,7 +118,7 @@ public class GDriveStoreActivity extends GDriveBaseActivity {
 					"Fehler beim Schreiben der XML-Datei. Grund: "
 							+ e.getLocalizedMessage(), Toast.LENGTH_LONG)
 					.show();
-			TextView xmlTv = (TextView) findViewById(R.id.xmlExportValueLine);
+			TextView xmlTv = findViewById(R.id.xmlExportValueLine);
 			xmlTv.setBackgroundColor(Color.RED);
 			xmlTv.setTextColor(Color.BLACK);
 			xmlTv.setText("FEHLER");
@@ -138,7 +137,7 @@ public class GDriveStoreActivity extends GDriveBaseActivity {
 					"Fehler beim Upload der XML-Datei. Grund: "
 							+ e.getLocalizedMessage(), Toast.LENGTH_LONG)
 					.show();
-			TextView xmlTv = (TextView) findViewById(R.id.cloudExportValueLine);
+			TextView xmlTv = findViewById(R.id.cloudExportValueLine);
 			xmlTv.setBackgroundColor(Color.RED);
 			xmlTv.setTextColor(Color.BLACK);
 			xmlTv.setText("FEHLER");
@@ -161,7 +160,7 @@ public class GDriveStoreActivity extends GDriveBaseActivity {
 					"Exception while starting resolution activity", e);
 		}
 
-		TextView cloudTv = (TextView) findViewById(R.id.cloudExportValueLine);
+		TextView cloudTv = findViewById(R.id.cloudExportValueLine);
 		cloudTv.setBackgroundColor(Color.RED);
 		cloudTv.setTextColor(Color.BLACK);
 		cloudTv.setText("FEHLER");
@@ -197,7 +196,7 @@ public class GDriveStoreActivity extends GDriveBaseActivity {
 	public class CreateFileAsyncTask extends
 			GDriveAsyncTask<Void, Void, Metadata> {
 
-		public CreateFileAsyncTask(Context context) {
+		CreateFileAsyncTask(Context context) {
 			super(context);
 		}
 
@@ -264,7 +263,7 @@ public class GDriveStoreActivity extends GDriveBaseActivity {
 				// The creation failed somehow, so show a message.
 				// showMessage("Error while creating the file.");
 
-				TextView xmlTv = (TextView) findViewById(R.id.cloudExportValueLine);
+				TextView xmlTv = findViewById(R.id.cloudExportValueLine);
 				xmlTv.setTextColor(Color.RED);
 				xmlTv.setText("FEHLER");
 
@@ -275,7 +274,7 @@ public class GDriveStoreActivity extends GDriveBaseActivity {
 
 			Log.i("GDriveStoreActivity", "Writing to Drive ok. Created content size: " + result.getFileSize());
 
-			TextView xmlTv = (TextView) findViewById(R.id.cloudExportValueLine);
+			TextView xmlTv = findViewById(R.id.cloudExportValueLine);
 			xmlTv.setBackgroundColor(Color.GREEN);
 			xmlTv.setTextColor(Color.BLACK);
 			xmlTv.setText("OK");
@@ -286,7 +285,7 @@ public class GDriveStoreActivity extends GDriveBaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
+                navigateUpTo(this.getParentActivityIntent());
                 return true;
         }
         return super.onOptionsItemSelected(item);

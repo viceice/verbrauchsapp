@@ -1,8 +1,8 @@
 package de.anipe.verbrauchsapp;
 
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.animation.Animation;
@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import de.anipe.verbrauchsapp.adapters.ImportPagerAdapter;
 import de.anipe.verbrauchsapp.fragments.ImportFragment;
 
-public class TabbedImportActivity extends AppCompatActivity {
+public class TabbedImportActivity extends FragmentActivity {
 
     private ImportPagerAdapter pagerAdapter;
     private ViewPager viewPager;
@@ -30,7 +30,7 @@ public class TabbedImportActivity extends AppCompatActivity {
         // ViewPager and its adapters use support library
         // fragments, so use getSupportFragmentManager.
         pagerAdapter = new ImportPagerAdapter(this);
-        viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager = findViewById(R.id.pager);
         viewPager.setAdapter(pagerAdapter);
 
         iv = (ImageView) getLayoutInflater().inflate(R.layout.iv_refresh, null);
@@ -38,7 +38,7 @@ public class TabbedImportActivity extends AppCompatActivity {
         rotation.setRepeatCount(Animation.INFINITE);
         iv.startAnimation(rotation);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

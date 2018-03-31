@@ -1,10 +1,9 @@
 package de.anipe.verbrauchsapp;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,7 +20,7 @@ import java.util.Map;
 import de.anipe.verbrauchsapp.db.ConsumptionDataSource;
 import de.anipe.verbrauchsapp.io.FileSystemAccessor;
 
-public class PictureImportActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class PictureImportActivity extends Activity implements AdapterView.OnItemClickListener {
 
 	private static final int MAX_FILE_SIZE = 6000000;
 	private ConsumptionDataSource dataSource;
@@ -48,8 +47,8 @@ public class PictureImportActivity extends AppCompatActivity implements AdapterV
 					.show();
 		}
 
-		ArrayList<String> filesList = new ArrayList<String>();
-		fileMapping = new HashMap<String, File>();
+		ArrayList<String> filesList = new ArrayList<>();
+		fileMapping = new HashMap<>();
 
 		accessor = FileSystemAccessor.getInstance();
 		File[] files = accessor.readFilesFromStorageDir(accessor
@@ -66,14 +65,14 @@ public class PictureImportActivity extends AppCompatActivity implements AdapterV
 			Toast.makeText(this, "Zielordner existiert nicht oder ist leer!",
 					Toast.LENGTH_LONG).show();
 		}
-        adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, filesList);
-        ListView view = (ListView) findViewById(android.R.id.list);
+        adapter = new ArrayAdapter<>(this,
+            android.R.layout.simple_list_item_1, filesList);
+        ListView view = findViewById(android.R.id.list);
 
         view.setAdapter(adapter);
 
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	private boolean isPictureFile(String lowerCase) {
@@ -85,7 +84,7 @@ public class PictureImportActivity extends AppCompatActivity implements AdapterV
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
+                navigateUpTo(this.getParentActivityIntent());
                 return true;
         }
         return super.onOptionsItemSelected(item);

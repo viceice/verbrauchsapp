@@ -1,11 +1,10 @@
 package de.anipe.verbrauchsapp;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -24,7 +23,7 @@ import de.anipe.verbrauchsapp.objects.Consumption;
 /**
  *
  */
-public class ConsumptionInputActivity extends AppCompatActivity {
+public class ConsumptionInputActivity extends Activity {
 
 	private ConsumptionDataSource dataSource;
 	private long carId;
@@ -51,16 +50,16 @@ public class ConsumptionInputActivity extends AppCompatActivity {
 					.show();
 		}
 
-		EditText dateText = (EditText) findViewById(R.id.datumTextLine);
+		EditText dateText = findViewById(R.id.datumTextLine);
 		final Calendar c = Calendar.getInstance();
 		dateText.setText(c.get(Calendar.DAY_OF_MONTH) + "."
 				+ (c.get(Calendar.MONTH) + 1) + "." + c.get(Calendar.YEAR));
 		dateText.setOnClickListener(clickListener);
 
-		Button addButton = (Button) findViewById(R.id.button_add_consumption);
+		Button addButton = findViewById(R.id.button_add_consumption);
 		addButton.setOnClickListener(clickListener);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override
@@ -104,7 +103,7 @@ public class ConsumptionInputActivity extends AppCompatActivity {
 		// onDateSet method
 		public void onDateSet(DatePicker view, int year, int monthOfYear,
 				int dayOfMonth) {
-			EditText dateText = (EditText) findViewById(R.id.datumTextLine);
+			EditText dateText = findViewById(R.id.datumTextLine);
 			String dateSelected = String.valueOf(dayOfMonth) + "."
 					+ String.valueOf(monthOfYear + 1) + "."
 					+ String.valueOf(year);
@@ -161,7 +160,7 @@ public class ConsumptionInputActivity extends AppCompatActivity {
 		private boolean verify() {
 			String kmState = ((EditText) findViewById(R.id.cons_km_input))
 					.getText().toString();
-			if (kmState == null || kmState.equals("")) {
+			if (kmState.equals("")) {
 				Toast.makeText(ConsumptionInputActivity.this,
 						"Kilometerstand darf nicht leer sein!",
 						Toast.LENGTH_LONG).show();
@@ -234,7 +233,7 @@ public class ConsumptionInputActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
+                navigateUpTo(this.getParentActivityIntent());
                 return true;
         }
         return super.onOptionsItemSelected(item);

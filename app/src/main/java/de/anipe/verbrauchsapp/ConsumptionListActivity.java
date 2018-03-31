@@ -1,9 +1,8 @@
 package de.anipe.verbrauchsapp;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuInflater;
@@ -19,7 +18,7 @@ import de.anipe.verbrauchsapp.adapters.ConsumptionArrayAdapter;
 import de.anipe.verbrauchsapp.db.ConsumptionDataSource;
 import de.anipe.verbrauchsapp.objects.Consumption;
 
-public class ConsumptionListActivity extends AppCompatActivity {
+public class ConsumptionListActivity extends Activity {
 
 	private ConsumptionDataSource dataSource;
 	private ConsumptionArrayAdapter adapter;
@@ -46,12 +45,12 @@ public class ConsumptionListActivity extends AppCompatActivity {
 		adapter = new ConsumptionArrayAdapter(this,
 				R.layout.layout_consumption_view,
 				dataSource.getConsumptionCycles(carId));
-        ListView view = (ListView) findViewById(android.R.id.list);
+        ListView view = findViewById(android.R.id.list);
         view.setAdapter(adapter);
 
 		registerForContextMenu(view);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override
@@ -96,7 +95,7 @@ public class ConsumptionListActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
+                navigateUpTo(this.getParentActivityIntent());
                 return true;
         }
         return super.onOptionsItemSelected(item);

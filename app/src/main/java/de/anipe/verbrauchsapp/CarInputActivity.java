@@ -1,8 +1,8 @@
 package de.anipe.verbrauchsapp;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,7 +23,7 @@ import de.anipe.verbrauchsapp.objects.Fueltype;
 /**
  *
  */
-public class CarInputActivity extends AppCompatActivity {
+public class CarInputActivity extends Activity {
 
 	private ConsumptionDataSource dataSource;
 	private FileSystemAccessor accessor;
@@ -54,7 +54,7 @@ public class CarInputActivity extends AppCompatActivity {
 
 		accessor = FileSystemAccessor.getInstance();
 
-		Spinner fuelTypeSpinner = (Spinner) findViewById(R.id.fueltypes_spinner);
+		Spinner fuelTypeSpinner = findViewById(R.id.fueltypes_spinner);
 		ArrayAdapter<CharSequence> fuelAdapter = ArrayAdapter
 				.createFromResource(this, R.array.fuel_types,
 						android.R.layout.simple_spinner_item);
@@ -64,7 +64,7 @@ public class CarInputActivity extends AppCompatActivity {
 		// Apply the adapter to the spinner
 		fuelTypeSpinner.setAdapter(fuelAdapter);
 
-		Spinner brandSpinner = (Spinner) findViewById(R.id.brand_spinner);
+		Spinner brandSpinner = findViewById(R.id.brand_spinner);
 		ArrayAdapter<CharSequence> brandAdapter = ArrayAdapter
 				.createFromResource(this, R.array.brands,
 						android.R.layout.simple_spinner_item);
@@ -95,7 +95,7 @@ public class CarInputActivity extends AppCompatActivity {
 			fuelTypeSpinner.setSelection(spinnerPosition);
 		}
 
-		Button addButton = (Button) findViewById(R.id.button_add_car);
+		Button addButton = findViewById(R.id.button_add_car);
 		addButton.setOnClickListener(clickListener);
 
 		if (update) {
@@ -103,7 +103,7 @@ public class CarInputActivity extends AppCompatActivity {
 		}
 
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override
@@ -188,7 +188,7 @@ public class CarInputActivity extends AppCompatActivity {
 		private boolean verify() {
 			String carType = ((EditText) findViewById(R.id.car_type_input))
 					.getText().toString();
-			if (carType == null || carType.equals("")) {
+			if (carType.equals("")) {
 				Toast.makeText(CarInputActivity.this,
 						"Fahrzeugtyp darf nicht leer sein!", Toast.LENGTH_LONG)
 						.show();
@@ -196,7 +196,7 @@ public class CarInputActivity extends AppCompatActivity {
 			}
 			String carPlate = ((EditText) findViewById(R.id.car_numberplate_input))
 					.getText().toString();
-			if (carPlate == null || carPlate.equals("")) {
+			if (carPlate.equals("")) {
 				Toast.makeText(CarInputActivity.this,
 						"Kennzeichen darf nicht leer sein!", Toast.LENGTH_LONG)
 						.show();
@@ -204,7 +204,7 @@ public class CarInputActivity extends AppCompatActivity {
 			}
 			String startKm = ((EditText) findViewById(R.id.car_startkm_input))
 					.getText().toString();
-			if (startKm == null || startKm.equals("")) {
+			if (startKm.equals("")) {
 				Toast.makeText(CarInputActivity.this,
 						"Start-Kilometer darf nicht leer sein!",
 						Toast.LENGTH_LONG).show();

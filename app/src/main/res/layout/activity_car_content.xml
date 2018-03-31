@@ -1,208 +1,197 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" 
-    android:orientation="vertical" >
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/fullscreen_car_content"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
         android:textColor="#33b5e5"
         android:textSize="25sp"
-        android:layout_marginStart="6dp"
-	    android:layout_marginLeft="6dp"
         android:textStyle="bold" />
 
     <LinearLayout
-         android:layout_width="fill_parent"
-         android:layout_height="wrap_content"
-         android:orientation="horizontal" >
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-		<TextView  
-	        android:id="@+id/startkmTextLine"
-	        android:layout_weight="1"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content" 
-	        android:textSize="22sp"
-	        android:textStyle="bold"
-	        android:text="@string/startkm_text"
-	        android:singleLine="true"
-	        android:layout_marginTop="6dp"
-	        android:layout_marginStart="6dp"
-	        android:layout_marginLeft="6dp" />
-         
-         <TextView  
-	        android:id="@+id/startkmValueLine"
-	        android:layout_weight="2"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content" 
-	        android:textSize="22sp"
-	        android:singleLine="true"
-	        android:layout_marginTop="6dp"
-	        android:layout_marginStart="6dp"
-	        android:layout_marginLeft="6dp" />
-     </LinearLayout>
-     
+        <TextView
+            android:id="@+id/startkmTextLine"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="6dp"
+            android:layout_weight="1"
+            android:singleLine="true"
+            android:text="@string/startkm_text"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/startkmValueLine"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="6dp"
+            android:layout_weight="2"
+            android:singleLine="true"
+            android:textSize="22sp" />
+    </LinearLayout>
+
     <LinearLayout
-         android:layout_width="fill_parent"
-         android:layout_height="wrap_content"
-         android:orientation="horizontal" >
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-		<TextView  
-	        android:id="@+id/actualkmTextLine"
-	        android:layout_weight="1"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content" 
-	        android:textSize="22sp"
-	        android:textStyle="bold"
-	        android:text="@string/actualkm_text"
-	        android:singleLine="true"
-	        android:layout_marginTop="6dp"
-	        android:layout_marginStart="6dp"
-	        android:layout_marginLeft="6dp" />
-         
-         <TextView  
-	        android:id="@+id/actualkmValueLine"
-	        android:layout_weight="2"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content" 
-	        android:textSize="22sp"
-	        android:singleLine="true"
-	        android:layout_marginTop="6dp"
-	        android:layout_marginStart="6dp"
-	        android:layout_marginLeft="6dp" />
-     </LinearLayout>
-     
+        <TextView
+            android:id="@+id/actualkmTextLine"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="6dp"
+            android:layout_weight="1"
+            android:singleLine="true"
+            android:text="@string/actualkm_text"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/actualkmValueLine"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="6dp"
+            android:layout_weight="2"
+            android:singleLine="true"
+            android:textSize="22sp" />
+    </LinearLayout>
+
     <LinearLayout
-         android:layout_width="fill_parent"
-         android:layout_height="wrap_content"
-         android:orientation="horizontal" >
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-		<TextView  
-	        android:id="@+id/consumptionTextLine"
-	        android:layout_weight="1"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content" 
-	        android:textSize="22sp"
-	        android:textStyle="bold"
-	        android:text="@string/consumption_text"
-	        android:singleLine="true"
-	        android:layout_marginTop="6dp"
-	        android:layout_marginStart="6dp"
-	        android:layout_marginLeft="6dp" />
-         
-         <TextView  
-	        android:id="@+id/consumptionValueLine"
-	        android:layout_weight="2"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content" 
-	        android:textSize="22sp"
-	        android:singleLine="true"
-	        android:layout_marginTop="6dp"
-	        android:layout_marginStart="6dp"
-	        android:layout_marginLeft="6dp" />
-     </LinearLayout>
-     
+        <TextView
+            android:id="@+id/consumptionTextLine"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="6dp"
+            android:layout_weight="1"
+            android:singleLine="true"
+            android:text="@string/consumption_text"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/consumptionValueLine"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="6dp"
+            android:layout_weight="2"
+            android:singleLine="true"
+            android:textSize="22sp" />
+    </LinearLayout>
+
     <LinearLayout
-         android:layout_width="fill_parent"
-         android:layout_height="wrap_content"
-         android:orientation="horizontal" >
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-		<TextView  
-	        android:id="@+id/drivenKmTextLine"
-	        android:layout_weight="1"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content" 
-	        android:textSize="22sp"
-	        android:textStyle="bold"
-	        android:text="@string/drivenKm_text"
-	        android:singleLine="true"
-	        android:layout_marginTop="6dp"
-	        android:layout_marginStart="6dp"
-	        android:layout_marginLeft="6dp" />
-         
-         <TextView  
-	        android:id="@+id/drivenKmValueLine"
-	        android:layout_weight="2"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content" 
-	        android:textSize="22sp"
-	        android:singleLine="true"
-	        android:layout_marginTop="6dp"
-	        android:layout_marginStart="6dp"
-	        android:layout_marginLeft="6dp" />
-     </LinearLayout>
-     
+        <TextView
+            android:id="@+id/drivenKmTextLine"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="6dp"
+            android:layout_weight="1"
+            android:singleLine="true"
+            android:text="@string/drivenKm_text"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/drivenKmValueLine"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="6dp"
+            android:layout_weight="2"
+            android:singleLine="true"
+            android:textSize="22sp" />
+    </LinearLayout>
+
     <LinearLayout
-         android:layout_width="fill_parent"
-         android:layout_height="wrap_content"
-         android:orientation="horizontal" >
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-		<TextView  
-	        android:id="@+id/overallCostsTextLine"
-	        android:layout_weight="1"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content" 
-	        android:textSize="22sp"
-	        android:textStyle="bold"
-	        android:text="@string/overallCosts_text"
-	        android:singleLine="true"
-	        android:layout_marginTop="6dp"
-	        android:layout_marginStart="6dp"
-	        android:layout_marginLeft="6dp" />
-         
-         <TextView  
-	        android:id="@+id/overallCostsValueLine"
-	        android:layout_weight="2"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content" 
-	        android:textSize="22sp"
-	        android:singleLine="true"
-	        android:layout_marginTop="6dp"
-	        android:layout_marginStart="6dp"
-	        android:layout_marginLeft="6dp" />
-     </LinearLayout>
-    
-	<LinearLayout
-         android:layout_width="fill_parent"
-         android:layout_height="wrap_content"
-         android:orientation="horizontal" >
+        <TextView
+            android:id="@+id/overallCostsTextLine"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="6dp"
+            android:layout_weight="1"
+            android:singleLine="true"
+            android:text="@string/overallCosts_text"
+            android:textSize="22sp"
+            android:textStyle="bold" />
 
-		<ImageView  
-	        android:id="@+id/pictureLine"
-	        android:contentDescription="@string/picture_text"
-	        android:padding="10dp"
-	        android:layout_height="wrap_content" 
-	        android:layout_width="wrap_content" 
-	        android:orientation="vertical"
-	        android:layout_gravity="center_horizontal" />    
-     </LinearLayout>
-     
-     <LinearLayout
-         android:layout_width="fill_parent"
-         android:layout_height="wrap_content"
-         android:orientation="horizontal"
-         tools:ignore="UselessParent" >
+        <TextView
+            android:id="@+id/overallCostsValueLine"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:layout_marginTop="6dp"
+            android:layout_weight="2"
+            android:singleLine="true"
+            android:textSize="22sp" />
+    </LinearLayout>
 
-         <Button
-             android:id="@+id/addconsumption_button"
-             style="?metaButtonBarButtonStyle"
-             android:layout_width="fill_parent"
-             android:layout_height="wrap_content"
-             android:layout_weight="1"
-             android:layout_marginTop="6dp"
-             android:text="@string/addconsumption_button" />
-         
-         <Button
-             android:id="@+id/viewconsumptions_button"
-             style="?metaButtonBarButtonStyle"
-             android:layout_width="fill_parent"
-             android:layout_height="wrap_content"
-             android:layout_weight="1"
-             android:layout_marginTop="6dp"
-             android:text="@string/viewconsumptions_button" />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-     </LinearLayout>
+        <ImageView
+            android:id="@+id/pictureLine"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="@string/picture_text"
+            android:orientation="vertical"
+            android:padding="10dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:ignore="UselessParent">
+
+        <Button
+            android:id="@+id/addconsumption_button"
+            style="?metaButtonBarButtonStyle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_weight="1"
+            android:text="@string/addconsumption_button" />
+
+        <Button
+            android:id="@+id/viewconsumptions_button"
+            style="?metaButtonBarButtonStyle"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_weight="1"
+            android:text="@string/viewconsumptions_button" />
+
+    </LinearLayout>
 
 </LinearLayout>

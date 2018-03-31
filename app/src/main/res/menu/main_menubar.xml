@@ -1,15 +1,14 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" >
-		
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
 		<item android:id="@+id/action_add_car"
 			android:icon="@drawable/ic_action_new"
-			android:title="@string/action_add_car" 
-			app:showAsAction="ifRoom" />
-		
+			android:title="@string/action_add_car"
+            android:showAsAction="ifRoom" />
+
 		<item android:id="@+id/action_import_car"
 			android:icon="@drawable/ic_action_import_export"
 			android:title="@string/action_import_car" />
-		
+
 		<item android:id="@+id/action_quit"
 			android:icon="@drawable/ic_action_remove"
 			android:title="@string/action_quit" />

@@ -1,14 +1,14 @@
 package de.anipe.verbrauchsapp;
 
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,7 +30,7 @@ import de.anipe.verbrauchsapp.objects.Car;
 /**
  *
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     private final CarListFragment mCarListFragment = new CarListFragment();
     private ConsumptionDataSource dataSource;
@@ -59,8 +59,8 @@ public class MainActivity extends AppCompatActivity {
 
         adapter = new CarArrayAdapter(this, R.layout.drawer_car, dataSource.getCarList());
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        mDrawerLayout = findViewById(R.id.drawer_layout);
+        mDrawerList = findViewById(R.id.left_drawer);
 
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
         mDrawerList.setAdapter(adapter);
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        getSupportFragmentManager()
+        getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.content_frame, mCarListFragment)
                 .commit();
@@ -84,30 +84,30 @@ public class MainActivity extends AppCompatActivity {
                 selectCar(dataSource.getCarForId(carid));
             }
         }
+//
+//        mDrawerToggle = new ActionBarDrawerToggle(
+//                this,                  /* host Activity */
+//                mDrawerLayout,         /* DrawerLayout object */
+//                R.string.drawer_open,  /* "open drawer" description for accessibility */
+//                R.string.drawer_close  /* "close drawer" description for accessibility */
+//        ) {
+//            public void onDrawerClosed(View view) {
+//                //getActionBar().setTitle(mTitle);
+//                //invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+//            }
+//
+//            public void onDrawerOpened(View drawerView) {
+//                //getActionBar().setTitle(mDrawerTitle);
+//                //invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+//            }
+//        };
+//
+//        mDrawerLayout.setDrawerListener(mDrawerToggle);
 
-        mDrawerToggle = new ActionBarDrawerToggle(
-                this,                  /* host Activity */
-                mDrawerLayout,         /* DrawerLayout object */
-                R.string.drawer_open,  /* "open drawer" description for accessibility */
-                R.string.drawer_close  /* "close drawer" description for accessibility */
-        ) {
-            public void onDrawerClosed(View view) {
-                //getActionBar().setTitle(mTitle);
-                //invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
 
-            public void onDrawerOpened(View drawerView) {
-                //getActionBar().setTitle(mDrawerTitle);
-                //invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-        };
-
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeButtonEnabled(true);
-
-        final FragmentManager fm = getSupportFragmentManager();
+        final FragmentManager fm = getFragmentManager();
         fm.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
             public int mCount;
 
@@ -268,7 +268,7 @@ public class MainActivity extends AppCompatActivity {
 
         mDrawerList.setItemChecked(pos, true);
 
-        getSupportFragmentManager()
+        getFragmentManager()
                 .beginTransaction()
                 .setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right)
                 .replace(R.id.content_frame, fragment)

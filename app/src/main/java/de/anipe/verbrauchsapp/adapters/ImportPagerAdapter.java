@@ -3,13 +3,13 @@ package de.anipe.verbrauchsapp.adapters;
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentPagerAdapter;
 
 import de.anipe.verbrauchsapp.R;
 import de.anipe.verbrauchsapp.fragments.GDriveImportFragment;
 import de.anipe.verbrauchsapp.fragments.LocalImportFragment;
 
-public class ImportPagerAdapter extends FragmentStatePagerAdapter {
+public class ImportPagerAdapter extends FragmentPagerAdapter {
 
     private final LocalImportFragment localImportFragment;
     private final GDriveImportFragment gDriveImportFragment;

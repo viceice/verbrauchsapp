@@ -1,11 +1,11 @@
 package de.anipe.verbrauchsapp.fragments;
 
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -36,7 +36,7 @@ import de.anipe.verbrauchsapp.io.XMLHandler;
 import de.anipe.verbrauchsapp.objects.Car;
 
 /**
- * 
+ *
  */
 public class CarContentFragment extends Fragment {
 
@@ -63,10 +63,10 @@ public class CarContentFragment extends Fragment {
         // The last two arguments ensure LayoutParams are inflated properly.
         rootView = inflater.inflate(R.layout.activity_car_content, container, false);
 
-        Button b1 = (Button) rootView.findViewById(R.id.addconsumption_button);
+        Button b1 = rootView.findViewById(R.id.addconsumption_button);
         b1.setOnClickListener(clickListener);
 
-        Button b2 = (Button) rootView.findViewById(R.id.viewconsumptions_button);
+        Button b2 = rootView.findViewById(R.id.viewconsumptions_button);
         b2.setOnClickListener(clickListener);
 
         return rootView;
@@ -74,7 +74,7 @@ public class CarContentFragment extends Fragment {
 
     @Override
 	public void onResume() {
-		
+
 
 		updateView();
 
@@ -222,29 +222,29 @@ public class CarContentFragment extends Fragment {
 	private void updateView() {
 		Car car = dataSource.getCarForId(carId);
 
-		TextView header = (TextView) rootView.findViewById(R.id.fullscreen_car_content);
+		TextView header = rootView.findViewById(R.id.fullscreen_car_content);
 		header.setText(car.getBrand().value() + " " + car.getType());
 
-		TextView startkm = (TextView) rootView.findViewById(R.id.startkmValueLine);
+		TextView startkm = rootView.findViewById(R.id.startkmValueLine);
 		startkm.setText(String.valueOf(car.getStartKm()));
 
-		TextView actualkm = (TextView) rootView.findViewById(R.id.actualkmValueLine);
+		TextView actualkm = rootView.findViewById(R.id.actualkmValueLine);
 		int mileage = dataSource.getMileageForCar(carId);
 		actualkm.setText(String.valueOf(mileage));
 
-		TextView consumption = (TextView) rootView.findViewById(R.id.consumptionValueLine);
+		TextView consumption = rootView.findViewById(R.id.consumptionValueLine);
 		consumption.setText(new DecimalFormat("#.00").format(dataSource
 				.getOverallConsumptionForCar(carId)) + " l/100km");
 
-		TextView overallKm = (TextView) rootView.findViewById(R.id.drivenKmValueLine);
+		TextView overallKm = rootView.findViewById(R.id.drivenKmValueLine);
 		overallKm.setText(String.valueOf(mileage - car.getStartKm()));
 
-		TextView overallCosts = (TextView) rootView.findViewById(R.id.overallCostsValueLine);
+		TextView overallCosts = rootView.findViewById(R.id.overallCostsValueLine);
 		overallCosts.setText(new DecimalFormat("#0.00").format(dataSource
 				.getOverallCostsForCar(carId)) + " \u20ac");
 
 		if (car.getImage() != null) {
-			ImageView image = (ImageView) rootView.findViewById(R.id.pictureLine);
+			ImageView image = rootView.findViewById(R.id.pictureLine);
 			image.setImageBitmap(car.getImage());
 		}
 	}
