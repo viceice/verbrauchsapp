@@ -6,12 +6,12 @@ import java.util.Date;
 
 import de.anipe.verbrauchsapp.db.ConsumptionDataSource;
 import de.anipe.verbrauchsapp.objects.Consumption;
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,7 +23,7 @@ import android.widget.Toast;
 /**
  * 
  */
-public class ConsumptionInputActivity extends Activity {
+public class ConsumptionInputActivity extends ActionBarActivity {
 
 	private ConsumptionDataSource dataSource;
 	private long carId;
@@ -59,7 +59,7 @@ public class ConsumptionInputActivity extends Activity {
 		Button addButton = (Button) findViewById(R.id.button_add_consumption);
 		addButton.setOnClickListener(clickListener);
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override

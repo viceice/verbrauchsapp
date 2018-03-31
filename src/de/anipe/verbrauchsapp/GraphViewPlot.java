@@ -13,16 +13,16 @@ import com.jjoe64.graphview.LineGraphView;
 import de.anipe.verbrauchsapp.db.ConsumptionDataSource;
 import de.anipe.verbrauchsapp.objects.Consumption;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-public class GraphViewPlot extends Activity {
+public class GraphViewPlot extends ActionBarActivity {
 	
 	private ConsumptionDataSource dataSource;
 	private long carId;
@@ -72,7 +72,7 @@ public class GraphViewPlot extends Activity {
 		
 		layout.addView(gView);
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 	
 	private GraphViewData[] createDataLists() {

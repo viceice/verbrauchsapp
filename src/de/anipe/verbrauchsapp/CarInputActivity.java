@@ -7,9 +7,9 @@ import de.anipe.verbrauchsapp.io.FileSystemAccessor;
 import de.anipe.verbrauchsapp.objects.Brand;
 import de.anipe.verbrauchsapp.objects.Car;
 import de.anipe.verbrauchsapp.objects.Fueltype;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
@@ -21,7 +21,7 @@ import android.widget.Toast;
 /**
  * 
  */
-public class CarInputActivity extends Activity {
+public class CarInputActivity extends ActionBarActivity {
 
 	private ConsumptionDataSource dataSource;
 	private FileSystemAccessor accessor;
@@ -101,7 +101,7 @@ public class CarInputActivity extends Activity {
 		}
 
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override

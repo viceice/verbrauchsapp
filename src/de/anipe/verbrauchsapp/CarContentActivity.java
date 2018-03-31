@@ -1,17 +1,10 @@
 package de.anipe.verbrauchsapp;
 
-import java.sql.SQLException;
-import java.text.DecimalFormat;
-
-import de.anipe.verbrauchsapp.db.ConsumptionDataSource;
-import de.anipe.verbrauchsapp.io.FileSystemAccessor;
-import de.anipe.verbrauchsapp.io.XMLHandler;
-import de.anipe.verbrauchsapp.objects.Car;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,10 +16,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.sql.SQLException;
+import java.text.DecimalFormat;
+
+import de.anipe.verbrauchsapp.db.ConsumptionDataSource;
+import de.anipe.verbrauchsapp.io.FileSystemAccessor;
+import de.anipe.verbrauchsapp.io.XMLHandler;
+import de.anipe.verbrauchsapp.objects.Car;
+
 /**
  * 
  */
-public class CarContentActivity extends Activity {
+public class CarContentActivity extends ActionBarActivity {
 
 	private FileSystemAccessor accessor;
 	private ConsumptionDataSource dataSource;
@@ -62,7 +63,7 @@ public class CarContentActivity extends Activity {
 		Button b2 = (Button) findViewById(R.id.viewconsumptions_button);
 		b2.setOnClickListener(clickListener);
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override

@@ -1,5 +1,18 @@
 package de.anipe.verbrauchsapp;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.support.v4.app.NavUtils;
+import android.support.v7.app.ActionBarActivity;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,20 +21,8 @@ import java.util.Map;
 import de.anipe.verbrauchsapp.io.CSVHandler;
 import de.anipe.verbrauchsapp.io.FileSystemAccessor;
 import de.anipe.verbrauchsapp.io.XMLHandler;
-import android.app.ListActivity;
-import android.app.ProgressDialog;
-import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
-import android.widget.ListView;
-import android.widget.Toast;
 
-public class ImportActivity extends ListActivity {
+public class ImportActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
 
 	private FileSystemAccessor accessor;
 	private CSVHandler csvImporter;
@@ -29,8 +30,9 @@ public class ImportActivity extends ListActivity {
 	private Map<String, File> fileMapping;
 	private long carId;
 	private boolean isCarImport = false;
+    private ArrayAdapter<String> adapter;
 
-	@Override
+    @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.csvimport_layout);
@@ -62,17 +64,18 @@ public class ImportActivity extends ListActivity {
 			Toast.makeText(this, "Zielordner existiert nicht oder ist leer!",
 					Toast.LENGTH_LONG).show();
 		}
-		ListAdapter adapter = new ArrayAdapter<String>(this,
+        adapter = new ArrayAdapter<String>(this,
 				android.R.layout.simple_list_item_1, filesList);
-		setListAdapter(adapter);
+        ListView view = (ListView) findViewById(android.R.id.list);
+		view.setAdapter(adapter);
 
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override
-	protected void onListItemClick(ListView l, View v, int position, long id) {
-		String item = (String) getListAdapter().getItem(position);
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		String item = adapter.getItem(position);
 		MyAsyncTask task = new MyAsyncTask();
 		task.item = item;
 		task.execute();

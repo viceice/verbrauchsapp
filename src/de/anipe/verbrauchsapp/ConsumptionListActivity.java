@@ -5,19 +5,20 @@ import java.sql.SQLException;
 import de.anipe.verbrauchsapp.adapters.ConsumptionArrayAdapter;
 import de.anipe.verbrauchsapp.db.ConsumptionDataSource;
 import de.anipe.verbrauchsapp.objects.Consumption;
-import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
+import android.support.v7.app.ActionBarActivity;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.AdapterView.AdapterContextMenuInfo;
+import android.widget.ListView;
 import android.widget.Toast;
 
-public class ConsumptionListActivity extends ListActivity {
+public class ConsumptionListActivity extends ActionBarActivity {
 
 	private ConsumptionDataSource dataSource;
 	private ConsumptionArrayAdapter adapter;
@@ -44,11 +45,12 @@ public class ConsumptionListActivity extends ListActivity {
 		adapter = new ConsumptionArrayAdapter(this,
 				R.layout.layout_consumption_view,
 				dataSource.getConsumptionCycles(carId));
-		setListAdapter(adapter);
+        ListView view = (ListView) findViewById(android.R.id.list);
+        view.setAdapter(adapter);
 
-		registerForContextMenu(getListView());
+		registerForContextMenu(view);
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override
@@ -79,7 +81,7 @@ public class ConsumptionListActivity extends ListActivity {
 				.getMenuInfo();
 		switch (item.getItemId()) {
 		case R.id.delete_item:
-			Consumption cons = (Consumption) getListAdapter().getItem(
+			Consumption cons = adapter.getItem(
 					info.position);
 			dataSource.deleteConsumption(cons.getId());
 			adapter.update(dataSource.getConsumptionCycles(carId));

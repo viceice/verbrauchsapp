@@ -7,13 +7,13 @@ import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.drive.Drive;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 
-public class GDriveBaseActivity extends Activity implements
+public class GDriveBaseActivity extends ActionBarActivity implements
 		ConnectionCallbacks, OnConnectionFailedListener {
 
 	private GoogleApiClient mGoogleApiClient;
