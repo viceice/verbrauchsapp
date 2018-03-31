@@ -53,11 +53,11 @@ public class CarArrayAdapter extends ArrayAdapter<Car> {
 		holder.number.setText(car.getNumberPlate());
 		holder.imgIcon.setImageBitmap(car.getIcon());
 
-		if (position % 2 == 0) {
-			row.setBackgroundColor(Color.LTGRAY);
-		} else {
-			row.setBackgroundColor(Color.WHITE);
-		}
+//		if (position % 2 == 0) {
+//			row.setBackgroundColor(Color.LTGRAY);
+//		} else {
+//			row.setBackgroundColor(Color.WHITE);
+//		}
 
 		return row;
 	}

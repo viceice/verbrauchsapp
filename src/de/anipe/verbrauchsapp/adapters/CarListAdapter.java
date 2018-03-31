@@ -36,10 +36,7 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.ViewHold
     @Override
     public void onBindViewHolder(ViewHolder viewHolder, int i) {
         Car car = data.get(i);
-        viewHolder.type.setText(car.getType());
-        viewHolder.number.setText(car.getNumberPlate());
-        viewHolder.imgIcon.setImageBitmap(car.getIcon());
-        viewHolder.car = car;
+        viewHolder.bind(i, car);
     }
 
     @Override
@@ -52,10 +49,11 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.ViewHold
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView imgIcon;
-        TextView type;
-        TextView number;
-        Car car;
+        private ImageView imgIcon;
+        private TextView type;
+        private TextView number;
+        private Car mCar;
+        private int mPos;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -64,13 +62,21 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.ViewHold
                 @Override
                 public void onClick(View v) {
                     if (CarListAdapter.this.selected != null)
-                        CarListAdapter.this.selected.selected(car);
+                        CarListAdapter.this.selected.selected(mCar, mPos);
                 }
             });
 
             imgIcon = (ImageView) itemView.findViewById(R.id.brand_icon);
             type = (TextView) itemView.findViewById(R.id.typeLine);
             number = (TextView) itemView.findViewById(R.id.numberplateLine);
+        }
+
+        public void bind(int pos, Car car) {
+            type.setText(car.getType());
+            number.setText(car.getNumberPlate());
+            imgIcon.setImageBitmap(car.getIcon());
+            mCar = car;
+            mPos = pos;
         }
     }
 

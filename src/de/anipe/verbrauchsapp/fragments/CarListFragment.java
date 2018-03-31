@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -35,7 +36,9 @@ public class CarListFragment extends Fragment implements IOnCarSelected {
 
         rootView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
         rootView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rootView.setItemAnimator(new DefaultItemAnimator());
         rootView.setAdapter(this.adapter);
+        rootView.setHasFixedSize(true);
 
         return rootView;
     }
@@ -65,8 +68,8 @@ public class CarListFragment extends Fragment implements IOnCarSelected {
     }
 
     @Override
-    public void selected(Car car) {
+    public void selected(Car car, int pos) {
         MainActivity a = (MainActivity) getActivity();
-        a.selectCar(car);
+        a.selectCar(car, pos);
     }
 }

@@ -95,4 +95,9 @@ public class Car implements Comparable<Car> {
 	public void setImage(Bitmap image) {
 		this.image = image;
 	}
+
+    @Override
+    public String toString() {
+        return getType() + " " + getNumberPlate();
+    }
 }
