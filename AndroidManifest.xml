@@ -41,19 +41,9 @@
             android:parentActivityName=".MainActivity" >
         </activity>
         <activity
-			android:name="de.anipe.verbrauchsapp.CarListActivity"
-			android:label="@string/cars_view_name" >
-        </activity>
-        <activity
-			android:name="de.anipe.verbrauchsapp.CarContentActivity"
-			android:label="@string/car_dataset_label"
-            android:parentActivityName=".MainActivity"
-            android:launchMode="singleTop" >
-        </activity>
-        <activity
 			android:name="de.anipe.verbrauchsapp.ImportActivity"
 			android:label="@string/csv_import_label"
-            android:parentActivityName=".CarContentActivity" >
+            android:parentActivityName=".MainActivity" >
         </activity>
         <activity
 			android:name="de.anipe.verbrauchsapp.TabbedImportActivity"
@@ -63,18 +53,18 @@
         <activity
 			android:name="de.anipe.verbrauchsapp.PictureImportActivity"
 			android:label="@string/picture_import_label"
-            android:parentActivityName=".CarContentActivity" >
+            android:parentActivityName=".MainActivity" >
         </activity>
         <activity
 			android:name="de.anipe.verbrauchsapp.ConsumptionInputActivity"
 			android:windowSoftInputMode="adjustResize"
 			android:label="@string/cons_add_label"
-            android:parentActivityName=".CarContentActivity" >
+            android:parentActivityName=".MainActivity" >
         </activity>
         <activity
 			android:name="de.anipe.verbrauchsapp.ConsumptionListActivity"
 			android:label="@string/cons_list_label"
-            android:parentActivityName=".CarContentActivity" >
+            android:parentActivityName=".MainActivity" >
         </activity>
         <activity
 			android:name="de.anipe.verbrauchsapp.PlotActivity"
@@ -87,7 +77,7 @@
         <activity
 			android:name="de.anipe.verbrauchsapp.GraphViewPlot"
 			android:label="@string/cons_plot_header"
-            android:parentActivityName=".CarContentActivity" >
+            android:parentActivityName=".MainActivity" >
         </activity>
         <activity
 			android:name="de.anipe.verbrauchsapp.GDriveBaseActivity" >
@@ -95,7 +85,7 @@
         <activity
 			android:name="de.anipe.verbrauchsapp.GDriveStoreActivity"
 			android:label="@string/store_drive_label"
-            android:parentActivityName=".CarContentActivity" >
+            android:parentActivityName=".MainActivity" >
             <data android:mimeType="text/xml" />
             <data android:mimeType="text/csv" />
             <action android:name="com.google.android.apps.drive.DRIVE_OPEN" />

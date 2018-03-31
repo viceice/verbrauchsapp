@@ -13,7 +13,6 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import de.anipe.verbrauchsapp.CarContentActivity;
 import de.anipe.verbrauchsapp.IOnCarSelected;
 import de.anipe.verbrauchsapp.MainActivity;
 import de.anipe.verbrauchsapp.R;
