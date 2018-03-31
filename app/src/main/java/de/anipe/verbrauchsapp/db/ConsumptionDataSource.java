@@ -1,14 +1,5 @@
 package de.anipe.verbrauchsapp.db;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.Serializable;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -16,6 +7,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
+
 import de.anipe.verbrauchsapp.io.FileSystemAccessor;
 import de.anipe.verbrauchsapp.objects.Brand;
 import de.anipe.verbrauchsapp.objects.Car;
@@ -46,7 +46,7 @@ public class ConsumptionDataSource implements Serializable {
 		return dataSouce;
 	}
 
-	public void open() throws SQLException {
+	public void open() {
 		database = dbHelper.getWritableDatabase();
 	}
 
@@ -56,7 +56,7 @@ public class ConsumptionDataSource implements Serializable {
 
 	public List<Consumption> getConsumptionCycles(long carId) {
 
-		List<Consumption> consumptionCyclestList = new LinkedList<Consumption>();
+		List<Consumption> consumptionCyclestList = new LinkedList<>();
 		Cursor cursor = database.query(DBHelper.TABLE_CONSUMPTIONS, null,
 				DBHelper.CONSUMPTION_CAR_ID + "=?",
 				new String[] { String.valueOf(carId) }, null, null,
@@ -154,7 +154,7 @@ public class ConsumptionDataSource implements Serializable {
 
 	public List<Car> getCarList() {
 
-		List<Car> carList = new LinkedList<Car>();
+		List<Car> carList = new LinkedList<>();
 
 		Cursor cursor = database.query(DBHelper.TABLE_CARS, null, null, null,
 				null, null, DBHelper.CAR_COLUMN_TYPE);
@@ -169,7 +169,7 @@ public class ConsumptionDataSource implements Serializable {
 
 	public List<String> getCarTypesList() {
 
-		List<String> carTypesList = new ArrayList<String>();
+		List<String> carTypesList = new ArrayList<>();
 
 		Cursor cursor = database.query(DBHelper.TABLE_CARS,
 				new String[] { DBHelper.CAR_COLUMN_TYPE }, null, null, null,
