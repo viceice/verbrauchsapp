@@ -6,15 +6,9 @@
         <ignore path="src/de/anipe/verbrauchsapp/ImportActivity.java" />
         <ignore path="src/de/anipe/verbrauchsapp/PictureImportActivity.java" />
     </issue>
-    <issue id="InvalidPackage">
-        <ignore path="libs/jdom-2.0.5.jar" />
-    </issue>
     <issue id="MissingTranslation">
         <ignore path="res/values/brands.xml" />
         <ignore path="res/values/fueltypes.xml" />
         <ignore path="res/values/strings.xml" />
-    </issue>
-    <issue id="UnusedAttribute">
-        <ignore path="AndroidManifest.xml" />
     </issue>
 </lint>
