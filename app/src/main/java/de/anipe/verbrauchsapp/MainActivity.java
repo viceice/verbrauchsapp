@@ -105,7 +105,7 @@ public class MainActivity extends Activity {
 
         final FragmentManager fm = getFragmentManager();
         fm.addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
-            public int mCount;
+            int mCount;
 
             @Override
             public void onBackStackChanged() {
@@ -122,7 +122,7 @@ public class MainActivity extends Activity {
                     mDrawerList.requestLayout();
                     return;
                 }
-                int carid = args.getInt("carid");
+                long carid = args.getLong("carid");
                 mCar = dataSource.getCarForId(carid);
                 mDrawerList.setItemChecked(adapter.getPosition(mCar), true);
             }
