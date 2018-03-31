@@ -20,7 +20,7 @@ public class UpdateLocalCarList extends AsyncTask<Void, Void, Void> {
     private LocalImportFragment mCon;
     //private ProgressDialog myprogsdial;
     private int dataSets = 0;
-    public HashMap<String, File> fileMapping;
+    private HashMap<String, File> fileMapping;
     private ArrayList<String> filesList;
 
     public UpdateLocalCarList(LocalImportFragment con) {
@@ -35,8 +35,8 @@ public class UpdateLocalCarList extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-        filesList = new ArrayList<String>();
-        fileMapping = new HashMap<String, File>();
+        filesList = new ArrayList<>();
+        fileMapping = new HashMap<>();
 
         FileSystemAccessor accessor = FileSystemAccessor.getInstance();
         File[] files = accessor.readFilesFromStorageDir(accessor
@@ -49,8 +49,8 @@ public class UpdateLocalCarList extends AsyncTask<Void, Void, Void> {
                     filesList.add(f.getName());
                     fileMapping.put(f.getName(), f);
                 }
+                dataSets++;
             }
-            dataSets++;
 
             Collections.sort(filesList);
         }

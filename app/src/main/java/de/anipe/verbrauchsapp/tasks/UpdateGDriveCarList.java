@@ -79,8 +79,7 @@ public class UpdateGDriveCarList extends AsyncTask<Void, Void, Void> {
             filesList = new ArrayList<String>();
             fileMapping = new HashMap<String, String>();
 
-            MetadataBufferResult result = Drive.DriveApi
-                    .getFolder(mClient, Drive.DriveApi.getRootFolder(mClient).getDriveId())
+            MetadataBufferResult result = Drive.DriveApi.getRootFolder(mClient)
                     .listChildren(mClient).await();
 
             if (!result.getStatus().isSuccess())

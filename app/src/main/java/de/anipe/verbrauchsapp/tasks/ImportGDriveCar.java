@@ -82,8 +82,7 @@ public class ImportGDriveCar extends AsyncTask<String, Void, Void> {
                 return null;
             }
             try {
-
-                DriveFile file = Drive.DriveApi.getFile(mClient, DriveId.decodeFromString(params[0]));
+                DriveFile file = DriveId.decodeFromString(params[0]).asDriveFile();
                 DriveContentsResult result = file.open(mClient, DriveFile.MODE_READ_ONLY, null).await();
 
                 if (!result.getStatus().isSuccess()) {
