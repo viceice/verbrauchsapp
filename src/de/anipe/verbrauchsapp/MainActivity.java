@@ -247,20 +247,22 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void selectCar(Car car) {
+        if (car != null && mCar != null && car.equals(mCar))
+            return;
+
         mCar = car;
         int pos = adapter.getPosition(car);
         Fragment fragment;
 
         if (car != null) {
-            Bundle args = new Bundle();
-            args.putLong("carid", car.getCarId());
-            args.putInt("pos", pos);
             fragment = mFragments.get(mCar);
             if (fragment == null) {
+                Bundle args = new Bundle();
+                args.putLong("carid", car.getCarId());
                 fragment = new CarContentFragment();
+                fragment.setArguments(args);
                 mFragments.put(mCar, fragment);
             }
-            fragment.setArguments(args);
         } else
             fragment = mCarListFragment;
 
