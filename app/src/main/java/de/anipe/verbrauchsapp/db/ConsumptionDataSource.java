@@ -11,6 +11,7 @@ import android.util.Log;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
@@ -46,7 +47,7 @@ public class ConsumptionDataSource implements Serializable {
 		return dataSouce;
 	}
 
-	public void open() {
+	public void open() throws SQLException {
 		database = dbHelper.getWritableDatabase();
 	}
 
