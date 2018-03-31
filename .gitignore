@@ -1,7 +1,8 @@
-/.settings/
-/gen/
-/.gradle/
-/.idea/
-/VerbrauchsApp.iml
+*.iml
+.gradle
+/.settings
+/.idea
 /local.properties
 /build
+/captures
+.externalNativeBuild
