@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -21,7 +21,7 @@ import java.util.Map;
 import de.anipe.verbrauchsapp.db.ConsumptionDataSource;
 import de.anipe.verbrauchsapp.io.FileSystemAccessor;
 
-public class PictureImportActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
+public class PictureImportActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
 	private static final int MAX_FILE_SIZE = 6000000;
 	private ConsumptionDataSource dataSource;

@@ -1,17 +1,11 @@
 package de.anipe.verbrauchsapp;
 
-import java.sql.SQLException;
-import java.util.Calendar;
-import java.util.Date;
-
-import de.anipe.verbrauchsapp.db.ConsumptionDataSource;
-import de.anipe.verbrauchsapp.objects.Consumption;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,10 +14,17 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.sql.SQLException;
+import java.util.Calendar;
+import java.util.Date;
+
+import de.anipe.verbrauchsapp.db.ConsumptionDataSource;
+import de.anipe.verbrauchsapp.objects.Consumption;
+
 /**
- * 
+ *
  */
-public class ConsumptionInputActivity extends ActionBarActivity {
+public class ConsumptionInputActivity extends AppCompatActivity {
 
 	private ConsumptionDataSource dataSource;
 	private long carId;

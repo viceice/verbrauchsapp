@@ -1,11 +1,15 @@
 package de.anipe.verbrauchsapp;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.sql.SQLException;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentSender.SendIntentException;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.support.v4.app.NavUtils;
+import android.util.Log;
+import android.view.MenuItem;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -18,21 +22,18 @@ import com.google.android.gms.drive.DriveResource.MetadataResult;
 import com.google.android.gms.drive.Metadata;
 import com.google.android.gms.drive.MetadataChangeSet;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.sql.SQLException;
+
 import de.anipe.verbrauchsapp.db.ConsumptionDataSource;
-import de.anipe.verbrauchsapp.io.GDriveAsyncTask;
 import de.anipe.verbrauchsapp.io.FileSystemAccessor;
+import de.anipe.verbrauchsapp.io.GDriveAsyncTask;
 import de.anipe.verbrauchsapp.io.XMLHandler;
 import de.anipe.verbrauchsapp.objects.Car;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentSender.SendIntentException;
-import android.graphics.Color;
-import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.util.Log;
-import android.view.MenuItem;
-import android.widget.TextView;
-import android.widget.Toast;
 
 public class GDriveStoreActivity extends GDriveBaseActivity {
 
@@ -63,10 +64,10 @@ public class GDriveStoreActivity extends GDriveBaseActivity {
 					"Fehler beim Öffnen der Datenbank!", Toast.LENGTH_LONG)
 					.show();
 		}
-		
+
 		// Step 1: write to local XML file
 		writeXMLFileToLocalFileSystem();
-		
+
 		if (outputFile == null) {
 			Log.e("GDriveStoreActivity", "Output file is null. Nothing to write to Google Drive. Aborting Activity.");
 			finish();
@@ -273,7 +274,7 @@ public class GDriveStoreActivity extends GDriveBaseActivity {
 			// showMessage("File created: " + result.getDriveId());
 
 			Log.i("GDriveStoreActivity", "Writing to Drive ok. Created content size: " + result.getFileSize());
-			
+
 			TextView xmlTv = (TextView) findViewById(R.id.cloudExportValueLine);
 			xmlTv.setBackgroundColor(Color.GREEN);
 			xmlTv.setTextColor(Color.BLACK);

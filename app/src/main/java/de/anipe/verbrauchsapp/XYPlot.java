@@ -1,12 +1,12 @@
 /**
  * Copyright (C) 2009 - 2013 SC 4ViewSoft SRL
- *  
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *  
+ *
  *      http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,8 +15,13 @@
  */
 package de.anipe.verbrauchsapp;
 
-import java.sql.SQLException;
-import java.util.List;
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Color;
+import android.os.Bundle;
+import android.view.ViewGroup.LayoutParams;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
@@ -26,16 +31,11 @@ import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
+import java.sql.SQLException;
+import java.util.List;
+
 import de.anipe.verbrauchsapp.db.ConsumptionDataSource;
 import de.anipe.verbrauchsapp.objects.Consumption;
-
-import android.app.Activity;
-import android.content.Intent;
-import android.graphics.Color;
-import android.os.Bundle;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.LinearLayout;
-import android.widget.Toast;
 
 public class XYPlot extends Activity {
 	/** The main dataset that includes all the series that go into a chart. */
@@ -48,10 +48,10 @@ public class XYPlot extends Activity {
 	private XYSeriesRenderer mCurrentRenderer;
 	/** The chart view that displays the data. */
 	private GraphicalView mChartView;
-	
+
 	private ConsumptionDataSource dataSource;
 	private long carId;
-	
+
 	private double maxY = 0;
 
 	@Override
@@ -82,7 +82,7 @@ public class XYPlot extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+
 		Intent intent = getIntent();
 		Bundle bundle = intent.getExtras();
 		carId = bundle.getLong("carid");
@@ -97,7 +97,7 @@ public class XYPlot extends Activity {
 					"Fehler beim Öffnen der Datenbank!", Toast.LENGTH_LONG)
 					.show();
 		}
-		
+
 		setContentView(R.layout.xy_chart);
 
 		// set some properties on the main renderer
@@ -111,9 +111,9 @@ public class XYPlot extends Activity {
 		mRenderer.setZoomButtonsVisible(true);
 		mRenderer.setPointSize(10);
 		mRenderer.setYAxisMin(0);
-		
-		
-		
+
+
+
 		if (mChartView == null) {
 			LinearLayout layout = (LinearLayout) findViewById(R.id.chart);
 			mChartView = ChartFactory.getLineChartView(this, mDataset,
@@ -150,8 +150,8 @@ public class XYPlot extends Activity {
 		} else {
 			mChartView.repaint();
 		}
-		
-		
+
+
 		String seriesTitle = "Series " + (mDataset.getSeriesCount() + 1);
         // create a new series of data
         XYSeries series = new XYSeries(seriesTitle);
@@ -165,37 +165,37 @@ public class XYPlot extends Activity {
         renderer.setFillPoints(true);
         renderer.setDisplayChartValues(true);
         renderer.setDisplayChartValuesDistance(10);
-        
+
         createDataLists();
-        
+
         mRenderer.setYAxisMax(maxY);
         mCurrentRenderer = renderer;
         mChartView.repaint();
 
 	}
-	
+
 	private void createDataLists() {
 		List<Consumption> consList = dataSource.getConsumptionCycles(carId);
-		
+
 		System.out.println(consList.size());
-		
+
 		for (Consumption c : consList) {
-		
+
 			System.out.println("PING");
-			
+
 			double x = c.getDate().getTime()/100000000.0;
-			
+
 			System.out.println(x);
-			
+
 			double y = (double)((Math.round(c.getConsumption()*100))/100.0);
-			
+
 			System.out.println(y);
-			
+
 			mCurrentSeries.add(x, y);
-			
+
 			System.out.println("PONG");
-			
-			
+
+
 			if (c.getConsumption() > maxY) {
 				maxY = c.getConsumption();
 			}

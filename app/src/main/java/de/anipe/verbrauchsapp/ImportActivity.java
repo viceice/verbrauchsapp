@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,7 +22,7 @@ import de.anipe.verbrauchsapp.io.CSVHandler;
 import de.anipe.verbrauchsapp.io.FileSystemAccessor;
 import de.anipe.verbrauchsapp.io.XMLHandler;
 
-public class ImportActivity extends ActionBarActivity implements AdapterView.OnItemClickListener {
+public class ImportActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
 	private FileSystemAccessor accessor;
 	private CSVHandler csvImporter;
@@ -145,7 +145,7 @@ public class ImportActivity extends ActionBarActivity implements AdapterView.OnI
 						dataSets + " Datensätze importiert.", Toast.LENGTH_LONG)
 						.show();
 			}
-			
+
 			finish();
 		}
 	}

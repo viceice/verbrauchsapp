@@ -2,7 +2,7 @@ package de.anipe.verbrauchsapp;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.animation.Animation;
@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import de.anipe.verbrauchsapp.adapters.ImportPagerAdapter;
 import de.anipe.verbrauchsapp.fragments.ImportFragment;
 
-public class TabbedImportActivity extends ActionBarActivity {
+public class TabbedImportActivity extends AppCompatActivity {
 
     private ImportPagerAdapter pagerAdapter;
     private ViewPager viewPager;

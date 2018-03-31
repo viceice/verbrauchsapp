@@ -1,15 +1,8 @@
 package de.anipe.verbrauchsapp;
 
-import java.sql.SQLException;
-
-import de.anipe.verbrauchsapp.db.ConsumptionDataSource;
-import de.anipe.verbrauchsapp.io.FileSystemAccessor;
-import de.anipe.verbrauchsapp.objects.Brand;
-import de.anipe.verbrauchsapp.objects.Car;
-import de.anipe.verbrauchsapp.objects.Fueltype;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,10 +12,18 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.sql.SQLException;
+
+import de.anipe.verbrauchsapp.db.ConsumptionDataSource;
+import de.anipe.verbrauchsapp.io.FileSystemAccessor;
+import de.anipe.verbrauchsapp.objects.Brand;
+import de.anipe.verbrauchsapp.objects.Car;
+import de.anipe.verbrauchsapp.objects.Fueltype;
+
 /**
- * 
+ *
  */
-public class CarInputActivity extends ActionBarActivity {
+public class CarInputActivity extends AppCompatActivity {
 
 	private ConsumptionDataSource dataSource;
 	private FileSystemAccessor accessor;

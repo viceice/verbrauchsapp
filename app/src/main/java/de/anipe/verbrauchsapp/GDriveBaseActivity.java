@@ -10,10 +10,10 @@ import com.google.android.gms.drive.Drive;
 import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-public class GDriveBaseActivity extends ActionBarActivity implements
+public class GDriveBaseActivity extends AppCompatActivity implements
 		ConnectionCallbacks, OnConnectionFailedListener {
 
 	private GoogleApiClient mGoogleApiClient;
@@ -25,7 +25,7 @@ public class GDriveBaseActivity extends ActionBarActivity implements
 	* folder operations samples.
 	*/
 	public static final String EXISTING_FOLDER_ID = "0B2EEtIjPUdX6MERsWlYxN3J6RU0";
-	
+
 	/**
 	 * Request code for auto Google Play Services error resolution.
 	 */
@@ -108,7 +108,7 @@ public class GDriveBaseActivity extends ActionBarActivity implements
 			Log.e(TAG, "Exception while starting resolution activity", e);
 		}
 	}
-	
+
 	/**
 	* Getter for the {@code GoogleApiClient}.
 	*/
