@@ -1,6 +1,7 @@
 package de.anipe.verbrauchsapp.fragments;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -17,10 +18,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import de.anipe.verbrauchsapp.CarInputActivity;
-import de.anipe.verbrauchsapp.adapters.IOnCarSelected;
 import de.anipe.verbrauchsapp.MainActivity;
 import de.anipe.verbrauchsapp.R;
 import de.anipe.verbrauchsapp.adapters.CarListAdapter;
+import de.anipe.verbrauchsapp.adapters.IOnCarSelected;
 import de.anipe.verbrauchsapp.db.ConsumptionDataSource;
 import de.anipe.verbrauchsapp.objects.Car;
 import de.anipe.verbrauchsapp.support.DividerItemDecoration;
@@ -49,7 +50,8 @@ public class CarListFragment extends Fragment implements IOnCarSelected {
         FloatingActionButton btn = rootView.findViewById(R.id.float_add);
         btn.setOnClickListener(v -> {
             Intent intent = new Intent(parent, CarInputActivity.class);
-            startActivity(intent);
+            Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(parent).toBundle();
+            startActivity(intent, bundle);
         });
 
         return rootView;

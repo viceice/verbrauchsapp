@@ -1,5 +1,6 @@
 package de.anipe.verbrauchsapp;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -232,7 +233,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void createImportCarActivity() {
         Intent intent = new Intent(MainActivity.this, TabbedImportActivity.class);
-        MainActivity.this.startActivity(intent);
+        Bundle bundle = ActivityOptions.makeSceneTransitionAnimation(this).toBundle();
+        MainActivity.this.startActivity(intent, bundle);
     }
 
     public void selectCar(Car car) {

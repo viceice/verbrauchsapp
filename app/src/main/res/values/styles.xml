@@ -6,18 +6,23 @@
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
 
     -->
-    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!--
             Theme customizations available in newer API levels can go in
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
 
         -->
+        <item name="colorAccent">@color/secondaryColor</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowEnterTransition">@android:transition/explode</item>
+        <item name="android:windowExitTransition">@android:transition/explode</item>
     </style>
 
     <!-- Application theme. -->
-    <style name="AppTheme" parent="AppBaseTheme">
-    </style>
+    <style name="AppTheme" parent="AppBaseTheme"></style>
 
 
 </resources>
