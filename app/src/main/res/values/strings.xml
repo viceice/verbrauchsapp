@@ -70,8 +70,8 @@
     <string name="car_numberplate_hint">Kennzeichen</string>
     <string name="start_km_header">Start-Kilometer eingeben:</string>
     <string name="car_startkm_hint">Start-Kilometerstand</string>
-    <string name="fueltype_spinner_header">Kraftstoff-Art auswählen:</string>
-    <string name="brand_spinner_header">Hersteller auswählen:</string>
+    <string name="fueltype_spinner_header">Kraftstoff-Art</string>
+    <string name="brand_spinner_header">Hersteller</string>
     <string name="button_add_car">Fahrzeug speichern</string>
     <string name="date_picker_header">Datum wählen:</string>
     <string name="km_input_header">Kilometerstand eingeben:</string>
