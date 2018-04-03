@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -39,6 +40,9 @@ public class ConsumptionInputActivity extends AppCompatActivity implements DateP
 		kmState = bundle.getInt("kmstate");
 
 		setContentView(R.layout.inputform_consumption);
+
+        Toolbar myToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(myToolbar);
 
 		dataSource = ConsumptionDataSource.getInstance(this);
 		try {

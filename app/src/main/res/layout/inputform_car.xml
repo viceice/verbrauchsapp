@@ -1,143 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent" >
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <RelativeLayout
+    <include layout="@layout/toolbar"/>
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/toolbar">
 
-        <TextView
-            android:id="@+id/addcar_content"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:lineSpacingExtra="10sp"
-            android:text="@string/car_input_header"
-            android:textColor="#33b5e5"
-            android:textSize="30sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/spinnerBrand"
+        <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/addcar_content"
-            android:layout_marginLeft="5dp"
-            android:layout_marginStart="5dp"
-            android:text="@string/brand_spinner_header"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:orientation="horizontal">
 
-        <Spinner
-            android:id="@+id/brand_spinner"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/spinnerBrand" />
+            <TextView
+                android:id="@+id/addcar_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:lineSpacingExtra="10sp"
+                android:text="@string/car_input_header"
+                android:textColor="#33b5e5"
+                android:textSize="30sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/textViewCarType"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/brand_spinner"
-            android:layout_marginLeft="5dp"
-            android:layout_marginStart="5dp"
-            android:text="@string/car_type_header"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/spinnerBrand"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/addcar_content"
+                android:layout_marginStart="5dp"
+                android:text="@string/brand_spinner_header"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/car_type_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/textViewCarType"
-            android:hint="@string/car_type_hint"
-            android:inputType="textNoSuggestions"
-            android:imeOptions="actionNext"
-            android:lineSpacingExtra="10sp"
-            android:textSize="25sp" />
+            <Spinner
+                android:id="@+id/brand_spinner"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/spinnerBrand" />
 
-        <TextView
-            android:id="@+id/textViewNumberPlate"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/car_type_input"
-            android:layout_marginLeft="5dp"
-            android:layout_marginStart="5dp"
-            android:text="@string/number_plate_header"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/textViewCarType"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/brand_spinner"
+                android:layout_marginStart="5dp"
+                android:text="@string/car_type_header"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/car_numberplate_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/textViewNumberPlate"
-            android:hint="@string/car_numberplate_hint"
-            android:inputType="textNoSuggestions"
-            android:imeOptions="actionNext"
-            android:lineSpacingExtra="10sp"
-            android:textSize="25sp" />
+            <EditText
+                android:id="@+id/car_type_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textViewCarType"
+                android:hint="@string/car_type_hint"
+                android:imeOptions="actionNext"
+                android:inputType="textNoSuggestions"
+                android:lineSpacingExtra="10sp"
+                android:textSize="25sp" />
 
-        <TextView
-            android:id="@+id/textViewStartKm"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/car_numberplate_input"
-            android:layout_marginLeft="5dp"
-            android:layout_marginStart="5dp"
-            android:text="@string/start_km_header"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/textViewNumberPlate"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/car_type_input"
+                android:layout_marginStart="5dp"
+                android:text="@string/number_plate_header"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/car_startkm_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/textViewStartKm"
-            android:digits="0123456789"
-            android:hint="@string/car_startkm_hint"
-            android:inputType="number"
-            android:imeOptions="actionDone"
-            android:lineSpacingExtra="10sp"
-            android:textSize="25sp" />
+            <EditText
+                android:id="@+id/car_numberplate_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textViewNumberPlate"
+                android:hint="@string/car_numberplate_hint"
+                android:imeOptions="actionNext"
+                android:inputType="textNoSuggestions"
+                android:lineSpacingExtra="10sp"
+                android:textSize="25sp" />
 
-        <TextView
-            android:id="@+id/spinnerFuelType"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/car_startkm_input"
-            android:layout_marginLeft="5dp"
-            android:layout_marginStart="5dp"
-            android:text="@string/fueltype_spinner_header"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            <TextView
+                android:id="@+id/textViewStartKm"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/car_numberplate_input"
+                android:layout_marginStart="5dp"
+                android:text="@string/start_km_header"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-        <Spinner
-            android:id="@+id/fueltypes_spinner"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/spinnerFuelType" />
+            <EditText
+                android:id="@+id/car_startkm_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/textViewStartKm"
+                android:digits="0123456789"
+                android:hint="@string/car_startkm_hint"
+                android:imeOptions="actionDone"
+                android:inputType="number"
+                android:lineSpacingExtra="10sp"
+                android:textSize="25sp" />
 
-        <Button
-            android:id="@+id/button_add_car"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/fueltypes_spinner"
-            android:layout_centerHorizontal="true"
-            android:text="@string/button_add_car" />
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/spinnerFuelType"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/car_startkm_input"
+                android:layout_marginStart="5dp"
+                android:text="@string/fueltype_spinner_header"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-</ScrollView>
+            <Spinner
+                android:id="@+id/fueltypes_spinner"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/spinnerFuelType" />
+
+            <Button
+                android:id="@+id/button_add_car"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/fueltypes_spinner"
+                android:layout_centerHorizontal="true"
+                android:text="@string/button_add_car" />
+        </RelativeLayout>
+
+    </ScrollView>
+</RelativeLayout>

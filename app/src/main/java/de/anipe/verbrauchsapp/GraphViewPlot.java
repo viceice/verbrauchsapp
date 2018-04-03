@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -40,6 +41,9 @@ public class GraphViewPlot extends AppCompatActivity {
 		carId = bundle.getLong("carid");
 
 		setContentView(R.layout.xy_chart);
+
+        Toolbar myToolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(myToolbar);
 
 		dataSource = ConsumptionDataSource.getInstance(this);
 		try {

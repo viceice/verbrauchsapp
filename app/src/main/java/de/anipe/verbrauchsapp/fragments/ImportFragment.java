@@ -22,8 +22,9 @@ public abstract class ImportFragment extends Fragment implements AdapterView.OnI
     public final View onCreateView(LayoutInflater inflater, ViewGroup container,
                                    Bundle savedInstanceState) {
 
+        View view = inflater.inflate(R.layout.csvimport_layout, container, false);
         // The last two arguments ensure LayoutParams are inflated properly.
-        ListView rootView = (ListView) inflater.inflate(R.layout.csvimport_layout, container, false);
+        ListView rootView = view.findViewById(android.R.id.list);
 
         rootView.setAdapter(this.adapter);
         rootView.setOnItemClickListener(this);
