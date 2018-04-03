@@ -126,14 +126,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/spinnerFuelType" />
-
-            <Button
-                android:id="@+id/button_add_car"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/fueltypes_spinner"
-                android:layout_centerHorizontal="true"
-                android:text="@string/button_add_car" />
         </RelativeLayout>
 
     </ScrollView>

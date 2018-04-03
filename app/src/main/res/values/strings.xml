@@ -72,7 +72,7 @@
     <string name="car_startkm_hint">Start-Kilometerstand</string>
     <string name="fueltype_spinner_header">Kraftstoff-Art auswählen:</string>
     <string name="brand_spinner_header">Hersteller auswählen:</string>
-    <string name="button_add_car">Fahrzeug hinzufügen</string>
+    <string name="button_add_car">Fahrzeug speichern</string>
     <string name="date_picker_header">Datum wählen:</string>
     <string name="km_input_header">Kilometerstand eingeben:</string>
     <string name="liter_input_header">Getankte Literzahl eingeben:</string>
