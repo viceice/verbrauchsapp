@@ -1,7 +1,11 @@
 package de.anipe.verbrauchsapp.fragments;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,6 +16,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import de.anipe.verbrauchsapp.CarInputActivity;
 import de.anipe.verbrauchsapp.adapters.IOnCarSelected;
 import de.anipe.verbrauchsapp.MainActivity;
 import de.anipe.verbrauchsapp.R;
@@ -24,18 +29,28 @@ public class CarListFragment extends Fragment implements IOnCarSelected {
 
     private ConsumptionDataSource dataSource;
     private CarListAdapter adapter;
+    private View rootView;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         // The last two arguments ensure LayoutParams are inflated properly.
-        RecyclerView rootView = (RecyclerView) inflater.inflate(R.layout.car_listview, container, false);
+        rootView = inflater.inflate(R.layout.car_listview, container, false);
 
-        rootView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
-        rootView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        rootView.setItemAnimator(new DefaultItemAnimator());
-        rootView.setAdapter(this.adapter);
-        rootView.setHasFixedSize(true);
+        RecyclerView rv = rootView.findViewById(R.id.my_recycler_view);
+        Activity parent = getActivity();
+
+        rv.addItemDecoration(new DividerItemDecoration(parent, DividerItemDecoration.VERTICAL_LIST));
+        rv.setLayoutManager(new LinearLayoutManager(parent));
+        rv.setItemAnimator(new DefaultItemAnimator());
+        rv.setAdapter(this.adapter);
+        rv.setHasFixedSize(true);
+
+        FloatingActionButton btn = rootView.findViewById(R.id.float_add);
+        btn.setOnClickListener(v -> {
+            Intent intent = new Intent(parent, CarInputActivity.class);
+            startActivity(intent);
+        });
 
         return rootView;
     }

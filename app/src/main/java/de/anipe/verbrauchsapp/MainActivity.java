@@ -215,9 +215,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         switch (item.getItemId()) {
-            case R.id.action_add_car:
-                createAddCarActivity();
-                return true;
             case R.id.action_import_car:
                 createImportCarActivity();
                 return true;
@@ -230,15 +227,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void createImportCarActivity() {
-//		Intent intent = new Intent(MainActivity.this, ImportActivity.class);
-//		intent.putExtra("iscarimport", true);
-
         Intent intent = new Intent(MainActivity.this, TabbedImportActivity.class);
-        MainActivity.this.startActivity(intent);
-    }
-
-    private void createAddCarActivity() {
-        Intent intent = new Intent(MainActivity.this, CarInputActivity.class);
         MainActivity.this.startActivity(intent);
     }
 
