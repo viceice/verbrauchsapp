@@ -6,6 +6,7 @@ public enum Brand {
 	BMW("BMW"),
 	FORD("Ford"),
 	HONDA("Honda"),
+    HYUNDAI("Hyundai"),
 	MAZDA("Mazda"),
 	MERCEDES("Daimler-Benz"),
 	NISSAN("Nissan"),

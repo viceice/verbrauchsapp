@@ -9,13 +9,14 @@
         <item>@string/fuel_strom</item>
         <item>@string/fuel_other</item>
     </string-array>
-    
+
     <string-array name="brands">
         <item>@string/brand_audi</item>
         <item>@string/brand_bmw</item>
         <item>@string/brand_mercedes</item>
         <item>@string/brand_ford</item>
         <item>@string/brand_honda</item>
+        <item>@string/brand_hyundai</item>
         <item>@string/brand_mazda</item>
         <item>@string/brand_nissan</item>
         <item>@string/brand_porsche</item>
