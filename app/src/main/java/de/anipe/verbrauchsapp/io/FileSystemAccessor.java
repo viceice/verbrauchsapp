@@ -46,21 +46,15 @@ public class FileSystemAccessor {
 	/* Checks if external storage is available for read and write */
 	public boolean isExternalStorageWritable() {
 		String state = Environment.getExternalStorageState();
-		if (Environment.MEDIA_MOUNTED.equals(state)) {
-			return true;
-		}
-		return false;
-	}
+        return Environment.MEDIA_MOUNTED.equals(state);
+    }
 
 	/* Checks if external storage is available to at least read */
 	public boolean isExternalStorageReadable() {
 		String state = Environment.getExternalStorageState();
-		if (Environment.MEDIA_MOUNTED.equals(state)
-				|| Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
-			return true;
-		}
-		return false;
-	}
+        return Environment.MEDIA_MOUNTED.equals(state)
+            || Environment.MEDIA_MOUNTED_READ_ONLY.equals(state);
+    }
 
 	public File createOrGetStorageDir(String folderName) {
 		File file = new File(Environment.getExternalStorageDirectory(),
@@ -114,7 +108,7 @@ public class FileSystemAccessor {
 	}
 
 	public List<String> readCSVFileFromStorage(File csvFile) {
-		List<String> res = new LinkedList<String>();
+		List<String> res = new LinkedList<>();
 
 		try {
 			BufferedReader in = new BufferedReader(new FileReader(csvFile));
@@ -153,7 +147,7 @@ public class FileSystemAccessor {
 	public Document readXMLDocumentFromFile(String folder, String name)
 			throws Exception {
 		SAXBuilder builder = new SAXBuilder();
-		return (Document) builder.build(new File(folder, name));
+		return builder.build(new File(folder, name));
 	}
 
 	public Bitmap getBitmapForBrand(Context context, Brand value) {

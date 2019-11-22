@@ -109,9 +109,9 @@ public class ConsumptionInputActivity extends AppCompatActivity implements DateP
     @Override
     public void onFragmentInteraction(Calendar date) {
         EditText dateText = findViewById(R.id.datumTextLine);
-        String dateSelected = String.valueOf(date.get(Calendar.DAY_OF_MONTH)) + "."
-            + String.valueOf(date.get(Calendar.MONTH) + 1) + "."
-            + String.valueOf(date.get(Calendar.YEAR));
+        String dateSelected = date.get(Calendar.DAY_OF_MONTH) + "."
+            + (date.get(Calendar.MONTH) + 1) + "."
+            + date.get(Calendar.YEAR);
         dateText.setText(dateSelected);
     }
 

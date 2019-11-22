@@ -117,13 +117,11 @@ public class CarContentFragment extends Fragment {
     }
 
     // Create an anonymous implementation of OnClickListener
-    private OnClickListener clickListener = new OnClickListener() {
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.float_add:
-                    createAddConsumptionActivity();
-                    break;
-            }
+    private OnClickListener clickListener = v -> {
+        switch (v.getId()) {
+            case R.id.float_add:
+                createAddConsumptionActivity();
+                break;
         }
     };
 
@@ -173,20 +171,14 @@ public class CarContentFragment extends Fragment {
             .setMessage(
                 "Mit 'Ja' wird der Fahrzeugdatensatz und alle dazugehörigen Verbrauchsdatensätze gelöscht!")
             .setCancelable(false)
-            .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    dataSource.deleteConsumptionsForCar(carId);
-                    dataSource.deleteCar(dataSource.getCarForId(carId));
+            .setPositiveButton("Ja", (dialog, id) -> {
+                dataSource.deleteConsumptionsForCar(carId);
+                dataSource.deleteCar(dataSource.getCarForId(carId));
 
-                    getActivity().finish();
-                }
+                getActivity().finish();
             })
             .setNegativeButton("Nein",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
+                (dialog, id) -> dialog.cancel());
 
         // create alert dialog
         AlertDialog alertDialog = alertDialogBuilder.create();

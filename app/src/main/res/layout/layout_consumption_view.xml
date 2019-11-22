@@ -16,8 +16,7 @@
      <!-- android:background="#cccccc" -->
      
      <LinearLayout
-        android:id="@+id/cons_content_layout"
-		android:layout_width="fill_parent"
+         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
      

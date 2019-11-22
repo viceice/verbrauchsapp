@@ -61,16 +61,13 @@ public class ImportGDriveCar extends AsyncTask<String, Void, Void> {
                     latch.countDown();
                 }
             });
-            mClient.registerConnectionFailedListener(new OnConnectionFailedListener() {
-                @Override
-                public void onConnectionFailed(ConnectionResult result) {
-                    try {
-                        result.startResolutionForResult(mCon, 1);
-                    } catch (IntentSender.SendIntentException e) {
-                        Log.e("ImportGDriveCar", "Exception while starting resolution activity", e);
-                    }
-                    latch.countDown();
+            mClient.registerConnectionFailedListener(result -> {
+                try {
+                    result.startResolutionForResult(mCon, 1);
+                } catch (IntentSender.SendIntentException e) {
+                    Log.e("ImportGDriveCar", "Exception while starting resolution activity", e);
                 }
+                latch.countDown();
             });
             mClient.connect();
             try {

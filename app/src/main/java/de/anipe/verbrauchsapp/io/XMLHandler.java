@@ -80,7 +80,7 @@ public class XMLHandler {
 	public long importXMLCarData(File inputFile) {
 		try {
 			SAXBuilder builder = new SAXBuilder();
-			Document doc = (Document) builder.build(inputFile);
+			Document doc = builder.build(inputFile);
 			return dataSource.addCar(parseCarFromDocument(doc));
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -92,7 +92,7 @@ public class XMLHandler {
     public int importXMLCarDataWithConsumption(InputStream input) {
         try {
             SAXBuilder builder = new SAXBuilder();
-            Document doc = (Document) builder.build(input);
+            Document doc = builder.build(input);
             long carId = dataSource.addCar(parseCarFromDocument(doc));
             List<Consumption> conList = parseConsumptionFromDocument(doc, carId);
             if (conList.size() > 0) {
@@ -112,7 +112,7 @@ public class XMLHandler {
 
 		try {
 			SAXBuilder builder = new SAXBuilder();
-			Document doc = (Document) builder.build(inputFile);
+			Document doc = builder.build(inputFile);
 			List<Consumption> conList = parseConsumptionFromDocument(doc, carId);
 			if (conList.size() > 0) {
 				dataSource.addConsumptions(conList);
@@ -131,7 +131,7 @@ public class XMLHandler {
 
         try {
             SAXBuilder builder = new SAXBuilder();
-            Document doc = (Document) builder.build(inputFile);
+            Document doc = builder.build(inputFile);
             List<Consumption> conList = parseConsumptionFromDocument(doc, carId);
             if (conList.size() > 0) {
                 dataSource.addConsumptions(conList);
@@ -163,7 +163,7 @@ public class XMLHandler {
 
 	public List<Consumption> parseConsumptionFromDocument(Document doc,
 			long carId) {
-		List<Consumption> cons = new LinkedList<Consumption>();
+		List<Consumption> cons = new LinkedList<>();
 		List<Element> conList = doc.getRootElement()
 				.getChild(CONSUMPTIONS_ROOT_NAME)
 				.getChildren(CONSUMPTION_ELEMENT_NAME);

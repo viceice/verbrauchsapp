@@ -42,8 +42,8 @@ public class ImportActivity extends AppCompatActivity implements AdapterView.OnI
         carId = bundle.getLong("carid");
         isCarImport = bundle.getBoolean("iscarimport");
 
-        ArrayList<String> filesList = new ArrayList<String>();
-        fileMapping = new HashMap<String, File>();
+        ArrayList<String> filesList = new ArrayList<>();
+        fileMapping = new HashMap<>();
 
         FileSystemAccessor accessor = FileSystemAccessor.getInstance();
         File[] files = accessor.readFilesFromStorageDir(accessor

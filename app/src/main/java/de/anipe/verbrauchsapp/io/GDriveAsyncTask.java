@@ -42,12 +42,7 @@ public abstract class GDriveAsyncTask<Params, Progress, Result> extends
 				latch.countDown();
 			}
 		});
-		mClient.registerConnectionFailedListener(new OnConnectionFailedListener() {
-			@Override
-			public void onConnectionFailed(ConnectionResult arg0) {
-				latch.countDown();
-			}
-		});
+		mClient.registerConnectionFailedListener(arg0 -> latch.countDown());
 		mClient.connect();
 		try {
 			latch.await();

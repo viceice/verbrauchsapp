@@ -23,7 +23,6 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/startkmTextLine"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
@@ -51,7 +50,6 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/actualkmTextLine"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
@@ -79,7 +77,6 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/consumptionTextLine"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
@@ -107,7 +104,6 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/drivenKmTextLine"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
@@ -135,7 +131,6 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/overallCostsTextLine"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"

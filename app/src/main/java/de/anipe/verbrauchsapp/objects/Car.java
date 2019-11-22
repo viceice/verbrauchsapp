@@ -15,9 +15,9 @@ public class Car implements Comparable<Car> {
 	private Bitmap image;
 
 	public Car() {
-	};
+	}
 
-	public Car(String type, Brand brand, String numberPlate, Fueltype fuelType,
+    public Car(String type, Brand brand, String numberPlate, Fueltype fuelType,
 			int startKm, Bitmap icon) {
 		this.carId = -1;
 		this.type = type;
@@ -103,7 +103,7 @@ public class Car implements Comparable<Car> {
 
     @Override
     public boolean equals(Object o) {
-        return o instanceof Car ? compareTo((Car)o) == 0 : false;
+        return o instanceof Car && compareTo((Car) o) == 0;
     }
 
     @Override

@@ -238,7 +238,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void selectCar(Car car) {
-        if (car != null && mCar != null && car.equals(mCar))
+        if (car != null && car.equals(mCar))
             return;
 
         mCar = car;

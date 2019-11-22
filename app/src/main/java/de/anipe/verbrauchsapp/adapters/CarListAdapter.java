@@ -54,17 +54,14 @@ public class CarListAdapter extends RecyclerView.Adapter<CarListAdapter.ViewHold
         public ViewHolder(View itemView) {
             super(itemView);
 
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (CarListAdapter.this.selected != null)
-                        CarListAdapter.this.selected.selected(mCar);
-                }
+            itemView.setOnClickListener(v -> {
+                if (CarListAdapter.this.selected != null)
+                    CarListAdapter.this.selected.selected(mCar);
             });
 
-            imgIcon = (ImageView) itemView.findViewById(R.id.brand_icon);
-            type = (TextView) itemView.findViewById(R.id.typeLine);
-            number = (TextView) itemView.findViewById(R.id.numberplateLine);
+            imgIcon = itemView.findViewById(R.id.brand_icon);
+            type = itemView.findViewById(R.id.typeLine);
+            number = itemView.findViewById(R.id.numberplateLine);
         }
 
         public void bind(Car car) {

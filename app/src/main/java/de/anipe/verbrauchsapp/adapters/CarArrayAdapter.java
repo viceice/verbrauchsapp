@@ -38,9 +38,9 @@ public class CarArrayAdapter extends ArrayAdapter<Car> {
 			row = inflater.inflate(layoutResourceId, parent, false);
 
 			holder = new CarEntryHolder();
-			holder.imgIcon = (ImageView) row.findViewById(R.id.brand_icon);
-			holder.type = (TextView) row.findViewById(R.id.typeLine);
-			holder.number = (TextView) row.findViewById(R.id.numberplateLine);
+			holder.imgIcon = row.findViewById(R.id.brand_icon);
+			holder.type = row.findViewById(R.id.typeLine);
+			holder.number = row.findViewById(R.id.numberplateLine);
 
 			row.setTag(holder);
 		} else {

@@ -44,12 +44,12 @@ public class ConsumptionArrayAdapter extends ArrayAdapter<Consumption> {
 			row = inflater.inflate(layoutResourceId, parent, false);
 
 			holder = new ConsumptionEntryHolder();
-			holder.date = (TextView) row.findViewById(R.id.date_text);
-			holder.refuelKm = (TextView) row.findViewById(R.id.refuelkm_text);
-			holder.drivenKm = (TextView) row.findViewById(R.id.drivenkm_text);
-			holder.liter = (TextView) row.findViewById(R.id.liter_text);
-			holder.price = (TextView) row.findViewById(R.id.price_text);
-			holder.cons = (TextView) row.findViewById(R.id.consumption_text);
+			holder.date = row.findViewById(R.id.date_text);
+			holder.refuelKm = row.findViewById(R.id.refuelkm_text);
+			holder.drivenKm = row.findViewById(R.id.drivenkm_text);
+			holder.liter = row.findViewById(R.id.liter_text);
+			holder.price = row.findViewById(R.id.price_text);
+			holder.cons = row.findViewById(R.id.consumption_text);
 
 			row.setTag(holder);
 		} else {

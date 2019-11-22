@@ -79,12 +79,6 @@ public class Consumption implements Comparable<Consumption> {
 
 	@Override
 	public int compareTo(Consumption another) {
-		if (this.date.getTime() < another.date.getTime()) {
-			return -1;
-		}
-		if (this.date.getTime() > another.date.getTime()) {
-			return 1;
-		}
-		return 0;
-	}
+        return Long.compare(this.date.getTime(), another.date.getTime());
+    }
 }

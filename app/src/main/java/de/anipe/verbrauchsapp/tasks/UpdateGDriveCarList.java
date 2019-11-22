@@ -54,16 +54,13 @@ public class UpdateGDriveCarList extends AsyncTask<Void, Void, Void> {
                 latch.countDown();
             }
         });
-        mClient.registerConnectionFailedListener(new OnConnectionFailedListener() {
-            @Override
-            public void onConnectionFailed(ConnectionResult result) {
-                try {
-                    result.startResolutionForResult(mCon.getActivity(), 1);
-                } catch (IntentSender.SendIntentException e) {
-                    Log.e("UpdateGDriveCarList", "Exception while starting resolution activity", e);
-                }
-                latch.countDown();
+        mClient.registerConnectionFailedListener(result -> {
+            try {
+                result.startResolutionForResult(mCon.getActivity(), 1);
+            } catch (IntentSender.SendIntentException e) {
+                Log.e("UpdateGDriveCarList", "Exception while starting resolution activity", e);
             }
+            latch.countDown();
         });
         mClient.connect();
         try {
@@ -76,8 +73,8 @@ public class UpdateGDriveCarList extends AsyncTask<Void, Void, Void> {
         }
 
         try {
-            filesList = new ArrayList<String>();
-            fileMapping = new HashMap<String, String>();
+            filesList = new ArrayList<>();
+            fileMapping = new HashMap<>();
 
             MetadataBufferResult result = Drive.DriveApi.getRootFolder(mClient)
                     .listChildren(mClient).await();

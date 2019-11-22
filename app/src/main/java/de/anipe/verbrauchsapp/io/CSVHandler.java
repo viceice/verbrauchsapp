@@ -35,7 +35,7 @@ public class CSVHandler {
 		dataSource.deleteConsumptionsForCar(carId);
 
 		List<String> inList = getCsvContent(inputFile);
-		List<Consumption> cycles = new LinkedList<Consumption>();
+		List<Consumption> cycles = new LinkedList<>();
 
 		for (String str : inList) {
 			Consumption cycle = new Consumption();

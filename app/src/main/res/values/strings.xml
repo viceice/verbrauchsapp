@@ -5,7 +5,6 @@
 
     <string name="app_name">VerbrauchsApp</string>
     <string name="app_id">411613445263</string>
-    <string name="car_dataset_label">Fahrzeugdatensatz</string>
     <string name="csv_import_label">Datensatz-Import</string>
     <string name="picture_import_label">Bild importieren</string>
     <string name="cons_add_label">Verbrauchseintrag hinzufügen</string>
@@ -14,7 +13,6 @@
 
     <!-- Consumption list header labels -->
 
-    <string name="dateHeaderText">Datum</string>
     <string name="refuelKmHeaderText">Kilom.</string>
     <string name="drivenKmKmHeaderText">\u2192</string>
     <string name="literHeaderText">Liter</string>
@@ -22,19 +20,14 @@
     <string name="consumptionKmHeaderText">\u2205</string>
 
     <!-- menu action labels -->
-    <string name="action_view_cars">Fahrzeuge anzeigen</string>
-    <string name="action_add_car">Fahrzeug hinzufügen</string>
     <string name="action_import_car">Fahrzeugdatensatz importieren</string>
     <string name="action_import_data">Daten importieren</string>
     <string name="action_export_data">Daten exportieren</string>
-    <string name="action_edit">Bearbeiten</string>
-    <string name="action_overflow">Weitere Aktionen</string>
     <string name="action_delete_entry">Eintrag löschen?</string>
     <string name="action_delete_car">Eintrag löschen</string>
     <string name="action_edit_entry">Eintrag bearbeiten</string>
     <string name="action_view_consumptions">Verbrauchsdaten anzeigen</string>
     <string name="action_view_chart">Verbrauchsdaten-Plot</string>
-    <string name="action_add_consumption">Verbrauchseintrag hinzufügen</string>
     <string name="action_add_picture">Fahrzeugbild laden</string>
     <string name="action_quit">Beenden</string>
 
@@ -44,17 +37,9 @@
     <!--  -->
 
     <string name="car_input_name">Fahrzeug hinzufügen</string>
-    <string name="cars_view_name">Fahrzeugliste</string>
     <string name="car_list_title">Fahrzeugliste</string>
     <string name="file_list_title">Dateiliste</string>
     <string name="brand_icon_description">Marken-Icon</string>
-    <string name="addcar_button">Fahrzeug anlegen</string>
-    <string name="showcars_button">Fahrzeuge anzeigen</string>
-    <string name="showconsumptions_button">Verbrauchsdaten anzeigen</string>
-    <string name="addconsumption_button">Tankeintrag hinzufügen</string>
-    <string name="importconsumptions_button">Datensatz importieren</string>
-    <string name="addpictures_button">Bild hinzufügen</string>
-    <string name="viewconsumptions_button">Verbrauchsdaten anzeigen</string>
     <string name="picture_text">Bild</string>
     <string name="startkm_text">Kilometer bei Beginn:</string>
     <string name="actualkm_text">Aktueller Kilometerstand:</string>
@@ -63,23 +48,13 @@
     <string name="overallCosts_text">Kosten:</string>
     <string name="xmlExport_text">Status XML-Export:</string>
     <string name="cloudExport_text">Status Cloud-Export:</string>
-    <string name="car_input_header">Fahrzeugdaten eingeben</string>
-    <string name="car_type_header">Fahrzeugtyp eingeben:</string>
     <string name="car_type_hint">Fahrzeugtyp</string>
-    <string name="number_plate_header">Kennzeichen eingeben:</string>
     <string name="car_numberplate_hint">Kennzeichen</string>
-    <string name="start_km_header">Start-Kilometer eingeben:</string>
     <string name="car_startkm_hint">Start-Kilometerstand</string>
     <string name="fueltype_spinner_header">Kraftstoff-Art</string>
     <string name="brand_spinner_header">Hersteller</string>
     <string name="button_add_car">Fahrzeug speichern</string>
-    <string name="date_picker_header">Datum wählen:</string>
-    <string name="km_input_header">Kilometerstand eingeben:</string>
-    <string name="liter_input_header">Getankte Literzahl eingeben:</string>
-    <string name="price_input_header">Preis eingeben (in Euro):</string>
-    <string name="cons_input_header">Verbrauchsdaten eingeben</string>
     <string name="cons_plot_header">Verbrauch (grafisch)</string>
-    <string name="cons_select_date">Datum wählen</string>
     <string name="cons_km_hint">Kilometerstand</string>
     <string name="cons_liter_hint">Getankt (Liter)</string>
     <string name="cons_price_hint">Preis (je Liter)</string>
@@ -113,6 +88,5 @@
     <string name="cons_date_hint">Tankdatum</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

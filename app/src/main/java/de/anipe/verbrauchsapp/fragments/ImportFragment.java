@@ -36,7 +36,7 @@ public abstract class ImportFragment extends Fragment implements AdapterView.OnI
     @Override
     public final void onCreate(Bundle savedInstanceState) {
         adapter = new ArrayAdapter<>(getActivity(),
-            android.R.layout.simple_list_item_1, new ArrayList<String>());
+            android.R.layout.simple_list_item_1, new ArrayList<>());
         super.onCreate(savedInstanceState);
     }
 

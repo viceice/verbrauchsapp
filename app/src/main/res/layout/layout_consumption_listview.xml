@@ -25,8 +25,7 @@
 	        android:layout_marginLeft="6dp" />  -->
 
 		<TextView
-	        android:id="@+id/refuelKmHeaderLine"
-	        android:layout_weight="1"
+            android:layout_weight="1"
 	        android:gravity="start"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
@@ -39,8 +38,7 @@
 	        android:layout_marginLeft="6dp" />
 
          <TextView
-	        android:id="@+id/drivenKmHeaderLine"
-	        android:layout_weight="1"
+             android:layout_weight="1"
 	        android:gravity="start"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
@@ -51,8 +49,7 @@
 	        android:layout_marginTop="6dp" />
 
          <TextView
-	        android:id="@+id/literHeaderLine"
-	        android:layout_weight="1"
+             android:layout_weight="1"
 	        android:gravity="start"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
@@ -63,8 +60,7 @@
 	        android:layout_marginTop="6dp" />
 
          <TextView
-	        android:id="@+id/priceHeaderLine"
-	        android:layout_weight="1"
+             android:layout_weight="1"
 	        android:gravity="start"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
@@ -75,8 +71,7 @@
 	        android:layout_marginTop="6dp" />
 
          <TextView
-	        android:id="@+id/consumptionHeaderLine"
-	        android:layout_weight="1"
+             android:layout_weight="1"
 	        android:gravity="start"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
