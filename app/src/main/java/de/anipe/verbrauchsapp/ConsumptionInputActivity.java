@@ -60,7 +60,7 @@ public class ConsumptionInputActivity extends AppCompatActivity implements DateP
         dateText.setText(c.get(Calendar.DAY_OF_MONTH) + "."
             + (c.get(Calendar.MONTH) + 1) + "." + c.get(Calendar.YEAR));
         dateText.setOnClickListener(v -> {
-            DialogFragment f = DatePickerFragment.newInstance(getCalendarFromDateText(((EditText) findViewById(R.id.datumTextLine))
+            DialogFragment f = DatePickerFragment.newInstance(getCalendarFromDateText(dateText
                 .getText().toString()));
             f.show(getSupportFragmentManager(), "datePicker");
         });

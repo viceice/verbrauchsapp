@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 
 if(project.hasProperty("VerbrauchsApp.signing")
     && new File(project.property("VerbrauchsApp.signing") + ".gradle").exists()) {
-  apply from: project.property("VerbrauchsApp.signing") + ".gradle";
+  apply from: project.property("VerbrauchsApp.signing") + ".gradle"
 }
 
 android {
@@ -26,7 +26,8 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
     lintOptions {
-        abortOnError false
+        // abortOnError false
+        lintConfig file("../lint.xml")
     }
 }
 
@@ -37,10 +38,10 @@ dependencies {
     implementation 'com.jjoe64:graphview:3.1.4'
     implementation 'com.github.ganfra:material-spinner:2.0.0'
 
-    implementation 'com.android.support:appcompat-v7:27.1.0'
-    implementation 'com.android.support:recyclerview-v7:27.1.0'
-    implementation 'com.android.support:design:27.1.0'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
 
-    implementation 'com.google.android.gms:play-services-drive:12.0.1'
-    implementation 'com.google.android.gms:play-services-auth:12.0.1'
+    implementation 'com.google.android.gms:play-services-drive:17.0.0'
+    implementation 'com.google.android.gms:play-services-auth:17.0.0'
 }

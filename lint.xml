@@ -11,4 +11,7 @@
         <ignore path="res/values/fueltypes.xml" />
         <ignore path="res/values/strings.xml" />
     </issue>
+    <issue id="InvalidPackage">
+        <ignore path="**/jdom2*.jar"/>
+    </issue>
 </lint>
