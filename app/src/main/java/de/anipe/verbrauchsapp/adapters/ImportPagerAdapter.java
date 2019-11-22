@@ -1,9 +1,9 @@
 package de.anipe.verbrauchsapp.adapters;
 
 import android.content.Context;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentPagerAdapter;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentPagerAdapter;
 
 import de.anipe.verbrauchsapp.R;
 import de.anipe.verbrauchsapp.fragments.GDriveImportFragment;

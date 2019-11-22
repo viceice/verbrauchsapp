@@ -6,11 +6,11 @@ if(project.hasProperty("VerbrauchsApp.signing")
 }
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
     defaultConfig {
         applicationId 'de.anipe.verbrauchsapp'
         minSdkVersion 22
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 1
         versionName '1.3'
         vectorDrawables.useSupportLibrary = true
@@ -38,9 +38,9 @@ dependencies {
     implementation 'com.jjoe64:graphview:3.1.4'
     implementation 'com.github.ganfra:material-spinner:2.0.0'
 
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support:recyclerview-v7:27.1.1'
-    implementation 'com.android.support:design:27.1.1'
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'com.google.android.material:material:1.0.0'
 
     implementation 'com.google.android.gms:play-services-drive:17.0.0'
     implementation 'com.google.android.gms:play-services-auth:17.0.0'
