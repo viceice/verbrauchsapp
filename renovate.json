@@ -1,0 +1,12 @@
+{
+  "extends": [
+    "config:base",
+    ":assignee(kriese)",
+    ":masterIssue"
+  ],
+  "automergeType": "branch",
+  "semanticCommits": true,
+  "major": {
+    "masterIssueApproval": true
+  }
+}
