@@ -7,6 +7,7 @@ before_script:
   - export GRADLE_USER_HOME=`pwd`/.gradle
 
 build:
+  interruptible: true
   stage: build
   script: gradle --build-cache assemble
   artifacts:
@@ -20,6 +21,7 @@ build:
       - .gradle
 
 test:
+  interruptible: true
   stage: test
   script: gradle check
   cache:
