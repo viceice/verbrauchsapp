@@ -1,12 +1,14 @@
 {
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
     "config:base",
     ":assignee(kriese)",
-    ":masterIssue"
+    ":switchToGradleLite",
+    ":dependencyDashboard"
   ],
   "automergeType": "branch",
-  "semanticCommits": true,
+  "semanticCommits": "enabled",
   "major": {
-    "masterIssueApproval": true
+    "dependencyDashboardApproval": true
   }
 }
