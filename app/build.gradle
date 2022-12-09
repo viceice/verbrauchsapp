@@ -6,6 +6,7 @@ if(project.hasProperty("VerbrauchsApp.signing")
 }
 
 android {
+    namespace 'de.anipe.verbrauchsapp'
     compileSdkVersion 33
     defaultConfig {
         applicationId 'de.anipe.verbrauchsapp'
@@ -22,8 +23,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
     lintOptions {
         // abortOnError false
