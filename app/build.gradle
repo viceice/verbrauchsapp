@@ -6,11 +6,11 @@ if(project.hasProperty("VerbrauchsApp.signing")
 }
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 33
     defaultConfig {
         applicationId 'de.anipe.verbrauchsapp'
-        minSdkVersion 22
-        targetSdkVersion 28
+        minSdkVersion 24
+        targetSdkVersion 33
         versionCode 1
         versionName '1.4'
         vectorDrawables.useSupportLibrary = true
