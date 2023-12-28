@@ -7,11 +7,11 @@ if(project.hasProperty("VerbrauchsApp.signing")
 
 android {
     namespace 'de.anipe.verbrauchsapp'
-    compileSdkVersion 33
+    compileSdk 34
     defaultConfig {
         applicationId 'de.anipe.verbrauchsapp'
         minSdkVersion 24
-        targetSdkVersion 33
+        targetSdk 33
         versionCode 1
         versionName '1.4'
         vectorDrawables.useSupportLibrary = true
@@ -23,9 +23,12 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
+    // kotlinOptions {
+    //     jvmTarget '17'
+    // }
     lint {
         lintConfig file('../lint.xml')
     }
