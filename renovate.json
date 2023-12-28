@@ -10,7 +10,8 @@
       "description": "group gradle major updates",
       "matchDepNames": ["com.android.tools.build:gradle", "gradle"],
       "matchUpdateTypes": ["major"],
-      "groupName": "gradle-major"
+      "groupName": "gradle-major",
+      "semanticCommitType": "feat"
     }
   ]
 }
